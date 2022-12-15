@@ -21,9 +21,9 @@ import java.util.Optional;
 @Repository
 public class MemberNicknameHistoryRepository {
 
-    final private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    static final private String TABLE = "MemberNicknameHistory";
+    private static final String TABLE = "MemberNicknameHistory";
 
     static final RowMapper<MemberNicknameHistory> rowMapper = (ResultSet resultSet, int rowNum) -> MemberNicknameHistory
                 .builder()
@@ -33,32 +33,32 @@ public class MemberNicknameHistoryRepository {
                 .createdAt(resultSet.getObject("createdAt", LocalDateTime.class))
                 .build();
 
-    public List<MemberNicknameHistory> findAllByMemberId(Long memberId) {
-        var sql = String.format("SELECT * FROM %s WHERE memberId = :memberId", TABLE);
-        var params = new MapSqlParameterSource().addValue("memberId", memberId);
-        return namedParameterJdbcTemplate.query(sql, params, rowMapper);
+    public List<MemberNicknameHistory> findAllByMemberId(final Long memberId) {
+        final var sql = String.format("SELECT * FROM %s WHERE memberId = :memberId", MemberNicknameHistoryRepository.TABLE);
+        final var params = new MapSqlParameterSource().addValue("memberId", memberId);
+        return this.namedParameterJdbcTemplate.query(sql, params, MemberNicknameHistoryRepository.rowMapper);
     }
 
-    public MemberNicknameHistory save(MemberNicknameHistory memberNicknameHistory) {
+    public MemberNicknameHistory save(final MemberNicknameHistory memberNicknameHistory) {
 
         if(memberNicknameHistory.getId() == null) {
-            return insert(memberNicknameHistory);
+            return this.insert(memberNicknameHistory);
         }
 
         throw new UnsupportedOperationException("MemberNicknameHistory는 갱신을 지원하지 않습니다.");
 
     }
 
-    private MemberNicknameHistory insert(MemberNicknameHistory memberNicknameHistory) {
-        SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(namedParameterJdbcTemplate.getJdbcTemplate())
+    private MemberNicknameHistory insert(final MemberNicknameHistory memberNicknameHistory) {
+        final SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(this.namedParameterJdbcTemplate.getJdbcTemplate())
                 .withTableName("MemberNicknameHistory")
                 .usingGeneratedKeyColumns("id");
 
-        SqlParameterSource params = new BeanPropertySqlParameterSource(memberNicknameHistory);
+        final SqlParameterSource params = new BeanPropertySqlParameterSource(memberNicknameHistory);
 
-        Long id = simpleJdbcInsert.executeAndReturnKey(params).longValue();
+        final Long id = simpleJdbcInsert.executeAndReturnKey(params).longValue();
 
-        return memberNicknameHistory
+        return MemberNicknameHistory
                 .builder()
                 .id(id)
                 .memberId(memberNicknameHistory.getMemberId())

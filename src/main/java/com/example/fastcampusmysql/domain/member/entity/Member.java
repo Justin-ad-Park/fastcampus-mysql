@@ -10,36 +10,36 @@ import java.util.Objects;
 
 @Getter
 public class Member {
-    final private Long id;
+    private final Long id;
 
     private String nickname;
 
-    final private String email;
+    private final String email;
 
-    final private LocalDate birthday;
+    private final LocalDate birthday;
 
-    final private LocalDateTime createdAt;
+    private final LocalDateTime createdAt;
 
-    final private static Long NAME_MAX_MENGTH = 10L;
+    private static final Long NAME_MAX_MENGTH = 10L;
 
     @Builder
-    public Member(Long id, String nickname, String email, LocalDate birthday, LocalDateTime createdAt) {
+    public Member(final Long id, final String nickname, final String email, final LocalDate birthday, final LocalDateTime createdAt) {
         this.id = id;
         this.email = Objects.requireNonNull(email);
         this.birthday = Objects.requireNonNull(birthday);
 
-        validateNickname(nickname);
+        this.validateNickname(nickname);
         this.nickname = Objects.requireNonNull(nickname);
         this.createdAt = createdAt == null ? LocalDateTime.now() : createdAt;
     }
 
-    public void changeNickname(String toNickname) {
+    public void changeNickname(final String toNickname) {
         Objects.requireNonNull(toNickname);
-        validateNickname(toNickname);
-        nickname = toNickname;
+        this.validateNickname(toNickname);
+        this.nickname = toNickname;
     }
 
-    private void validateNickname(String nickname) {
-        Assert.isTrue(nickname.length() <= NAME_MAX_MENGTH, "최대 길이를 초과했습니다.");
+    private void validateNickname(final String nickname) {
+        Assert.isTrue(nickname.length() <= Member.NAME_MAX_MENGTH, "최대 길이를 초과했습니다.");
     }
 }

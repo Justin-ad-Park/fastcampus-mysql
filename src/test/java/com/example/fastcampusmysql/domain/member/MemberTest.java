@@ -14,8 +14,8 @@ public class MemberTest {
     @DisplayName("닉네임을 변경한다.")
     @Test
     public void testChangeName() {
-        var member = MemberFixtureFactory.create();
-        var expectedNickName = "jsp";
+        final var member = MemberFixtureFactory.create();
+        final var expectedNickName = "jsp";
 
         member.changeNickname(expectedNickName);
 
@@ -25,8 +25,8 @@ public class MemberTest {
     @DisplayName("닉네임은 10자를 초과할 수 없다.")
     @Test
     public void testNicknameMaxLength() {
-        var member = MemberFixtureFactory.create();
-        var expectedNickName = "1234567890A";
+        final var member = MemberFixtureFactory.create();
+        final var expectedNickName = "1234567890A";
 
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> member.changeNickname(expectedNickName)

@@ -20,9 +20,9 @@ import java.util.Optional;
 @Repository
 public class MemberRepository {
 
-    final private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    static final private String TABLE = "member";
+    private static final String TABLE = "member";
 
     static final RowMapper<Member> rowMapper = (ResultSet resultSet, int rowNum) -> Member
                 .builder()
@@ -34,37 +34,37 @@ public class MemberRepository {
                 .build();
 
 
-    public Optional<Member> findById(Long id) {
-        var sql = String.format("SELECT * FROM %s WHERE id = :id", TABLE);
-        var param = new MapSqlParameterSource()
+    public Optional<Member> findById(final Long id) {
+        final var sql = String.format("SELECT * FROM %s WHERE id = :id", MemberRepository.TABLE);
+        final var param = new MapSqlParameterSource()
                 .addValue("id", id);
 
-        var member = namedParameterJdbcTemplate.queryForObject(sql, param, rowMapper);
+        final var member = this.namedParameterJdbcTemplate.queryForObject(sql, param, MemberRepository.rowMapper);
         return Optional.ofNullable(member);
 
     }
 
 
-    public Member save(Member member) {
+    public Member save(final Member member) {
         /*
             member id가 없으면 신규 있으면 갱신
             반환값은 id를 담아서 반환한다.
          */
 
         if(member.getId() == null)
-            return insert(member);
+            return this.insert(member);
         else
-            return update(member);
+            return this.update(member);
     }
 
-    private Member insert(Member member) {
-        SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(namedParameterJdbcTemplate.getJdbcTemplate())
+    private Member insert(final Member member) {
+        final SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(this.namedParameterJdbcTemplate.getJdbcTemplate())
                 .withTableName("Member")
                 .usingGeneratedKeyColumns("id");
 
-        SqlParameterSource params = new BeanPropertySqlParameterSource(member);
+        final SqlParameterSource params = new BeanPropertySqlParameterSource(member);
 
-        Long id = simpleJdbcInsert.executeAndReturnKey(params).longValue();
+        final Long id = simpleJdbcInsert.executeAndReturnKey(params).longValue();
 
         return Member.builder()
                 .id(id)
@@ -75,10 +75,10 @@ public class MemberRepository {
                 .build();
     }
 
-    private Member update(Member member) {
-        var sql = String.format("UPDATE %s set email = :email, nickname = :nickname, birthday = :birthday WHERE id = :id", TABLE);
-        SqlParameterSource params = new BeanPropertySqlParameterSource(member);
-        namedParameterJdbcTemplate.update(sql, params);
+    private Member update(final Member member) {
+        final var sql = String.format("UPDATE %s set email = :email, nickname = :nickname, birthday = :birthday WHERE id = :id", MemberRepository.TABLE);
+        final SqlParameterSource params = new BeanPropertySqlParameterSource(member);
+        this.namedParameterJdbcTemplate.update(sql, params);
         return member;
     }
 

@@ -14,28 +14,28 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class MemberReadService {
-    final private MemberRepository memberRepository;
-    final private MemberNicknameHistoryRepository memberNicknameHistoryRepository;
+    private final MemberRepository memberRepository;
+    private final MemberNicknameHistoryRepository memberNicknameHistoryRepository;
 
-    public MemberDto getMember(Long id) {
-        var member = memberRepository.findById(id).orElseThrow();
+    public MemberDto getMember(final Long id) {
+        final var member = this.memberRepository.findById(id).orElseThrow();
 
-        return toDto(member);
+        return this.toDto(member);
     }
 
-    public List<MemberNicknameHistoryDto> getMemberNicknameHistories(Long memberId) {
-        return memberNicknameHistoryRepository.findAllByMemberId(memberId)
+    public List<MemberNicknameHistoryDto> getMemberNicknameHistories(final Long memberId) {
+        return this.memberNicknameHistoryRepository.findAllByMemberId(memberId)
                 .stream()
-                .map(history -> toDto(history))
+                .map(history -> this.toDto(history))
                 .toList()
                 ;
     }
 
-    public MemberDto toDto(Member member) {
+    public MemberDto toDto(final Member member) {
         return new MemberDto(member.getId(), member.getEmail(), member.getNickname(), member.getBirthday());
     }
 
-    private MemberNicknameHistoryDto toDto(MemberNicknameHistory history) {
+    private MemberNicknameHistoryDto toDto(final MemberNicknameHistory history) {
         return new MemberNicknameHistoryDto(
                 history.getId(),
                 history.getMemberId(),

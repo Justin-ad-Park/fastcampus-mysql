@@ -8,14 +8,14 @@ import java.util.Objects;
 
 @Getter
 public class MemberNicknameHistory {
-    final private Long id;
-    final private Long memberId;
-    final private String nickname;
-    final private LocalDateTime createdAt;
+    private final Long id;
+    private final Long memberId;
+    private final String nickname;
+    private final LocalDateTime createdAt;
 
 
     @Builder
-    public MemberNicknameHistory(Long id, Long memberId, String nickname, LocalDateTime createdAt) {
+    public MemberNicknameHistory(final Long id, final Long memberId, final String nickname, final LocalDateTime createdAt) {
         this.id = id;
         this.memberId = Objects.requireNonNull(memberId);
         this.nickname = Objects.requireNonNull(nickname);
