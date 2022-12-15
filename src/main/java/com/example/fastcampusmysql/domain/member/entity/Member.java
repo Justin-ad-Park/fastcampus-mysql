@@ -30,7 +30,7 @@ public class Member {
 
         this.validateNickname(nickname);
         this.nickname = Objects.requireNonNull(nickname);
-        this.createdAt = createdAt == null ? LocalDateTime.now() : createdAt;
+        this.createdAt = Objects.requireNonNullElseGet(createdAt, LocalDateTime::now);
     }
 
     public void changeNickname(final String toNickname) {

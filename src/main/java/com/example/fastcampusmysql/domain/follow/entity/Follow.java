@@ -20,7 +20,7 @@ public class Follow {
         this.id = id;
         this.fromMemberId = Objects.requireNonNull(fromMemberId) ;
         this.toMemberId = Objects.requireNonNull(toMemberId);
-        this.createdAt = Objects.requireNonNullElse(createdAt, LocalDateTime.now());
+        this.createdAt = Objects.requireNonNullElseGet(createdAt, () -> LocalDateTime.now());
 
     }
 
