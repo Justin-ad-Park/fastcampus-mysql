@@ -3,8 +3,6 @@ package com.example.javaLang.generic;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class StorageImplTest {
     @Test
     public void test() {

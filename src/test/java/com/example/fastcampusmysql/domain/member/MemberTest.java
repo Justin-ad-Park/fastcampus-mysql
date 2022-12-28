@@ -1,13 +1,9 @@
 package com.example.fastcampusmysql.domain.member;
 
-import com.example.fastcampusmysql.domain.member.entity.Member;
-import com.example.fastcampusmysql.domain.util.MemberFixtureFactory;
+import com.example.fastcampusmysql.util.MemberFixtureFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.stream.IntStream;
-import java.util.stream.LongStream;
 
 public class MemberTest {
 
