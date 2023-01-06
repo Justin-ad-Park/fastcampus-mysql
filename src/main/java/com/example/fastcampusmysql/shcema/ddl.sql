@@ -60,3 +60,16 @@ FROM post
 where memberId = 9 and createdDate between '2000-01-01' and '2022-12-31'
 group by memberId, createdDate
 ;
+
+create table Timeline
+(
+    id int auto_increment,
+    memberId int not null,
+    postId int not null,
+    createdAt datetime not null,
+    constraint Timeline_id_vindex primary key (id)
+);
+
+create index Timeline__index_member_id
+    on POST (memberId);
+

@@ -36,11 +36,9 @@ public class PostReadService {
 
     public PageCursor<Post> getPosts(Long memberId, CursorRequest cursorRequest) {
         var posts = findAllBy(memberId, cursorRequest);
-        var nextKey = posts.stream().mapToLong(Post::getId)
-                .min()
-                .orElse(CursorRequest.NONE_KEY);
+        var minKey = getMinKey(posts);
 
-        return new PageCursor<>(cursorRequest.next(nextKey), posts);
+        return new PageCursor<>(cursorRequest.next(minKey), posts);
 
     }
 
@@ -51,8 +49,31 @@ public class PostReadService {
         else
             posts = postRepository.findAllByMemberIdWithOrderByIDDesc( memberId, cursorRequest.size());
 
+        return posts;
+    }
+
+    public PageCursor<Post> getPosts(List<Long> memberIds, CursorRequest cursorRequest) {
+
+        var posts = findAllBy(memberIds, cursorRequest);
+        var minKey = getMinKey(posts);
+
+        return new PageCursor<>(cursorRequest.next(minKey), posts);
+
+    }
+
+    private List<Post> findAllBy(List<Long> memberIds, CursorRequest cursorRequest) {
+        List<Post> posts;
+        if(cursorRequest.hasKey())
+            posts = postRepository.findAllByMemberIdsLessThanIdWithOrderByIDDesc(cursorRequest.key(), memberIds, cursorRequest.size());
+        else
+            posts = postRepository.findAllByMemberIdsWithOrderByIDDesc(memberIds, cursorRequest.size());
 
         return posts;
+    }
 
+    private long getMinKey(List<Post> posts) {
+        return posts.stream().mapToLong(Post::getId)
+                .min()
+                .orElse(CursorRequest.NONE_KEY);
     }
 }

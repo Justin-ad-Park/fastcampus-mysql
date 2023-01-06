@@ -12,8 +12,14 @@ import java.util.List;
 public class FollowReadService {
     private final FollowRepository followRepository;
 
-    public List<Follow> getFollowers(Long fromMemberId) {
+    // Following : 내가 구독한 사람
+    public List<Follow> getFollowings(Long fromMemberId) {
         return followRepository.findAllByFromMemberId(fromMemberId);
+    }
+
+    // Follower : 나를 구독하는 사람
+    public List<Follow> getFollowers(Long fromMemberId) {
+        return followRepository.findAllByToMemberId(fromMemberId);
     }
 
 }

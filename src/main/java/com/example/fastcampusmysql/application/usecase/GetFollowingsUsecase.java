@@ -11,7 +11,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class GetFollowersUsecase {
+public class GetFollowingsUsecase {
     private final MemberReadService memberReadService;
     private final FollowReadService followReadService;
 
@@ -20,15 +20,15 @@ public class GetFollowersUsecase {
             1. fromMemberId -> Followers
             2. 1번을 순회하면서 회원정보를 찾는다.
          */
-        var followers = followReadService.getFollowers(fromMemberId);
+        //Follower : 나를 구독하는 사람
+        var followings = followReadService.getFollowings(fromMemberId);
 
-        if(followers.isEmpty())
+        if(followings.isEmpty())
             return List.of();
 
-        //var followerIds = followers.stream().map(f -> f.getToMemberId()).toList();
-        var followerIds = followers.stream().map(Follow::getToMemberId).toList();
+        var followingIds = followings.stream().map(Follow::getToMemberId).toList();
 
-        return memberReadService.getMembers(followerIds);
+        return memberReadService.getMembers(followingIds);
 
     }
 }

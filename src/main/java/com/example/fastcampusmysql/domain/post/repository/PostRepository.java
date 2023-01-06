@@ -168,6 +168,9 @@ public class PostRepository {
     }
 
     public List<Post> findAllByMemberIdsWithOrderByIDDesc(List<Long> memberIds, Long size) {
+        if(memberIds.isEmpty())
+            return List.of();
+
         var sql = String.format("""
                 SELECT *
                 FROM %s
@@ -176,13 +179,16 @@ public class PostRepository {
                 LIMIT :size
                 """, TABLE);
 
-        var params = new MapSqlParameterSource().addValue(MEMBER_ID, memberIds)
+        var params = new MapSqlParameterSource().addValue("memberIds", memberIds)
                 .addValue("size", size);
 
         return namedParameterJdbcTemplate.query(sql, params, POST_ROW_MAPPER);
     }
 
     public List<Post> findAllByMemberIdsLessThanIdWithOrderByIDDesc(Long id, List<Long> memberIds, Long size) {
+        if(memberIds.isEmpty())
+            return List.of();
+
         var sql = String.format("""
                 with covering as (
                 select id 
@@ -197,7 +203,7 @@ public class PostRepository {
                     ON p.id = c.id
                 """, TABLE);
 
-        var params = new MapSqlParameterSource().addValue(MEMBER_ID, memberIds)
+        var params = new MapSqlParameterSource().addValue("memberIds", memberIds)
                 .addValue("id", id)
                 .addValue("size", size);
 

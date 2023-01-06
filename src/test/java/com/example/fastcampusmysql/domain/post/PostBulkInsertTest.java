@@ -1,12 +1,15 @@
 package com.example.fastcampusmysql.domain.post;
 
+import com.example.fastcampusmysql.FastcampusMysqlApplicationTests;
 import com.example.fastcampusmysql.domain.post.entity.Post;
 import com.example.fastcampusmysql.domain.post.repository.PostRepository;
 import com.example.fastcampusmysql.util.PostFixtureFactory;
 import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.util.StopWatch;
 
 import java.time.LocalDate;
@@ -16,7 +19,9 @@ import java.util.stream.IntStream;
  * @Transactional 어노테이션은 테스트 후 롤백 처리를 한다.
  */
 //@Transactional
-@SpringBootTest
+@SpringBootTest(classes = FastcampusMysqlApplicationTests.class)
+@ComponentScan({ "com.example.fastcampusmysql.domain.post"})
+@EnableAutoConfiguration
 public class PostBulkInsertTest {
     @Autowired
     private PostRepository postRepository;
@@ -43,8 +48,8 @@ public class PostBulkInsertTest {
         System.out.println(stopWatch.prettyPrint());
     }
 
-//    @Disabled
     @Test
+    @Disabled
     public void bulkInsertOneByOne() {
 
         EasyRandom easyRandom = getEasyRandom();

@@ -24,7 +24,6 @@ dependencies {
     implementation 'org.springframework.data:spring-data-commons:2.7.2'
     implementation 'org.springdoc:springdoc-openapi-ui:1.6.8'
     implementation 'org.projectlombok:lombok:1.18.18'
-    implementation 'org.projectlombok:lombok:1.18.18'
 
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -35,6 +34,11 @@ dependencies {
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.jeasy:easy-random-core:5.0.0'
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.2")
+    testRuntimeOnly('org.junit.platform:junit-platform-engine:1.8.2')
+    testRuntimeOnly('org.junit.platform:junit-platform-commons:1.8.2')
 }
 
 tasks.named('test') {

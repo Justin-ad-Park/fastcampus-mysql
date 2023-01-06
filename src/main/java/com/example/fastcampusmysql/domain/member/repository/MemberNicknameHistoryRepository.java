@@ -23,13 +23,17 @@ public class MemberNicknameHistoryRepository {
 
     private static final String TABLE = "MemberNicknameHistory";
 
-    static final RowMapper<MemberNicknameHistory> rowMapper = (ResultSet resultSet, int rowNum) -> MemberNicknameHistory
+    static final RowMapper<MemberNicknameHistory> rowMapper;
+
+    static {
+        rowMapper = (ResultSet resultSet, int rowNum) -> MemberNicknameHistory
                 .builder()
                 .id(resultSet.getLong("Id"))
                 .memberId(resultSet.getLong(PostRepository.MEMBER_ID))
                 .nickname(resultSet.getString("nickname"))
                 .createdAt(resultSet.getObject("createdAt", LocalDateTime.class))
                 .build();
+    }
 
     public List<MemberNicknameHistory> findAllByMemberId(final Long memberId) {
         final var sql = String.format("SELECT * FROM %s WHERE memberId = :memberId", MemberNicknameHistoryRepository.TABLE);
