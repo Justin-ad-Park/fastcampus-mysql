@@ -1,12 +1,11 @@
-package com.example.fastcampusmysql.domain.member;
+package com.example.fastcampusmysql.domain.member.entity;
 
 import com.example.fastcampusmysql.util.MemberFixtureFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class MemberTest {
-
+class MemberTest {
     @DisplayName("닉네임을 변경한다.")
     @Test
     public void testChangeName() {
@@ -26,7 +25,6 @@ public class MemberTest {
 
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> member.changeNickname(expectedNickName)
-                );
+        );
     }
-
 }

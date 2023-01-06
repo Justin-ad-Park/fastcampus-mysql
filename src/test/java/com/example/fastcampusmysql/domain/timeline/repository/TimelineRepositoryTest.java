@@ -21,7 +21,7 @@ class TimelineRepositoryTest {
 
     @Test
     void findAllByMemberIdByIdDesc() {
-        var timelines = timelineRepository.findAllByMemberIdByIdDesc(1L, 10);
+        var timelines = timelineRepository.findAllByMemberIdByIdDesc(1L, 10L);
 
         System.out.println("===Timeline PostIds===");
         timelines.stream()
@@ -34,5 +34,15 @@ class TimelineRepositoryTest {
 
     @Test
     void findAllByLessThanIdAndMemberIdWithOrderByIDDesc() {
+        var timelines = timelineRepository.findAllByLessThanIdAndMemberIdWithOrderByIDDesc(10L, 1L, 10L);
+
+        System.out.println("===Timeline PostIds===");
+        timelines.stream()
+                .forEach(
+                        t->System.out.println(t.getPostId())
+                );
+
+        Assertions.assertTrue(timelines.size() > 0);
+
     }
 }

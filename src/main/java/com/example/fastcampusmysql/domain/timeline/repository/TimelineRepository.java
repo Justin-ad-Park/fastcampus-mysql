@@ -35,7 +35,7 @@ public class TimelineRepository {
         return insert(timeline);
     }
 
-    public List<Timeline> findAllByMemberIdByIdDesc(Long memberId, int size) {
+    public List<Timeline> findAllByMemberIdByIdDesc(Long memberId, Long size) {
         Assert.isTrue(memberId != null, "MemberId는 필수입니다.");
         Assert.isTrue(size > 0, "Size는 0보다 커야 합니다.");
 
