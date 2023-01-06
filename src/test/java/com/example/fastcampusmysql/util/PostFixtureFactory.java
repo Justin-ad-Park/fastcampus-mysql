@@ -22,7 +22,7 @@ public class PostFixtureFactory {
     public static final int MIN_MEMBER_ID = 1;
     public static final int MAX_MEMBER_ID = 10+1;
 
-    public static EasyRandom get(Long memberId, LocalDate firstDate, LocalDate lastDate) {
+    public static EasyRandom get(LocalDate firstDate, LocalDate lastDate) {
         var r = new Random();
 
         var idPredicate = FieldPredicates.named("id")
@@ -41,8 +41,6 @@ public class PostFixtureFactory {
                 });
 
         return new EasyRandom(param);
-
-
 
     }
 }

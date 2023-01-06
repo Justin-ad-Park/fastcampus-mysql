@@ -1,4 +1,4 @@
-package com.example.fastcampusmysql.domain.post;
+package com.example.fastcampusmysql.domain.post.bulkInsert;
 
 import com.example.fastcampusmysql.FastcampusMysqlApplicationTests;
 import com.example.fastcampusmysql.domain.post.entity.Post;
@@ -27,7 +27,7 @@ public class PostBulkInsertTest {
     private PostRepository postRepository;
 
     private static StopWatch stopWatch;
-    private static final int BULK_INSERT_CNT = 10000;
+    private static final int BULK_INSERT_CNT = 100;
 
     @BeforeAll
     public static void initTest() {
@@ -81,7 +81,6 @@ public class PostBulkInsertTest {
 
     private EasyRandom getEasyRandom() {
         return PostFixtureFactory.get(
-                3L,
                 LocalDate.of(1970, 1, 1),
                 LocalDate.of(2022, 12, 31)
         );

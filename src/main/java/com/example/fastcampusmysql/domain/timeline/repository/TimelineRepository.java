@@ -1,6 +1,6 @@
-package com.example.fastcampusmysql.domain.post.repository;
+package com.example.fastcampusmysql.domain.timeline.repository;
 
-import com.example.fastcampusmysql.domain.post.entity.Timeline;
+import com.example.fastcampusmysql.domain.timeline.entity.Timeline;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -25,7 +25,7 @@ public class TimelineRepository {
             .id(rs.getLong("id"))
             .memberId(rs.getLong("memberId"))
             .postId(rs.getLong("postId"))
-            .createdAt(rs.getObject("ceratedAt", LocalDateTime.class))
+            .createdAt(rs.getObject("createdAt", LocalDateTime.class))
             .build();
 
 

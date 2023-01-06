@@ -8,11 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest(classes = FastcampusMysqlApplicationTests.class)
-@ComponentScan({ "com.example.fastcampusmysql.domain.post"})
+@ComponentScan(
+        basePackages = {
+                "com.example.fastcampusmysql.domain.post"
+        }
+)
 @EnableAutoConfiguration
-class PostRepositoryTestByAnnotation {
+class PostRepositoryTest {
     @Autowired
     private PostRepository postRepository;
 
@@ -20,8 +25,13 @@ class PostRepositoryTestByAnnotation {
     void findAllByMemberId() {
     }
 
-
+    /**
+     * @Transactional 사용 이유
+     *  postRepository의 save는 timeline 처리를 하지 않기 때문에
+     *  테스트 후 rollback 되어야 함
+      */
     @Test
+    @Transactional
     void postSave() {
         var post = Post.builder()
                 .memberId(4L)
@@ -30,12 +40,14 @@ class PostRepositoryTestByAnnotation {
 
         var savedPost = postRepository.save(post);
 
+        System.out.println(
+                String.format(
+                        "===Created Post===\n 0%d, 1%d, 2%s"
+                        , savedPost.getId(), savedPost.getMemberId(), savedPost.getContents())
+        );
+
         Assertions.assertNotNull(savedPost.getId());
         Assertions.assertEquals(post.getMemberId(), savedPost.getMemberId());
-
     }
 
-    @Test
-    void findAllByMemberIdWithOrderByIDDesc() {
-    }
 }

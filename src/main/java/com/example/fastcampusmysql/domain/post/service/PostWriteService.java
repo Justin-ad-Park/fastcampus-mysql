@@ -14,8 +14,8 @@ public class PostWriteService {
 
     public Long create(PostDto postDto) {
         var post = Post.builder()
-                .memberId(postDto.memberId())
-                .contents(postDto.contents())
+                .memberId(postDto.getMemberId())
+                .contents(postDto.getContents())
                 .build();
 
         return postRepository.save(post).getId();

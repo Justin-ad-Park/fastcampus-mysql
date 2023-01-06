@@ -1,7 +1,7 @@
-package com.example.fastcampusmysql.domain.post.service;
+package com.example.fastcampusmysql.domain.timeline.service;
 
-import com.example.fastcampusmysql.domain.post.entity.Timeline;
-import com.example.fastcampusmysql.domain.post.repository.TimelineRepository;
+import com.example.fastcampusmysql.domain.timeline.entity.Timeline;
+import com.example.fastcampusmysql.domain.timeline.repository.TimelineRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
