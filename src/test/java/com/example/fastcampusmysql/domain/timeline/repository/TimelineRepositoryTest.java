@@ -1,7 +1,6 @@
-package com.example.fastcampusmysql.domain.post.repository;
+package com.example.fastcampusmysql.domain.timeline.repository;
 
 import com.example.fastcampusmysql.FastcampusMysqlApplicationTests;
-import com.example.fastcampusmysql.domain.timeline.repository.TimelineRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
