@@ -13,7 +13,9 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootTest(classes = FastcampusMysqlApplicationTests.class)
 //@ContextConfiguration(locations = {"/test-member-context.xml","/test-post-context.xml"})
-@ComponentScan({ "com.example.fastcampusmysql.domain.post", "com.example.fastcampusmysql.domain.member"})
+@ComponentScan(basePackages={"com.example.fastcampusmysql.domain.post", "com.example.fastcampusmysql.domain.member"})
+//@ContextConfiguration(locations = {"/test-member-context.xml"})
+//@ComponentScan(basePackages={"com.example.fastcampusmysql.domain.post"})
 @EnableAutoConfiguration
 class MemberAndPostRepositoryTest {
     @Autowired
