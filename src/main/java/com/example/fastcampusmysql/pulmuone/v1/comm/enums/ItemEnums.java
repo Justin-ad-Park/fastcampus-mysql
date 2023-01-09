@@ -56,9 +56,9 @@ public class ItemEnums {
             return modifiedMessage;
         }
 
-        public String getAdditionalMessage(String ctgrNo) {
+        public String getAdditionalMessage(String subName) {
             if(this.hasAddtionalMessage)
-                return SpecFieldAdditional.valueOf(this, ctgrNo).getAdditionalMessage();
+                return SpecFieldAdditional.valueOf(this, subName).getAdditionalMessage();
 
             return "";
         }

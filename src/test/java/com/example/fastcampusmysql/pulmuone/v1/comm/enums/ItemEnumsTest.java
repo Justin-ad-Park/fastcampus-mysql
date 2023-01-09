@@ -36,7 +36,7 @@ class ItemEnumsTest {
     @Test
     void 추가메세지_존재안하는케이스() {
         ItemEnums.SpecFieldCode specFieldCodeEnum = ItemEnums.SpecFieldCode.SPEC_FIELD_02;
-        String addtionalMessage = specFieldCodeEnum.getAdditionalMessage("xxx");
+        String addtionalMessage = specFieldCodeEnum.getAdditionalMessage("");
 
 
         Assertions.assertEquals("", addtionalMessage);
