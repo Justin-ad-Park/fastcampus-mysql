@@ -4,8 +4,8 @@ import com.example.fastcampusmysql.domain.post.dto.DailyPostCount;
 import com.example.fastcampusmysql.domain.post.dto.DailyPostCountRequest;
 import com.example.fastcampusmysql.domain.post.entity.Post;
 import com.example.fastcampusmysql.domain.post.repository.PostRepository;
-import com.example.fastcampusmysql.util.CursorRequest;
-import com.example.fastcampusmysql.util.PageCursor;
+import com.example.fastcampusmysql.util.CursorRequestV2;
+import com.example.fastcampusmysql.util.PageCursorV2;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,15 +34,14 @@ public class PostReadService {
         return postRepository.findAllByMemberId(memberId, pageable);
     }
 
-    public PageCursor<Post> getPosts(Long memberId, CursorRequest cursorRequest) {
+    public PageCursorV2<Post> getPosts(Long memberId, CursorRequestV2 cursorRequest) {
         var posts = findAllBy(memberId, cursorRequest);
-        var minKey = getMinKey(posts);
 
-        return new PageCursor<>(cursorRequest.next(minKey), posts);
+        return new PageCursorV2<>(cursorRequest, posts, Post::getId);
 
     }
 
-    private List<Post> findAllBy(Long memberId, CursorRequest cursorRequest) {
+    private List<Post> findAllBy(Long memberId, CursorRequestV2 cursorRequest) {
         List<Post> posts;
         if(cursorRequest.hasKey())
             posts = postRepository.findAllByLessThanIdAndMemberIdWithOrderByIDDesc(cursorRequest.key(), memberId, cursorRequest.size());
@@ -52,16 +51,15 @@ public class PostReadService {
         return posts;
     }
 
-    public PageCursor<Post> getPosts(List<Long> memberIds, CursorRequest cursorRequest) {
+    public PageCursorV2<Post> getPosts(List<Long> memberIds, CursorRequestV2 cursorRequest) {
 
         var posts = findAllBy(memberIds, cursorRequest);
-        var minKey = getMinKey(posts);
 
-        return new PageCursor<>(cursorRequest.next(minKey), posts);
+        return new PageCursorV2<>(cursorRequest, posts, Post::getId);
 
     }
 
-    private List<Post> findAllBy(List<Long> memberIds, CursorRequest cursorRequest) {
+    private List<Post> findAllBy(List<Long> memberIds, CursorRequestV2 cursorRequest) {
         List<Post> posts;
         if(cursorRequest.hasKey())
             posts = postRepository.findAllByMemberIdsLessThanIdWithOrderByIDDesc(cursorRequest.key(), memberIds, cursorRequest.size());
@@ -71,15 +69,8 @@ public class PostReadService {
         return posts;
     }
 
-    private Long getMinKey(List<Post> posts) {
-        return posts.stream().mapToLong(Post::getId)
-                .min()
-                .orElse(CursorRequest.NONE_KEY);
-    }
-
     public List<Post> getPostsByPostIds(List<Long> ids) {
         if(ids.size() == 0) return List.of();
-
 
         return postRepository.findAllByPostIds(ids);
     }

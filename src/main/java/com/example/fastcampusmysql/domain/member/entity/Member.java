@@ -20,7 +20,7 @@ public class Member {
 
     private final LocalDateTime createdAt;
 
-    private static final Long NAME_MAX_MENGTH = 10L;
+    private static final Long NAME_MAX_LENGTH = 10L;
 
     @Builder
     public Member(final Long id, final String nickname, final String email, final LocalDate birthday, final LocalDateTime createdAt) {
@@ -40,6 +40,6 @@ public class Member {
     }
 
     private void validateNickname(final String nickname) {
-        Assert.isTrue(nickname.length() <= Member.NAME_MAX_MENGTH, "최대 길이를 초과했습니다.");
+        Assert.isTrue(nickname.length() <= Member.NAME_MAX_LENGTH, "최대 길이를 초과했습니다.");
     }
 }

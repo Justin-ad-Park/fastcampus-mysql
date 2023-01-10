@@ -39,7 +39,7 @@ public class MemberRepository {
         final var param = new MapSqlParameterSource()
                 .addValue("id", id);
 
-        final var member = this.namedParameterJdbcTemplate.queryForObject(sql, param, MemberRepository.rowMapper);
+        final var member = this.namedParameterJdbcTemplate.queryForObject(sql, param, rowMapper);
         return Optional.ofNullable(member);
 
     }

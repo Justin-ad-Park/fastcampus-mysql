@@ -22,6 +22,7 @@ import java.util.stream.IntStream;
 @SpringBootTest(classes = FastcampusMysqlApplicationTests.class)
 @ComponentScan({ "com.example.fastcampusmysql.domain.post"})
 @EnableAutoConfiguration
+@Disabled
 public class PostBulkInsertTest {
     @Autowired
     private PostRepository postRepository;

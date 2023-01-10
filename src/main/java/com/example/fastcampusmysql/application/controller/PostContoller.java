@@ -9,8 +9,8 @@ import com.example.fastcampusmysql.domain.post.entity.Post;
 import com.example.fastcampusmysql.domain.post.entity.PostSort;
 import com.example.fastcampusmysql.domain.post.service.PostReadService;
 import com.example.fastcampusmysql.domain.post.service.PostWriteService;
-import com.example.fastcampusmysql.util.CursorRequest;
-import com.example.fastcampusmysql.util.PageCursor;
+import com.example.fastcampusmysql.util.CursorRequestV2;
+import com.example.fastcampusmysql.util.PageCursorV2;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -68,17 +68,17 @@ public class PostContoller {
     }
 
     @GetMapping("/members/{memberId}/by-cursor")
-    public PageCursor<Post> getPostsByCursor(
+    public PageCursorV2<Post> getPostsByCursor(
             @PathVariable Long memberId,
-            CursorRequest cursorRequest
+            CursorRequestV2 cursorRequest
     ) {
         return postReadService.getPosts(memberId, cursorRequest);
     }
 
     @GetMapping("/members/{memberId}/timeline")
-    public PageCursor<Post> getTimelineByCursor(
+    public PageCursorV2<Post> getTimelineByCursor(
             @PathVariable Long memberId,
-            CursorRequest cursorRequest
+            CursorRequestV2 cursorRequest
     ) {
         return getTImelinePostsUsecase.execute(memberId, cursorRequest);
     }

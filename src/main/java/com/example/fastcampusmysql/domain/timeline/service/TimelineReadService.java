@@ -2,7 +2,6 @@ package com.example.fastcampusmysql.domain.timeline.service;
 
 import com.example.fastcampusmysql.domain.timeline.entity.Timeline;
 import com.example.fastcampusmysql.domain.timeline.repository.TimelineRepository;
-import com.example.fastcampusmysql.util.CursorRequest;
 import com.example.fastcampusmysql.util.CursorRequestV2;
 import com.example.fastcampusmysql.util.PageCursorV2;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +21,7 @@ public class TimelineReadService {
     }
 
 
-    private List<Timeline> findAllBy(Long memberId, CursorRequest cursorRequest) {
+    private List<Timeline> findAllBy(Long memberId, CursorRequestV2 cursorRequest) {
         List<Timeline> timelines;
         if(cursorRequest.hasKey())
             timelines = timelineRepository.findAllByLessThanIdAndMemberIdWithOrderByIDDesc(cursorRequest.key(), memberId, cursorRequest.size());
@@ -32,12 +31,4 @@ public class TimelineReadService {
         return timelines;
     }
 
-
-    private Long getMinKey(List<Timeline> timelines, Long size) {
-        if(timelines.size() < size ) return CursorRequest.NONE_KEY;
-
-        return timelines.stream().mapToLong(Timeline::getId)
-                .min()
-                .orElse(CursorRequest.NONE_KEY);
-    }
 }

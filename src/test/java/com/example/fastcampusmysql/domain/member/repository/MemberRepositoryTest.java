@@ -18,10 +18,10 @@ class MemberRepositoryTest {
     @Test
     void findById() {
 
-        var findMemberId = 4L;
-        var member = memberRepository.findById(findMemberId);
+        final var  findMemberId = 4L;
+        final var member = memberRepository.findById(findMemberId).get();
 
-        Assertions.assertEquals(findMemberId, member.get().getId());
+        Assertions.assertEquals(findMemberId, member.getId());
     }
 
     @Test
