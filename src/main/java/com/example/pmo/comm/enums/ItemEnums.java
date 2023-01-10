@@ -1,4 +1,4 @@
-package com.example.fastcampusmysql.pulmuone.v1.comm.enums;
+package com.example.pmo.comm.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

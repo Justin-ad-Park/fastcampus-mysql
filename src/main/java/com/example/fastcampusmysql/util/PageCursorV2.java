@@ -1,5 +1,7 @@
 package com.example.fastcampusmysql.util;
 
+import org.springframework.util.Assert;
+
 import java.util.List;
 import java.util.function.ToLongFunction;
 
@@ -15,14 +17,16 @@ public class PageCursorV2<T>{
     }
     public CursorRequestV2 getCursorRequestV2() { return this.cursorRequestV2;}
 
-    public PageCursorV2(final CursorRequestV2 nextCursorRequestV2, final List<T> body) {
-        this.cursorRequestV2 = nextCursorRequestV2;
+    public PageCursorV2(final CursorRequestV2 cursorRequestV2, final List<T> body) {
+        Assert.isTrue(cursorRequestV2.updatedNextKey(), "Key를 업데이트 하지 못했습니다. 기존에 mapper가 포함된 생성자를 이용하세요.");
+
+        this.cursorRequestV2 = cursorRequestV2;
         this.body = body;
     }
 
-    public PageCursorV2(final CursorRequestV2 nextCursorRequestV2, final List<T> body
+    public PageCursorV2(final CursorRequestV2 cursorRequestV2, final List<T> body
             , @org.jetbrains.annotations.NotNull ToLongFunction<? super T> mapper) {
-        this.cursorRequestV2 = nextCursorRequestV2;
+        this.cursorRequestV2 = cursorRequestV2;
         this.body = body;
 
         updateKeyToNext(mapper);

@@ -1,4 +1,4 @@
-package com.example.fastcampusmysql.pulmuone.v1.comm.enums;
+package com.example.pmo.comm.enums;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

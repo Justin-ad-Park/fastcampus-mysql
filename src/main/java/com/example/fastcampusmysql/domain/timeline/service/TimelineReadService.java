@@ -16,8 +16,8 @@ public class TimelineReadService {
 
     public PageCursorV2<Timeline> getTimelines(Long memberId, CursorRequestV2 cursorRequest) {
         var timelines = findAllBy(memberId, cursorRequest);
-        return new PageCursorV2<>(cursorRequest, timelines, Timeline::getId);
 
+        return new PageCursorV2<>(cursorRequest, timelines, Timeline::getId);
     }
 
 
