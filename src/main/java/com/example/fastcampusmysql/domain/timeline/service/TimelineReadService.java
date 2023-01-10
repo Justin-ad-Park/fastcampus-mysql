@@ -18,7 +18,7 @@ public class TimelineReadService {
 
     public PageCursor<Timeline> getTimelines(Long memberId, CursorRequest cursorRequest) {
         var timelines = findAllBy(memberId, cursorRequest);
-        var minKey = getMinKey(timelines);
+        var minKey = getMinKey(timelines, cursorRequest.size());
 
         return new PageCursor<>(cursorRequest.next(minKey), timelines);
 
@@ -35,7 +35,9 @@ public class TimelineReadService {
     }
 
 
-    private long getMinKey(List<Timeline> timelines) {
+    private Long getMinKey(List<Timeline> timelines, Long size) {
+        if(timelines.size() < size ) return CursorRequest.NONE_KEY;
+
         return timelines.stream().mapToLong(Timeline::getId)
                 .min()
                 .orElse(CursorRequest.NONE_KEY);

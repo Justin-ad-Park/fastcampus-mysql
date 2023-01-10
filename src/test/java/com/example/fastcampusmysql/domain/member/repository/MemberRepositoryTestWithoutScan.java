@@ -1,9 +1,12 @@
 package com.example.fastcampusmysql.domain.member.repository;
 
+import com.example.fastcampusmysql.domain.member.entity.Member;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.Optional;
 
 
 @SpringBootTest
@@ -18,7 +21,7 @@ class MemberRepositoryTestWithoutScan {
     void findById() {
 
         var findMemberId = 4L;
-        var member = memberRepository.findById(findMemberId);
+        Optional<Member> member = memberRepository.findById(findMemberId);
 
         Assertions.assertEquals(findMemberId, member.get().getId());
     }

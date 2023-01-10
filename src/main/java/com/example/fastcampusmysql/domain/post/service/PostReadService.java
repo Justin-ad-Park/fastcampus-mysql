@@ -76,4 +76,11 @@ public class PostReadService {
                 .min()
                 .orElse(CursorRequest.NONE_KEY);
     }
+
+    public List<Post> getPostsByPostIds(List<Long> ids) {
+        if(ids.size() == 0) return List.of();
+
+
+        return postRepository.findAllByPostIds(ids);
+    }
 }

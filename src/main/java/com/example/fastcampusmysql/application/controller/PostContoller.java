@@ -1,7 +1,7 @@
 package com.example.fastcampusmysql.application.controller;
 
 import com.example.fastcampusmysql.application.usecase.CreatePostUsecase;
-import com.example.fastcampusmysql.application.usecase.GetTImelinePostsUsecase;
+import com.example.fastcampusmysql.application.usecase.timeline.pullmode.GetTimelinePostsUsecaseByPullMode;
 import com.example.fastcampusmysql.domain.post.dto.DailyPostCount;
 import com.example.fastcampusmysql.domain.post.dto.DailyPostCountRequest;
 import com.example.fastcampusmysql.domain.post.dto.PostDto;
@@ -26,7 +26,7 @@ import java.util.List;
 public class PostContoller {
     private final PostWriteService postWriteService;
     private final PostReadService postReadService;
-    private final GetTImelinePostsUsecase getTImelinePostsUsecase;
+    private final GetTimelinePostsUsecaseByPullMode getTImelinePostsUsecase;
     private final CreatePostUsecase createPostUsecase;
 
     @PostMapping("")

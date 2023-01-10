@@ -1,4 +1,4 @@
-package com.example.fastcampusmysql.application.usecase;
+package com.example.fastcampusmysql.application.usecase.timeline.pullmode;
 
 import com.example.fastcampusmysql.domain.follow.entity.Follow;
 import com.example.fastcampusmysql.domain.follow.service.FollowReadService;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class GetTImelinePostsUsecase {
+public class GetTimelinePostsUsecaseByPullMode {
     private final  FollowReadService followReadService;
     private final PostReadService postReadService;
 
@@ -31,4 +31,5 @@ public class GetTImelinePostsUsecase {
         var followingMemberIds = followings.stream().map(Follow::getToMemberId).toList();
         return postReadService.getPosts (followingMemberIds, cursorRequest);
     }
+
 }

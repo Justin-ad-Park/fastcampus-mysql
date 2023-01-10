@@ -23,6 +23,20 @@ public class Post {
         this.contents = Objects.requireNonNull(contents);
         this.createdDate = Objects.requireNonNullElseGet(createdDate, LocalDate::now);
         this.createdAt = Objects.requireNonNullElseGet(createdAt, LocalDateTime::now);
+    }
 
+    public static String toHeaderString()
+    {
+        return String.format("""
+    
+    %1$10s\t %2$10s\t %3$-20s\t %4$s
+    """, "ID","MemberId","CreatedAt","Contents");
+    }
+
+
+    @Override
+    public String toString()
+    {
+        return String.format("%1$10d\t %2$10d\t %3$-20s\t %4$s", this.id, this.memberId, this.createdAt, this.contents);
     }
 }

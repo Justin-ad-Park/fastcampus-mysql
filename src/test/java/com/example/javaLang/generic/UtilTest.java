@@ -3,6 +3,8 @@ package com.example.javaLang.generic;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
+
 public class UtilTest {
 
     @Test
@@ -62,5 +64,12 @@ public class UtilTest {
         Box<String> box = Util.getBox(model, name);
 
         Assertions.assertEquals(model, box.get());
+    }
+
+    @Test
+    void StringFormatter() {
+        System.out.println(
+                String.format("%1$10d\t %2$9d\t %3$20s\t %4$s", 8888812, 12, LocalDateTime.now(), "Test Abc Def")
+        ); ;
     }
 }

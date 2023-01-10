@@ -209,4 +209,21 @@ public class PostRepository {
 
         return namedParameterJdbcTemplate.query(sql, params, POST_ROW_MAPPER);
     }
+
+    public List<Post> findAllByPostIds(List<Long> ids) {
+        if(ids.size() == 0)
+            return List.of();
+
+        var sql = String.format("""
+                SELECT *
+                FROM %s
+                WHERE id in (:ids)
+                ORDER BY id desc
+                """, TABLE);
+
+        var params = new MapSqlParameterSource().addValue("ids", ids);
+
+        return namedParameterJdbcTemplate.query(sql, params, POST_ROW_MAPPER);
+
+    }
 }
