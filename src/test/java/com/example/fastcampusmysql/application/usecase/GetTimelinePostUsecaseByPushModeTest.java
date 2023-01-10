@@ -4,8 +4,8 @@ import com.example.fastcampusmysql.FastcampusMysqlApplicationTests;
 import com.example.fastcampusmysql.application.usecase.timeline.pushmode.GetTimelinePostsUsecaseByPushMode;
 import com.example.fastcampusmysql.domain.post.entity.Post;
 import com.example.fastcampusmysql.domain.post.service.PostReadService;
-import com.example.fastcampusmysql.util.CursorRequest;
-import com.example.fastcampusmysql.util.PageCursor;
+import com.example.fastcampusmysql.util.CursorRequestV2;
+import com.example.fastcampusmysql.util.PageCursorV2;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,12 +48,12 @@ public class GetTimelinePostUsecaseByPushModeTest {
     void 타임라인포스트조회() {
         var memberId = 3L;
 
-        CursorRequest cursorRequest = new CursorRequest(null, 3L);
+        CursorRequestV2 cursorRequest = new CursorRequestV2(null, 3L);
 
-        PageCursor<Post> posts = getTimelinePostsUsecaseByPushMode.getPostByMemberId(memberId, cursorRequest);
-        posts.body().forEach(System.out::println);
+        PageCursorV2<Post> posts = getTimelinePostsUsecaseByPushMode.getPostByMemberId(memberId, cursorRequest);
+        posts.getBody().forEach(System.out::println);
 
-        System.out.println("NextKey : " + posts.nextCursorRequest().key());
+        System.out.println("NextKey : " + posts.getCursorRequestV2().key());
 
         Assertions.assertNotNull(posts);
     }
@@ -62,12 +62,12 @@ public class GetTimelinePostUsecaseByPushModeTest {
     void 타임라인포스트조회_넥스트키없음() {
         var memberId = 3L;
 
-        CursorRequest cursorRequest = new CursorRequest(3L, 3L);
+        CursorRequestV2 cursorRequest = new CursorRequestV2(3L, 3L);
 
-        PageCursor<Post> posts = getTimelinePostsUsecaseByPushMode.getPostByMemberId(memberId, cursorRequest);
-        posts.body().forEach(System.out::println);
+        PageCursorV2<Post> posts = getTimelinePostsUsecaseByPushMode.getPostByMemberId(memberId, cursorRequest);
 
-        System.out.println("NextKey : " + posts.nextCursorRequest().key());
+        posts.getBody().forEach(System.out::println);
+        System.out.println("NextKey : " + posts.getCursorRequestV2().key());
 
         Assertions.assertNotNull(posts);
     }

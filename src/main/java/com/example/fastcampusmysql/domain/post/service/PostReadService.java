@@ -71,7 +71,7 @@ public class PostReadService {
         return posts;
     }
 
-    private long getMinKey(List<Post> posts) {
+    private Long getMinKey(List<Post> posts) {
         return posts.stream().mapToLong(Post::getId)
                 .min()
                 .orElse(CursorRequest.NONE_KEY);

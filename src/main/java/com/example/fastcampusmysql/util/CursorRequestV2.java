@@ -1,0 +1,23 @@
+package com.example.fastcampusmysql.util;
+
+import lombok.Getter;
+
+@Getter
+public class CursorRequestV2 extends CursorRequest {
+    private Long prevKey;
+
+    public static final Long NONE_KEY = -1L;
+
+    public CursorRequestV2(final Long key, final Long size) {
+        super(key, size);
+    }
+
+    public Boolean hasKey() {
+        return key != null;
+    }
+
+    public void setKeyToNext(Long nextKey) {
+        this.prevKey = this.key;
+        this.key = nextKey;
+    }
+}

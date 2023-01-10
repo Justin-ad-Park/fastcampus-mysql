@@ -6,5 +6,4 @@ public record PageCursor<T>(
     CursorRequest nextCursorRequest,
     List<T> body
 ) {
-
 }
