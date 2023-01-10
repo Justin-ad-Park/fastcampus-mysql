@@ -2,7 +2,7 @@ package com.example.fastcampusmysql.domain.timeline.service;
 
 
 import com.example.fastcampusmysql.FastcampusMysqlApplicationTests;
-import com.example.fastcampusmysql.util.CursorRequest;
+import com.example.fastcampusmysql.util.CursorRequestV2;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,24 +24,24 @@ public class TImelineReadServiceTest {
 
         @Test
         void 타임라인조회() {
-                CursorRequest cr = new CursorRequest(null, 3L);
+                CursorRequestV2 cr = new CursorRequestV2(null, 3L);
 
                 var timelines= timelineReadService.getTimelines(3L, cr);
 
-                System.out.println("Next Key : " + timelines.nextCursorRequest().key());
-                timelines.body().stream().forEach(t-> System.out.println( t.getPostId()));
+                System.out.println("Next Key : " + timelines.getCursorRequestV2().key());
+                timelines.getBody().stream().forEach(t-> System.out.println( t.getPostId()));
 
-                Assertions.assertTrue(timelines.body().size() > 0);
+                Assertions.assertTrue(timelines.getBody().size() > 0);
 
         }
 
         @Test
         void 타임라인조회byKey() {
-                CursorRequest cr = new CursorRequest(14L, 3L);
+                CursorRequestV2 cr = new CursorRequestV2(14L, 3L);
 
                 var timelines= timelineReadService.getTimelines(3L, cr);
 
-                System.out.println("Next Key : " + timelines.nextCursorRequest().key());
+                System.out.println("Next Key : " + timelines.getCursorRequestV2().key());
                 timelines.body().stream().forEach(t-> System.out.println( t.getPostId()));
 
                 Assertions.assertTrue(timelines.body().size() > 0);

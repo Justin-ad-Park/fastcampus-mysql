@@ -10,11 +10,10 @@ public class PageCursorV2<T>{
     public List<T> getBody() {
         return this.body;
     }
-    public List<T> Body() {
+    public List<T> body() {
         return this.body;
     }
     public CursorRequestV2 getCursorRequestV2() { return this.cursorRequestV2;}
-    public CursorRequestV2 getCursorRequest() { return this.cursorRequestV2;}
 
     public PageCursorV2(final CursorRequestV2 nextCursorRequestV2, final List<T> body) {
         this.cursorRequestV2 = nextCursorRequestV2;
