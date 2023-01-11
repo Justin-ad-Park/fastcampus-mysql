@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UtilTest {
 
@@ -13,6 +15,17 @@ public class UtilTest {
         Box<Integer> box1 = Util.boxing(value);
 
         Assertions.assertEquals(value, box1.get());
+
+        Box<String> box2 = Util.<String>boxing("Test");
+
+
+        var box4 = Util.<Long>boxing(100L);
+        box4 = Util.boxing(200L);
+
+
+        var box3 = Util.boxing(100L);
+        // box3 = Util.boxing(100);
+
     }
 
 
@@ -71,5 +84,17 @@ public class UtilTest {
         System.out.println(
                 String.format("%1$10d\t %2$9d\t %3$20s\t %4$s", 8888812, 12, LocalDateTime.now(), "Test Abc Def")
         ); ;
+    }
+
+    @Test
+    void 제네릭_타입체크() {
+        List<String> list = new ArrayList<>();
+        list.add("Hello");
+
+        String str = list.get(0);
+
+        // 제네릭 타입에서 String 으로 선언되어 컴파일 에러가 발생함
+        //list.add(3L);
+        //Long value = list.get(1);
     }
 }
