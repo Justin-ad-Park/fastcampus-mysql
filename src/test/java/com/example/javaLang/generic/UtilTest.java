@@ -36,7 +36,7 @@ public class UtilTest {
         Pair<Integer, String> p3 = new Pair<>(1, "Orange");
         Pair<Integer, String> p4 = new Pair<>(2, "Apple");
 
-        Assertions.assertTrue(Util.compare(p1, p2));
+        Assertions.assertTrue(Util.<Integer, String>compare(p1, p2));   //제네릭 타입 명시적 지정
         Assertions.assertFalse(Util.compare(p1, p3), () -> "p1 != p3 에러 발생");
         Assertions.assertFalse(Util.compare(p1, p4));
         Assertions.assertFalse(Util.compare(p3, p4));
@@ -49,16 +49,16 @@ public class UtilTest {
         );
     }
 
-
     @Test
     void compareNumber() {
-        int result1 = Util.compare(10, 10);
-        int result2 = Util.compare(10, 11);
+        var result1 = Util.compare(10, 10);
+        int result2 = Util.<Number>compare(10, 11);
         int result3 = Util.compare(10, 9);
 
-        boolean result4 = Util.compare("10", "20");
-        boolean result5 = Util.compare("10", 10);
+        var result4 = Util.compare("10", "20");
+        var result5 = Util.compare("10", 10);
         boolean result6 = Util.compare("10", 20);
+        var result7 = Util.<String, Number>compare("10", 10);
 
         Assertions.assertEquals(0, result1);
         Assertions.assertEquals(-1, result2);

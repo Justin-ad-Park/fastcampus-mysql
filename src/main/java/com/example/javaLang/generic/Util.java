@@ -7,13 +7,6 @@ public class Util {
         return box;
     }
 
-    public static <M extends String, N extends String, R extends String> Box<R> getBox(M model, N name) {
-        Box<R> box = new Box<R>();
-        box.set((R)model);
-
-        return box;
-    }
-
     public static <K, V> boolean compare(Pair<K, V> p1, Pair<K, V> p2) {
         if (p1.getKey().equals(p2.getKey()) == false) return false;
 
@@ -29,8 +22,17 @@ public class Util {
         return Double.compare(v1, v2);
     }
 
-    public static <T extends String> boolean compare(T t1, T t2) {
+    public static <T extends String> boolean compare(T t1, T t2)
+    {
         return t1.equals(t2);
+    }
+
+
+    public static <M extends String, N extends String, R extends String> Box<R> getBox(M model, N name) {
+        Box<R> box = new Box<R>();
+        box.set((R)model);
+
+        return box;
     }
 
     public static <T extends String, M extends Number> boolean compare(T t1,  M t2) {
