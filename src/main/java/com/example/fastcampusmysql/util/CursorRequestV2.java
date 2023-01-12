@@ -1,22 +1,50 @@
 package com.example.fastcampusmysql.util;
 
+import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
-@Getter
-public class CursorRequestV2 extends CursorRequest {
+import java.util.Objects;
+
+public class CursorRequestV2 {
+    @Setter
+    @Getter
+    private Long key;
+    @Setter
+    @Getter
+    private final Long size;
     private Long prevKey = null;
     private boolean updatedNextKey = false;
     public static final Long NONE_KEY = -1L;
 
-    public CursorRequestV2(final Long key, final Long size) {
-        super(key, size);
+    @Builder
+    public CursorRequestV2(final Long key, Long size) {
+        this.key = key;
+        this.size = Objects.requireNonNullElse(size, 1L);
     }
 
-    public Boolean updatedNextKey() {
+    public Boolean hasKey() {
+        return key != null;
+    }
+
+    public Long key() {
+        return key;
+    }
+
+    public Long size() {
+        return size;
+    }
+
+    public CursorRequestV2 next(Long key)
+    {
+        return new CursorRequestV2(key, size);
+    }
+
+    protected Boolean updatedNextKey() {
         return updatedNextKey;
     }
 
-    public void setKeyToNext(Long nextKey) {
+    protected void updateKeyToNext(Long nextKey) {
         this.prevKey = this.key;
         this.key = nextKey;
         this.updatedNextKey = true;

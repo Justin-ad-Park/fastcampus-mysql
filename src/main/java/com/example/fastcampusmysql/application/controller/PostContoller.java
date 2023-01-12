@@ -2,6 +2,7 @@ package com.example.fastcampusmysql.application.controller;
 
 import com.example.fastcampusmysql.application.usecase.CreatePostUsecase;
 import com.example.fastcampusmysql.application.usecase.timeline.pullmode.GetTimelinePostsUsecaseByPullMode;
+import com.example.fastcampusmysql.application.usecase.timeline.pushmode.GetTimelinePostsUsecaseByPushMode;
 import com.example.fastcampusmysql.domain.post.dto.DailyPostCount;
 import com.example.fastcampusmysql.domain.post.dto.DailyPostCountRequest;
 import com.example.fastcampusmysql.domain.post.dto.PostDto;
@@ -27,6 +28,7 @@ public class PostContoller {
     private final PostWriteService postWriteService;
     private final PostReadService postReadService;
     private final GetTimelinePostsUsecaseByPullMode getTImelinePostsUsecase;
+    private final GetTimelinePostsUsecaseByPushMode getTimelinePostsUsecaseByPushMode;
     private final CreatePostUsecase createPostUsecase;
 
     @PostMapping("")
@@ -81,6 +83,14 @@ public class PostContoller {
             CursorRequestV2 cursorRequest
     ) {
         return getTImelinePostsUsecase.execute(memberId, cursorRequest);
+    }
+
+    @GetMapping("/members/{memberId}/timelinePushMode")
+    public PageCursorV2<Post> getTimelinePostByPushMode(
+            @PathVariable Long memberId,
+            CursorRequestV2 cursorRequest
+    ) {
+        return getTimelinePostsUsecaseByPushMode.getPostByMemberId(memberId, cursorRequest);
     }
 
 }
