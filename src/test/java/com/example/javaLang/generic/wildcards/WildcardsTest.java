@@ -19,12 +19,9 @@ public class WildcardsTest {
         return peopleSupplier.get();
     }
 
-    private final Comparator<Person> compareName = (p1, p2) -> p1.getName().compareToIgnoreCase(p2.getName());
-    private final Comparator<Person> compareAge = (p1, p2) -> Integer.compare(p1.getAge(), p2.getAge());
-
     /**
-     * 전체 인원 중 가나다 순으로 이름이 가장 빠른 인원
-     * 최연소 구성원
+     * 전체 인원 중 가나다 순으로 이름이 가장 빠른 사람을 뽑는 방법
+     * 최연소 인원을 뽑는 방법
      */
     @Test
     void windcardTest() {
@@ -35,6 +32,7 @@ public class WildcardsTest {
                 .get();
         System.out.println(alphaFirstName);
 
+
         Assertions.assertEquals(ahphabetFirstPerson.getName(), alphaFirstName);
 
         int minAge = getPersonStream()
@@ -43,6 +41,7 @@ public class WildcardsTest {
                 .getAsInt();
         System.out.println(minAge);
         Assertions.assertEquals(youngestPerson.getAge(), minAge);
+
 
         // 방법 2 : min(비교 로직)
         Person alphaFirst = getPersonStream()
@@ -56,6 +55,7 @@ public class WildcardsTest {
                 .get();
         System.out.println("최연소 : " + youngest);
         Assertions.assertEquals(youngestPerson.getAge(), minAge);
+
 
         // 방법 3 : Comparator<T> interface를 이용
         alphaFirst = getPersonStream().min(compareName).get();
@@ -74,10 +74,14 @@ public class WildcardsTest {
         youngest = getMinPerson(getPersonStream(), compareAge);
         System.out.println("최연소 : " + youngest);
 
-    }
+`    }
 
     private <T extends Person> T getMinPerson(Stream<T> p, Comparator<T> comparator) {
         return p.min(comparator).get();
-
     }
+
+    private final Comparator<Person> compareName = (p1, p2) -> p1.getName().compareToIgnoreCase(p2.getName());
+    private final Comparator<Person> compareAge = (p1, p2) -> Integer.compare(p1.getAge(), p2.getAge());
+
+
 }
