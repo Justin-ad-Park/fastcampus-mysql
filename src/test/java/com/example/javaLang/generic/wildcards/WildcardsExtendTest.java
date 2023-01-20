@@ -1,18 +1,13 @@
 package com.example.javaLang.generic.wildcards;
 
+import com.example.javaLang.generic.common.StreamTestGenerator;
 import org.junit.jupiter.api.Test;
 
 import java.util.Comparator;
 import java.util.function.Function;
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 public class WildcardsExtendTest {
-
-    private Student youngestPerson = new Student("홍길동",17, 80);
-    private Student intermediatePerson = new Student("이몽룡",21, 99);
-    private Student lowestScorePerson = new Student("온달",23, 45);
-    private Student ahphabetFirstPerson = new Student("김유신",28, 89);
 
 
     /**
@@ -25,24 +20,20 @@ public class WildcardsExtendTest {
         // 방법 5 : 다양한 타입을 비교할 수 있도록 재활용성을 극대화 할 수 없을까?
         // Comparator<T>에 getter와 비교에 사용할 comparator
         //
-        Student alphaFirst = getMinPerson(getPersonStream(), multitypeComparator(Person::getName, stringComparator));
+        Student alphaFirst = getMinPerson(StreamTestGenerator.getPersonStream(), multitypeComparator(Person::getName, stringComparator));
         System.out.println("가나다 : " + alphaFirst);
 
-        Student lowestRecord = getMinPerson(getPersonStream(), multitypeComparator(Student::getAge, intComparator));
+        Student lowestRecord = getMinPerson(StreamTestGenerator.getPersonStream(), multitypeComparator(Student::getAge, intComparator));
         System.out.println("최연소 : " + lowestRecord);
 
-        Student youngestRecord = getMinPerson(getPersonStream(), multitypeComparator(Student::getRecord, intComparator));
+        Student youngestRecord = getMinPerson(StreamTestGenerator.getPersonStream(), multitypeComparator(Student::getRecord, intComparator));
         System.out.println("최하점 : " + youngestRecord);
 
-        Student highestRecord = getMinPerson(getPersonStream(), multitypeComparator(Student::getRecord, intComparator.reversed()));
+        Student highestRecord = getMinPerson(StreamTestGenerator.getPersonStream(), multitypeComparator(Student::getRecord, intComparator.reversed()));
         System.out.println("최고점 : " + highestRecord);
 
     }
 
-    private final Supplier<Stream<Student>> peopleSupplier = () -> Stream.of(youngestPerson, intermediatePerson, lowestScorePerson, ahphabetFirstPerson);
-    private final Stream<Student> getPersonStream() {
-        return peopleSupplier.get();
-    }
 
     private  final <T> T getMinPerson(Stream<T> p, Comparator<T> comparator) {
         return p.min(comparator).get();
