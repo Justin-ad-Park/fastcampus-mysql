@@ -79,8 +79,17 @@ public class FunctionalProgram4Test {
         void act(T t);
     }
 
+    @FunctionalInterface
+    interface Doit {
+        void run();
+    }
+
     public void execute(Runnable runnable) {
         runnable.run();
+    }
+
+    public void execute(Doit doit) {
+        doit.run();
     }
     public <T extends String> void execute(Action<? super String> action, T t) {
         action.act(t);
@@ -89,11 +98,15 @@ public class FunctionalProgram4Test {
     @Test
     void act() {
         var t = "Actor";
-        execute((u) -> System.out.println(u + "'s Action"), t);
-        execute(() -> System.out.println("Runnable"));
 
+        execute((Runnable)() -> System.out.println("Runnable"));
+        execute((Doit)() -> System.out.println("Runnable2"));
+
+        // 형식 추론 예제
+        execute((u) -> System.out.println(u + "'s Action"), t);
         execute((Action)(u) -> System.out.println(u + "'s Action2"), t);
-        execute((Runnable)() -> System.out.println("Runnable2"));
+        execute((Action<String>)(u) -> System.out.println(u + "'s Action3"), t);
+        execute((Action<String>)(String u) -> System.out.println(u + "'s Action3"), t);
     }
 
 
