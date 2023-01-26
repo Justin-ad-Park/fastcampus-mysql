@@ -1,6 +1,6 @@
 package com.example.javaLang.generic.functional;
 
-import com.example.javaLang.entity.Apple;
+import com.example.javaLang.entity.ColorApple;
 import com.example.javaLang.entity.Color;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -11,17 +11,17 @@ import java.util.List;
 
 
 public class FunctionalProgramTest {
-    private Apple greenApple = new Apple(Color.Green, 150);
-    private Apple redApple = new Apple(Color.Red, 120);
-    private Apple redBigApple = new Apple(Color.Red, 170);
+    private ColorApple greenColorApple = new ColorApple(Color.Green, 150);
+    private ColorApple redColorApple = new ColorApple(Color.Red, 120);
+    private ColorApple redBigColorApple = new ColorApple(Color.Red, 170);
 
-    private List<Apple> apples = Arrays.asList(greenApple, redApple, redBigApple);
+    private List<ColorApple> colorApples = Arrays.asList(greenColorApple, redColorApple, redBigColorApple);
 
     @Test
     void formatterTest() {
-        AppleFancyFormatter<Apple> appleFancyFormatter = new AppleFancyFormatter<>();
+        AppleFancyFormatter<ColorApple> appleFancyFormatter = new AppleFancyFormatter<>();
 
-        final String output = appleFancyFormatter.accept(greenApple);
+        final String output = appleFancyFormatter.accept(greenColorApple);
         System.out.println(output);
 
         Assertions.assertFalse(output.isEmpty(), "output 메시지가 존재하지 않습니다.");
@@ -29,9 +29,9 @@ public class FunctionalProgramTest {
 
     @Test
     void printAppleByAnonymousClassTest() {
-        Apple.PrintApple(apples, new AppleFancyFormatter() {
+        ColorApple.PrintApple(colorApples, new AppleFancyFormatter() {
             @Override
-            public String accept(Apple t) {
+            public String accept(ColorApple t) {
                 return String.format("Color : %1$s, Weight : %2$dg", t.color().toString(), t.weight());
             }
         });
@@ -40,16 +40,16 @@ public class FunctionalProgramTest {
 
     @Test
     void printApplesByInstanceOfClassTest() {
-        Apple.PrintApple(apples, new AppleFancyFormatter<>());
+        ColorApple.PrintApple(colorApples, new AppleFancyFormatter<>());
     }
 
     @Test
     void printApplesByLambdaTest() {
-        Apple.PrintApple(apples,
-                (Apple apple) -> String.format(
+        ColorApple.PrintApple(colorApples,
+                (ColorApple colorApple) -> String.format(
                         "Color : %1$s, Weight : %2$dg"
-                        , apple.color().toString()
-                        , apple.weight()
+                        , colorApple.color().toString()
+                        , colorApple.weight()
                 )
         );
     }
@@ -59,45 +59,45 @@ public class FunctionalProgramTest {
      */
     @Test
     void ListFilterTest() {
-        List<Apple> redApples =
-                ListFilter.filter(apples,
-                        (Apple apple) -> Color.Red.equals(apple.color()));
+        List<ColorApple> redColorApples =
+                ListFilter.filter(colorApples,
+                        (ColorApple colorApple) -> Color.Red.equals(colorApple.color()));
 
-        simplePrintApple(redApples);
+        simplePrintApple(redColorApples);
     }
 
-    private void simplePrintApple(List<Apple> apples) {
-        Apple.PrintApple(apples, new AppleFancyFormatter<>());
+    private void simplePrintApple(List<ColorApple> colorApples) {
+        ColorApple.PrintApple(colorApples, new AppleFancyFormatter<>());
     }
 
     @Test
     void ListSortTestByAnonymousClass() {
-        apples.sort(new Comparator<Apple>() {
+        colorApples.sort(new Comparator<ColorApple>() {
             @Override
-            public int compare(Apple o1, Apple o2) {
+            public int compare(ColorApple o1, ColorApple o2) {
                 return o1.weight().compareTo(o2.weight());
             }
         });
 
-        simplePrintApple(apples);
+        simplePrintApple(colorApples);
     }
 
     @Test
     void ListSortTestByLambda() {
-        apples.sort(
+        colorApples.sort(
                 (o1, o2) -> o1.weight().compareTo(o2.weight())
         );
 
-        simplePrintApple(apples);
+        simplePrintApple(colorApples);
     }
 
     @Test
     void ListSortTestByLambaReference() {
-        apples.sort(weightComparator);
+        colorApples.sort(weightComparator);
 
-        simplePrintApple(apples);
+        simplePrintApple(colorApples);
     }
 
-    private Comparator<Apple> weightComparator = (o1, o2) -> o1.weight().compareTo(o2.weight());
+    private Comparator<ColorApple> weightComparator = (o1, o2) -> o1.weight().compareTo(o2.weight());
 
 }

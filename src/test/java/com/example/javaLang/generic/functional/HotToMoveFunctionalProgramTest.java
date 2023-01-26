@@ -44,16 +44,19 @@ public class HotToMoveFunctionalProgramTest {
 
     @Test
     void LambdaTest() throws IOException {
-        String output = processFile((BufferedReader br) -> br.readLine());
+        String output = processFile((BufferedReader b) -> b.readLine());
 
         System.out.println(output);
         Assertions.assertEquals("test", output);
 
 
-        String twoLines = processFile( (BufferedReader br) -> br.readLine() + br.readLine() );
-        System.out.println(twoLines);
+        String secondsLine = processFile( (BufferedReader b) -> {
+            b.readLine();
+            return b.readLine();});
 
-        Assertions.assertTrue(twoLines.indexOf("abcdefg") > 0);
+        System.out.println(secondsLine);
+
+        Assertions.assertEquals("abcdefg", secondsLine);
     }
 
 

@@ -1,16 +1,21 @@
 package com.example.javaLang.entity;
 
-import com.example.javaLang.generic.functional.function.Formatter;
+import lombok.Getter;
 
-import java.util.List;
-
-public record Apple(Color color, Integer weight) {
-    public static void PrintApple(List<Apple> apples, Formatter<Apple> appleFancyFormatter) {
-        for(Apple apple: apples) {
-            String output = appleFancyFormatter.accept(apple);
-            System.out.println(output);
-        }
+@Getter
+public class Apple extends Fruit {
+    public Apple() {
     }
 
-}
+    public Apple(Integer height) {
+        super(height);
+    }
 
+    public Apple(Integer height, Integer diameter) {
+        super(height, diameter);
+    }
+
+    @Override
+    public String getName() { return "사과"; }
+
+}
