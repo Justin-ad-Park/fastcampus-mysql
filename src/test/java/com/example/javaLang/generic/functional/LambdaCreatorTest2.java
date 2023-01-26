@@ -1,4 +1,4 @@
-package com.example.javaLang.lambda;
+package com.example.javaLang.generic.functional;
 
 import com.example.javaLang.entity.Apple;
 import com.example.javaLang.entity.Fruit;

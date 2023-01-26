@@ -1,4 +1,4 @@
-package com.example.javaLang.lambda;
+package com.example.javaLang.generic.functional;
 
 import org.junit.jupiter.api.Test;
 

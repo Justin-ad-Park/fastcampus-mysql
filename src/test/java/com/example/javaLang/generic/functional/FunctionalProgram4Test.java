@@ -6,6 +6,9 @@ import java.util.Arrays;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
+/**
+ * 람다 형식추론의 이해
+ */
 public class FunctionalProgram4Test {
 
     private static <T> Consumer<T> printAny() {
