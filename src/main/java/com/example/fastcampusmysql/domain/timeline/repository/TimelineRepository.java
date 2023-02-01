@@ -18,7 +18,7 @@ import java.util.List;
 @Repository
 @RequiredArgsConstructor
 public class TimelineRepository {
-    private static final String TABLE = "Timeline";
+    private static final String TABLE = "SNS_TIMELINE";
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     private static final RowMapper<Timeline> TIMELINE_ROW_MAPPER = (ResultSet rs, int rowNum) -> Timeline.builder()

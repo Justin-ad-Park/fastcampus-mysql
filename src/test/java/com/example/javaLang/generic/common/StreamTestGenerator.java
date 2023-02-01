@@ -13,7 +13,7 @@ public class StreamTestGenerator {
     public static Student person5 = new Student("이순신",28, 89);
     public static Student person6 = new Student("장보고",28, 89);
 
-    public static final Supplier<Stream<Student>> testPeopleSupplier = () -> Stream.of(youngestPerson, intermediatePerson, lowestScorePerson, ahphabetFirstPerson, person5, person6);
+    public static final Supplier<Stream<Student>> testPeopleSupplier = () -> Stream.of(youngestPerson, intermediatePerson, ahphabetFirstPerson, person5, person6, lowestScorePerson);
     public static final Stream<Student> getPersonStream() {
         return testPeopleSupplier.get();
     }

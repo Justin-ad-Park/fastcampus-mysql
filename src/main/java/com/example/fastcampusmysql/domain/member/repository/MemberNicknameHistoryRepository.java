@@ -21,7 +21,7 @@ public class MemberNicknameHistoryRepository {
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    private static final String TABLE = "MemberNicknameHistory";
+    private static final String TABLE = "SNS_MEMBERNICKNAMEHISTORY";
 
     static final RowMapper<MemberNicknameHistory> rowMapper;
 

@@ -25,7 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Repository
 public class PostRepository {
-    private static final String TABLE = "post";
+    private static final String TABLE = "SNS_POST";
     public static final String MEMBER_ID = "memberId";
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private static final RowMapper<DailyPostCount> DAILY_POST_COUNT_MAPPER = (ResultSet rs, int rowNum) ->

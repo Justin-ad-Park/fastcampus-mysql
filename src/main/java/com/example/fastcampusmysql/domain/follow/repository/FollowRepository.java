@@ -17,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Repository
 public class FollowRepository {
-    static final String TABLE = "follow";
+    static final String TABLE = "SNS_FOLLOW";
     final private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     private static final RowMapper<Follow> ROW_MAPPER = (ResultSet resultSet, int rowNum) -> Follow.builder()

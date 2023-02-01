@@ -22,7 +22,7 @@ public class MemberRepository {
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    private static final String TABLE = "member";
+    private static final String TABLE = "SNS_MEMBER";
 
     static final RowMapper<Member> rowMapper = (ResultSet resultSet, int rowNum) -> Member
                 .builder()
@@ -68,7 +68,7 @@ public class MemberRepository {
 
     private Member insert(final Member member) {
         final SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(this.namedParameterJdbcTemplate.getJdbcTemplate())
-                .withTableName("Member")
+                .withTableName(TABLE)
                 .usingGeneratedKeyColumns("id");
 
         final SqlParameterSource params = new BeanPropertySqlParameterSource(member);

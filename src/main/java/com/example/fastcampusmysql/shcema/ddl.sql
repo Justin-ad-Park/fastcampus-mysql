@@ -1,4 +1,4 @@
-create table Member
+create table SNS_MEMBER
 (
     id int auto_increment,
     email varchar(20) not null,
@@ -9,7 +9,7 @@ create table Member
         primary key (id)
 );
 
-create table MemberNicknameHistory
+create table SNS_MEMBERNICKNAMEHISTORY
 (
     id int auto_increment,
     memberId int not null,
@@ -19,7 +19,7 @@ create table MemberNicknameHistory
         primary key (id)
 );
 
-create table Follow
+create table SNS_FOLLOW
 (
     id int auto_increment,
     fromMemberId int not null,
@@ -30,10 +30,10 @@ create table Follow
 );
 
 create unique index Follow_fromMemberId_toMemberId_uindex
-    on Follow (fromMemberId, toMemberId);
+    on SNS_FOLLOW (fromMemberId, toMemberId);
 
 
-create table POST
+create table SNS_POST
 (
     id int auto_increment,
     memberId int not null,
@@ -45,23 +45,23 @@ create table POST
 );
 
 create index POST__index_member_id
-    on POST (memberId);
+    on SNS_POST (memberId);
 
 create index POST__index_created_date
-    on POST (createdDate);
+    on SNS_POST (createdDate);
 
 create index POST__index_member_id_created_date
-    on POST (memberId, createdDate);
+    on SNS_POST (memberId, createdDate);
 
 explain
 select createdDate, memberId, count(*) cnt
-FROM post
+FROM SNS_POST
     use index (POST__index_member_id_created_date)
 where memberId = 9 and createdDate between '2000-01-01' and '2022-12-31'
 group by memberId, createdDate
 ;
 
-create table Timeline
+create table SNS_TIMELINE
 (
     id int auto_increment,
     memberId int not null,
@@ -71,5 +71,5 @@ create table Timeline
 );
 
 create index Timeline__index_member_id
-    on POST (memberId);
+    on SNS_TIMELINE (memberId);
 
