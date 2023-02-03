@@ -1,4 +1,4 @@
-package com.example.javaLang.generic.streamtest;
+package com.example.javaLang.generic.streamtest.chap05;
 
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;

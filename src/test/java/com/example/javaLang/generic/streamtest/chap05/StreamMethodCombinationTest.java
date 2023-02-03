@@ -1,4 +1,4 @@
-package com.example.javaLang.generic.streamtest;
+package com.example.javaLang.generic.streamtest.chap05;
 
 import com.example.javaLang.generic.common.StreamTestGenerator;
 import com.example.javaLang.generic.wildcards.Student;

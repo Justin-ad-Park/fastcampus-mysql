@@ -1,4 +1,4 @@
-package com.example.javaLang.generic.streamtest.generate;
+package com.example.javaLang.generic.streamtest.chap05;
 
 import org.junit.jupiter.api.Test;
 

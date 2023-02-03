@@ -1,4 +1,4 @@
-package com.example.javaLang.generic.streamtest;
+package com.example.javaLang.generic.streamtest.chap05;
 
 import com.example.javaLang.generic.streamtest.entity.Dish;
 import com.example.javaLang.generic.streamtest.entity.Menu;
@@ -10,7 +10,7 @@ public class Stream168Optional {
 
     @Test
     void streamOptionalTest() {
-        var dish = Menu.getMenu().stream()
+        var dish = Menu.getMenuList().stream()
                 .filter(Dish::isVegetarian)
                 .findAny();
 
@@ -18,7 +18,7 @@ public class Stream168Optional {
 
     @Test
     void reduceTest() {
-        var result = Menu.getMenu().stream()
+        var result = Menu.getMenuList().stream()
                 .map(Dish::getCalories)
                 .reduce(0, (x, y) -> x + y)
                 ;
@@ -28,11 +28,11 @@ public class Stream168Optional {
 
     @Test
     void reduceByMin() {
-        var dishMinCalory = Menu.getMenu().stream()
+        var dishMinCalory = Menu.getMenuList().stream()
                 .reduce( (a, b) -> a.getCalories() <= b.getCalories() ? a : b )
                 ;
 
-        var dishMaxCalory = Menu.getMenu().stream()
+        var dishMaxCalory = Menu.getMenuList().stream()
                 .reduce( (a, b) -> a.getCalories() >= b.getCalories() ? a : b)
                 ;
 
@@ -42,11 +42,11 @@ public class Stream168Optional {
 
     @Test
     void page173Quiz() {
-        var menuCnt = Menu.getMenu().stream()
+        var menuCnt = Menu.getMenuList().stream()
                 .map(d -> 1)
                 .reduce(0, (x, y) -> x + y);
 
-        var cnt = Menu.getMenu().stream().count();
+        var cnt = Menu.getMenuList().stream().count();
 
         System.out.println(menuCnt);
         System.out.println(cnt);
@@ -55,7 +55,7 @@ public class Stream168Optional {
     @Test
     void page138Quiz() {
         // 메뉴를 타입별로 매핑한다.
-        var resultMap = Menu.getMenu()
+        var resultMap = Menu.getMenuList()
                 .stream()
                 .collect(groupingBy(Dish::getType));
 

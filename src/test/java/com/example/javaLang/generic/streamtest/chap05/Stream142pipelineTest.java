@@ -1,4 +1,4 @@
-package com.example.javaLang.generic.streamtest;
+package com.example.javaLang.generic.streamtest.chap05;
 
 import com.example.javaLang.generic.streamtest.entity.Dish;
 import com.example.javaLang.generic.streamtest.entity.Menu;
@@ -15,7 +15,7 @@ public class Stream142pipelineTest {
         stopWatch.start();
 
         List<String> threeHighCaloricDishNames =
-                Menu.getMenu().stream()
+                Menu.getMenuList().stream()
                 .filter(dish -> dish.getCalories() > 300)
                 .limit(3)
                 .map(Dish::getName)
@@ -33,7 +33,7 @@ public class Stream142pipelineTest {
         stopWatch.start();
 
         List<String> threeHighCaloricDishNames =
-                Menu.getMenu().stream()
+                Menu.getMenuList().stream()
                         .filter(dish -> dish.getCalories() > 300)
                         .map(Dish::getName)
                         .limit(3)
@@ -51,7 +51,7 @@ public class Stream142pipelineTest {
         stopWatch.start();
 
         List<String> threeHighCaloricDishNames =
-                Menu.getMenu().stream()
+                Menu.getMenuList().stream()
                         .filter(dish -> {
                             System.out.println("Filtering:" + dish);
                             return dish.getCalories() > 300;
@@ -75,7 +75,7 @@ public class Stream142pipelineTest {
         stopWatch.start();
 
         List<String> threeHighCaloricDishNames =
-                Menu.getMenu().parallelStream()
+                Menu.getMenuList().parallelStream()
                         .filter(dish -> {
                             System.out.println("Filtering:" + dish);
                             return dish.getCalories() > 300;
