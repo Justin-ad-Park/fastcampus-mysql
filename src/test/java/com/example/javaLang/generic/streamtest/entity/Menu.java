@@ -8,7 +8,7 @@ public class Menu {
     public static List<Dish> getMenu()
     {
         return Arrays.asList(
-            new Dish("port", false, 800, Dish.Type.MEAT),
+            new Dish("pork", false, 800, Dish.Type.MEAT),
             new Dish("beef", false, 700, Dish.Type.MEAT),
             new Dish("season fruit", true, 120, Dish.Type.OTHER),
             new Dish("Chicken", false, 400, Dish.Type.MEAT),
