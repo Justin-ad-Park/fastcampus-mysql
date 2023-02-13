@@ -14,7 +14,7 @@ public class Menu {
             new Dish("Chicken", false, 400, Dish.Type.MEAT),
             new Dish("French fries", true, 530, Dish.Type.OTHER),
             new Dish("rice", true, 350, Dish.Type.OTHER),
-            new Dish("pizza", true, 300, Dish.Type.FISH),
+            new Dish("pizza", true, 300, Dish.Type.OTHER),
             new Dish("prawns", false, 300, Dish.Type.FISH),
             new Dish("salmon", false, 450, Dish.Type.FISH)
         );

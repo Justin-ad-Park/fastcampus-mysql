@@ -110,7 +110,19 @@ public class stream211Collect {
     }
 
     @Test
-    void 그룹핑_셋_218() {
+    void 그룹핑_칼로리레벨_218() {
+        Map<Dish.Type, List<CaloricLevel>> caloricLevelsByType =
+                Menu.getMenuList().stream().collect(
+                        groupingBy(Dish::getType,
+                                mapping(this::getCaloricLevel, toList())
+                        )
+                );
+
+        System.out.println(caloricLevelsByType);
+    }
+
+    @Test
+    void 그룹핑_중복제거_218() {
         Map<Dish.Type, Set<CaloricLevel>> caloricLevelsByType =
             Menu.getMenuList().stream().collect(
                 groupingBy(Dish::getType,
@@ -132,6 +144,8 @@ public class stream211Collect {
 
         System.out.println(caloricLevelsByType);
     }
+
+
 
     @NotNull
     private stream211Collect.CaloricLevel getCaloricLevel(Dish dish) {
