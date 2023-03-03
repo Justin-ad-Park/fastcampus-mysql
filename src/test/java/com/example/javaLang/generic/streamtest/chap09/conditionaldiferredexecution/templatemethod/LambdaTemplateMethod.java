@@ -1,9 +1,9 @@
-package com.example.javaLang.generic.streamtest.chap09.conditionaldiferredexecution.templatemethodpattern;
+package com.example.javaLang.generic.streamtest.chap09.conditionaldiferredexecution.templatemethod;
 
 import org.junit.jupiter.api.Test;
 import java.util.function.Consumer;
 
-public class TemplateMethod {
+public class LambdaTemplateMethod {
     public void deposit(int amount, Consumer<Integer> bearInterest) {
         System.out.println("입금액: " + amount + "원");
         bearInterest.accept(amount);

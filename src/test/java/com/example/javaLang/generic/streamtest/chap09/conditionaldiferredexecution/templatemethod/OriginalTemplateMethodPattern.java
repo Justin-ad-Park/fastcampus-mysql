@@ -1,4 +1,4 @@
-package com.example.javaLang.generic.streamtest.chap09.conditionaldiferredexecution.templatemethodpattern;
+package com.example.javaLang.generic.streamtest.chap09.conditionaldiferredexecution.templatemethod;
 
 import org.junit.jupiter.api.Test;
 

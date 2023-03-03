@@ -1,7 +1,7 @@
-package com.example.javaLang.generic.streamtest.chap09.conditionaldiferredexecution.lambdapattern;
+package com.example.javaLang.generic.streamtest.chap09.conditionaldiferredexecution.patternpractice;
 
 import java.util.function.Function;
-import static com.example.javaLang.generic.streamtest.chap09.conditionaldiferredexecution.lambdapattern.SaveLog.*;
+import static com.example.javaLang.generic.streamtest.chap09.conditionaldiferredexecution.patternpractice.SaveLog.*;
 
 public enum LogType {
 

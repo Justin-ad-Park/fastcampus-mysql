@@ -1,4 +1,4 @@
-package com.example.javaLang.generic.streamtest.chap09.conditionaldiferredexecution.strategypattern;
+package com.example.javaLang.generic.streamtest.chap09.conditionaldiferredexecution.strategy;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

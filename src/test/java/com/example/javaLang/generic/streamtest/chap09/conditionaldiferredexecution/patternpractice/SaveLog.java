@@ -1,4 +1,4 @@
-package com.example.javaLang.generic.streamtest.chap09.conditionaldiferredexecution.lambdapattern;
+package com.example.javaLang.generic.streamtest.chap09.conditionaldiferredexecution.patternpractice;
 
 import java.util.function.Function;
 
