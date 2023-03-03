@@ -17,6 +17,4 @@ public class LambdaResponsibilityChain {
         String result = pipeline.apply("Ins't labda really usable?!!!");
         System.out.println(result);
     }
-
-
 }

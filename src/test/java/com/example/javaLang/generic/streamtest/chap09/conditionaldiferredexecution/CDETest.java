@@ -29,16 +29,6 @@ public class CDETest {
         System.out.println(methodName + " running time : " + sw.getTotalTimeMillis() + " ms");
     }
 
-    @Test
-    void 단순실행테스트() {
-        methodName = "단순 반복 실행";
-        String logMessage;
-
-        for(int i = 0; i < 1_000; i ++) {
-            logOut(useLog, getMessage(methodName));
-        }
-    }
-
     String getMessage(String methodName) {
         // 10ms이 걸리는 로직이 있다고 가정함
         try {
@@ -54,6 +44,19 @@ public class CDETest {
         if(useLog) System.out.println(message);
     }
 
+    @Test
+    void 단순실행테스트() {
+        methodName = "단순 반복 실행";
+        String logMessage;
+
+        for(int i = 0; i < 1_000; i ++) {
+            logOut(useLog, getMessage(methodName));
+        }
+    }
+
+    void logOut(boolean useLog, Supplier<String> f) {
+        if (useLog) System.out.println(f.get());
+    }
 
     @Test
     void 조건부연기실행() {    //conditional diferred execution
@@ -66,7 +69,5 @@ public class CDETest {
         }
     }
 
-    void logOut(boolean useLog, Supplier<String> f) {
-        if (useLog) System.out.println(f.get());
-    }
+
 }
