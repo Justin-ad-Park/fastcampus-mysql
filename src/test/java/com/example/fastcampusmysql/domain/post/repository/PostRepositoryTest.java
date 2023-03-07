@@ -42,7 +42,7 @@ class PostRepositoryTest {
 
         System.out.println(
                 String.format(
-                        "===Created Post===\n 0%d, 1%d, 2%s"
+                        "===Created Post===\n %0$d, %1$d, %2$s"
                         , savedPost.getId(), savedPost.getMemberId(), savedPost.getContents())
         );
 
