@@ -3,7 +3,7 @@ package com.example.javaLang.generic.streamtest.chap10dsl.tradestock.lambdamixed
 import com.example.javaLang.generic.streamtest.chap10dsl.tradestock.Trade;
 
 public class TradeBuilder {
-    protected Trade trade = new Trade();
+    private Trade trade = new Trade();
 
     public void setType(Trade.Type type) {
         trade.setType(type);
@@ -21,6 +21,10 @@ public class TradeBuilder {
 
     public StockBuilder stock(String symbol) {
         return new StockBuilder(this, trade, symbol);
+    }
+
+    public Trade getTrade() {
+        return trade;
     }
 
 }

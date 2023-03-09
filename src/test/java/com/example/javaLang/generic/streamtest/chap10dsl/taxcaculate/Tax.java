@@ -1,20 +1,20 @@
 package com.example.javaLang.generic.streamtest.chap10dsl.taxcaculate;
 
 import com.example.javaLang.generic.streamtest.chap10dsl.tradestock.Order;
-import org.junit.jupiter.api.Test;
-
-import static com.example.javaLang.generic.streamtest.chap10dsl.tradestock.lambdamixedbuilder.MixedBuilder.*;
 
 public class Tax {
     public static double regional(double value) {
+        System.out.println("지방세 10%");
         return value * 1.1;
     }
 
     public static double general(double value) {
+        System.out.println("종합과세 30%");
         return value * 1.3;
     }
 
     public static double surcharge(double value) {
+        System.out.println("할증료 5%");
         return value * 1.05;
     }
 
@@ -27,26 +27,5 @@ public class Tax {
         if(useSurchage) value = Tax.surcharge(value);
 
         return value;
-    }
-
-    @Test
-    void test() {
-        Order order = forCustomer("BigBank",
-                buy(t -> t.quantity(80)
-                        .stock("IBM")
-                        .on("NYSE")
-                        .at(125.00)
-
-                ),
-                sell(t -> t.at(125.00)
-                        .quantity(50)
-                        .stock("GOOGLE")
-                        .on("NASDAQ")
-                )
-        );
-
-
-        double value = calculate(order, true, false, true);
-        System.out.println(String.format("거래금액 %1$5.2f, 세금포함 %2$5.2f", order.getValue(), value));
     }
 }

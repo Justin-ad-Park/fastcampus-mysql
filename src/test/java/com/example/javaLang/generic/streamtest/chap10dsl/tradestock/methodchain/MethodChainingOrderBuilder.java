@@ -3,6 +3,23 @@ package com.example.javaLang.generic.streamtest.chap10dsl.tradestock.methodchain
 import com.example.javaLang.generic.streamtest.chap10dsl.tradestock.Order;
 import com.example.javaLang.generic.streamtest.chap10dsl.tradestock.Trade;
 
+/**
+ * MethodChainingOrderBuilder
+ *  .forCustomer(String customer)
+ *  return MethodChainingOrderBuilder
+ *      .buy(int quantity)
+ *      ->TradeBuilder(this, Type.BUY, quantity)
+ *      .sell(int quantity)
+ *      ->TradeBuilder(this, Type.SELL, quantity)
+ *          .stock(String symbo)
+ *          ->StockBuilder(MethodChainingOrderBuilder builder, Trade trade, String symbol)
+ *              .on(String market)
+ *              ->TradeBuilderWithStock(MethodChainingOrderBuilder builder, trade)
+ *                  .at(double price)
+ *                  ->MethodChainingOrderBuilder builder.addTrade(trade)
+ *                      .end()
+ */
+
 public class MethodChainingOrderBuilder {
     public final Order order = new Order();
 
@@ -33,5 +50,4 @@ public class MethodChainingOrderBuilder {
     public Order end() {
         return order;
     }
-
 }

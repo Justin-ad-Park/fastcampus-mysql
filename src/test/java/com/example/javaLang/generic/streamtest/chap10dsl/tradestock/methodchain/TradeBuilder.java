@@ -15,5 +15,4 @@ public class TradeBuilder {
     public StockBuilder stock(String symbol) {
         return new StockBuilder(builder, trade, symbol);
     }
-
 }

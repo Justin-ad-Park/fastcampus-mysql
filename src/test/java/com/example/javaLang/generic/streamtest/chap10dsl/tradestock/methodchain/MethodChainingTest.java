@@ -18,7 +18,5 @@ public class MethodChainingTest {
                 .end();
 
         System.out.println(order.getValue());
-
-
     }
 }

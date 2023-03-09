@@ -11,17 +11,17 @@ public class MixedBuilder {
     public static Order forCustomer(String customer, TradeBuilder... builders) {
         Order order = new Order();
         order.setCustomer(customer);
-        Stream.of(builders).forEach(b -> order.addTrade(b.trade));
+        Stream.of(builders).forEach(b -> order.addTrade(b.getTrade()));
 
         return order;
     }
 
-    public static TradeBuilder buy(Consumer<TradeBuilder> comsumer) {
-        return buildTrade(comsumer, Trade.Type.BUY);
+    public static TradeBuilder buy(Consumer<TradeBuilder> consumer) {
+        return buildTrade(consumer, Trade.Type.BUY);
     }
 
-    public static TradeBuilder sell(Consumer<TradeBuilder> comsumer) {
-        return buildTrade(comsumer, Trade.Type.SELL);
+    public static TradeBuilder sell(Consumer<TradeBuilder> consumer) {
+        return buildTrade(consumer, Trade.Type.SELL);
     }
 
     private static TradeBuilder buildTrade(Consumer<TradeBuilder> consumer, Trade.Type type) {
@@ -35,16 +35,36 @@ public class MixedBuilder {
     @Test
     void mixedBuilderTest() {
         Order order = forCustomer("BigBank",
-                buy(t -> t.quantity(80)
+                buy(
+                        t -> t.quantity(80)
                         .stock("IBM")
                         .on("NYSE")
                         .at(125.00)
-
                     ),
                 sell(t -> t.at(125.00)
                         .quantity(50)
                         .stock("GOOGLE")
                         .on("NASDAQ")
+                )
+        );
+
+        System.out.println(order.getValue());
+    }
+
+    @Test
+    void mixedBuilderTest2() {
+        Order order = forCustomer("BigBank",
+                buy(t -> t.stock("IBM")
+                        .on("NYSE")
+                        .at(125.00)
+                ),
+                sell(t -> t.stock("GOOGLE")
+                ),
+                sell(t -> t.stock("IBM")
+                ),
+                buy(t -> t.quantity(50)
+                ),
+                sell(t -> t.at(100.00)
                 )
         );
 
