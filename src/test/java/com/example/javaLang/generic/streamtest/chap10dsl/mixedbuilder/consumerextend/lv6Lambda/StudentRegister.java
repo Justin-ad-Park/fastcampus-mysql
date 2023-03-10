@@ -5,10 +5,10 @@ import com.example.javaLang.generic.streamtest.chap10dsl.mixedbuilder.consumerex
 import java.util.ArrayList;
 import java.util.List;
 
-public class StudentBuilder {
+public class StudentRegister {
     private List<Student> students = new ArrayList<>();
 
-    public StudentBuilder register(String name) {
+    public StudentRegister register(String name) {
         Student student = new Student();
         student.setName(name);
         students.add(student);
