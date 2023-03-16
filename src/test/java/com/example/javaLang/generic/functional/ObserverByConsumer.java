@@ -50,7 +50,7 @@ public class ObserverByConsumer {
 
     // Consumer 소비 방식 2 : 인터페이스를 구현한 람다 메서드
     public Consumer<Integer> sendMessage = newCelsius ->
-            System.out.println("메시지 발송 : " + newCelsius);
+            System.out.println("[SendMessage]메시지 발송 : " + newCelsius);
 
     /**
      *  Consumer 소비 방식 3 : 인자와 리턴값이 일치하는 메서드
@@ -96,6 +96,7 @@ public class ObserverByConsumer {
         //람다 메서드를 직접 제공하는 방식
         System.out.println("\n람다 메서드로 슬랙 채널 추가");
         NotificationSlack notiSlack2 = new NotificationSlack("테스트 채널");
+
         ts.subscribe(newValue -> notiSlack2.notify(newValue));
         ts.onChange(27);
 
@@ -105,5 +106,65 @@ public class ObserverByConsumer {
         System.out.println("\n람다 메서드 제공2");
         ts.subscribe(newValue -> System.out.println("람다 메서드 온도 표시 : " + newValue));
         ts.onChange(30);
+
+
     }
+
+    @Test
+    void Test_AndThen() {
+        TemperatureSensor ts = new TemperatureSensor("사무실 온도계");
+
+        var sendMessageAndThen = sendMessage.andThen(value -> System.out.println("[And Then] : " + value));
+        ts.subscribe(sendMessageAndThen);
+        ts.onChange(25);
+
+        ts.clearSubscribers();
+
+        ts.subscribe(sendMessage);
+        sendMessage.andThen(value -> System.out.println("[New And Then] : " + value) );
+
+        ts.onChange(31);
+    }
+
+    @Test
+    void Test_AndThen2() {
+        TemperatureSensor ts = new TemperatureSensor("사무실 온도계");
+        ts.subscribe(sendMessage);
+        sendMessage.andThen(value -> System.out.println("[New And Then] : " + value) );
+        ts.onChange(31);
+    }
+
+    @Test
+    void Test_andThen3() {
+        TemperatureSensor ts = new TemperatureSensor("사무실 온도계");
+
+        // 함수형 인터페이스를 구현한 클래스 방식
+        CelsiusDisplayPannel dispPannel = new CelsiusDisplayPannel();
+        ts.subscribe(dispPannel.andThen(System.out::println));
+        ts.onChange(25);
+        ts.onChange(26);
+        }
+
+    @Test
+    void Test_andThen4() {
+        TemperatureSensor ts = new TemperatureSensor("사무실 온도계");
+        NotificationSlack notiSlack = new NotificationSlack("사무실 온도 채널");
+//        ts.subscribe(notiSlack::notify.andThen(System.out::println));
+        ts.onChange(26);
+        ts.onChange(26);
+    }
+
+    @Test
+    void Test_andThen5() {
+        TemperatureSensor ts = new TemperatureSensor("사무실 온도계");
+        NotificationSlack notiSlack = new NotificationSlack("사무실 온도 채널");
+        ts.subscribe(
+                ((Consumer<Integer>)value -> System.out.println("Display:" + value)).andThen(
+                        value -> System.out.println("AndThen:" + value)
+                )
+        );
+        ts.onChange(26);
+        ts.onChange(26);
+    }
+
 }
