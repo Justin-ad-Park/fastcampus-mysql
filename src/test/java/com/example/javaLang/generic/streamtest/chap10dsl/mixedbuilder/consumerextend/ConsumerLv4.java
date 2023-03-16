@@ -44,5 +44,22 @@ public class ConsumerLv4 {
         System.out.println(sa.toString2());
     }
 
+    @Test
+    void Test2() {
+        Stream<String> stream = Stream.of("A", "B", "C");
+        StringArray sa = new StringArray();
+
+        stream.forEach(addToStrs(sa).andThen(
+                s -> {
+                    System.out.println("andThen : " + s);
+                    sa.add("--" + s + "--");
+                }
+        ));
+
+        System.out.println(sa);
+        System.out.println(sa.toString2());
+    }
+
+
 
 }

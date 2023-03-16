@@ -7,7 +7,7 @@ import com.example.javaLang.generic.streamtest.chap10dsl.mixedbuilder.consumerex
 public class ClassRoomMaker {
     private final ClassRoom classRoom;
 
-    public ClassRoomMaker(String className) {
+    private ClassRoomMaker(String className) {
         classRoom = new ClassRoom(className);
     }
 

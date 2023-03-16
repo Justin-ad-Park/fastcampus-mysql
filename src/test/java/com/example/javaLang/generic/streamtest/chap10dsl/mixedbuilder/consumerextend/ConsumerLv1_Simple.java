@@ -42,6 +42,11 @@ public class ConsumerLv1_Simple {
     }
 
     @Test
+    void simpleConsumerTest4() {
+        add.andThen(sleep10x).andThen(sleep).accept(10);
+    }
+
+    @Test
     void simpleConsumerTest3() {
         Stream<Integer> intStream = Stream.of(1,2,3);
 

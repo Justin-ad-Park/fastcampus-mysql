@@ -3,6 +3,7 @@ package com.example.javaLang.generic.streamtest.chap10dsl.tradestock.nestedfunct
 import com.example.javaLang.generic.streamtest.chap10dsl.tradestock.Order;
 import com.example.javaLang.generic.streamtest.chap10dsl.tradestock.Stock;
 import com.example.javaLang.generic.streamtest.chap10dsl.tradestock.Trade;
+import org.junit.jupiter.api.Test;
 
 import java.util.stream.Stream;
 
@@ -45,5 +46,15 @@ public class NestedFunctionOrderBuilder {
 
     public static String on(String market) {
         return market;
+    }
+
+    @Test
+    void 중첩함수이용() {
+        Order order = order("BigBank",
+                buy(80, stock("IBM", on("NYSE")) , at(125.00)),
+                sell(50, stock("GOOGLE", on("NASDAQ")), at(375.00))
+        );
+
+        System.out.println(order.getValue());
     }
 }

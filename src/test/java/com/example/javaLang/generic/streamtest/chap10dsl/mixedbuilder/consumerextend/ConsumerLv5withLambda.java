@@ -35,7 +35,7 @@ public class ConsumerLv5withLambda {
     void Test() {
         ClassRoom cr = ClassRoomMaker.makeClass("수학",
                 registerStudent(s -> s.register("저스틴")),
-                registerStudent(s -> s.register("안나")
+                registerStudent(s -> s.register("아냐")
                         ));
 
         System.out.println(cr);

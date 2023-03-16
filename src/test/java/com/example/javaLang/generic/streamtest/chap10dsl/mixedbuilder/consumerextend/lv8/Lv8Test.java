@@ -8,7 +8,7 @@ public class Lv8Test {
     void Test() {
         ClassRoom cr = ClassRoomMaker.makeClass("수학")
                 .register("저스틴")
-                .register("안니")
+                .register("CHAI")
                 .register("마이크")
                 .finish();
 

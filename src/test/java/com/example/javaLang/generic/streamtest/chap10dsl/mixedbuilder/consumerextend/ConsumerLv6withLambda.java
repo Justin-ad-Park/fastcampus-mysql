@@ -17,7 +17,6 @@ public class ConsumerLv6withLambda {
 
             // 스트림의 forEach는 스트림을 소비하는 Consumer 함수형 인터페이스를
             // 구현한 메서드 참조에 스트림을 소비시킨다.
-            //
             Stream.of(studentRegisters).forEach(
                     s -> classRoom.addStudents(s.getStudents())
             );
@@ -41,7 +40,7 @@ public class ConsumerLv6withLambda {
     @Test
     void Test() {
         ClassRoom cr = ClassRoomMaker.makeClass("수학",
-                registerStudent(s -> s.register("저스틴").register("안나"))
+                registerStudent(s -> s.register("저스틴").register("황혼"))
         );
 
         System.out.println(cr);

@@ -34,7 +34,7 @@ public class ConsumerLv7MethodChain {
     @Test
     void Test() {
         ClassRoom cr = ClassRoomMaker.makeClass("수학",
-                register("저스틴").register("안나"),
+                register("저스틴").register("조던"),
                 register("리키").register("소냐")
         );
 
