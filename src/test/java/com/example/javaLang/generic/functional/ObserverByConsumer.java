@@ -70,7 +70,6 @@ public class ObserverByConsumer {
         }
     }
 
-
     @Test
     void test() {
         TemperatureSensor ts = new TemperatureSensor("사무실 온도계");
@@ -106,9 +105,5 @@ public class ObserverByConsumer {
         System.out.println("\n람다 메서드 제공2");
         ts.subscribe(newValue -> System.out.println("람다 메서드 온도 표시 : " + newValue));
         ts.onChange(30);
-
-
-
     }
-
 }
