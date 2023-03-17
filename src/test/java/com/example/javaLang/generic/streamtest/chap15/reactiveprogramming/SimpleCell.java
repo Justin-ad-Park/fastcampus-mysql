@@ -14,6 +14,7 @@ public class SimpleCell implements Publisher<Integer>, Subscriber<Integer> {
 
     @Override
     public void subscribe(Subscriber<? super Integer> subscriber) {
+
         subscribers.add(subscriber);
     }
 
@@ -26,6 +27,7 @@ public class SimpleCell implements Publisher<Integer>, Subscriber<Integer> {
     }
 
     private void notifyAllSubscribers() {
+
         subscribers.forEach(subscriber -> subscriber.onChange(this.value));
     }
 }

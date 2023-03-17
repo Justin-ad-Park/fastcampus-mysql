@@ -1,5 +1,7 @@
-package com.example.javaLang.generic;
+package com.example.javaLang.generic.basic;
 
+import com.example.javaLang.generic.ChildProduct;
+import com.example.javaLang.generic.Tv;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

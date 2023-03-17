@@ -1,5 +1,6 @@
-package com.example.javaLang.generic;
+package com.example.javaLang.generic.basic;
 
+import com.example.javaLang.generic.StorageImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

@@ -1,5 +1,8 @@
-package com.example.javaLang.generic;
+package com.example.javaLang.generic.basic;
 
+import com.example.javaLang.generic.Box;
+import com.example.javaLang.generic.Pair;
+import com.example.javaLang.generic.Util;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

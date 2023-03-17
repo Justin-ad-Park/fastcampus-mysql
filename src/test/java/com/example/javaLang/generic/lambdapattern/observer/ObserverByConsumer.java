@@ -1,4 +1,4 @@
-package com.example.javaLang.generic.functional;
+package com.example.javaLang.generic.lambdapattern.observer;
 
 import org.junit.jupiter.api.Test;
 
@@ -97,7 +97,9 @@ public class ObserverByConsumer {
         System.out.println("\n람다 메서드로 슬랙 채널 추가");
         NotificationSlack notiSlack2 = new NotificationSlack("테스트 채널");
 
-        ts.subscribe(newValue -> notiSlack2.notify(newValue));
+        ts.subscribe(
+                (newValue) -> {notiSlack2.notify(newValue);}
+        );
         ts.onChange(27);
 
         ts.clearSubscribers();
@@ -121,7 +123,9 @@ public class ObserverByConsumer {
         ts.clearSubscribers();
 
         ts.subscribe(sendMessage);
-        sendMessage.andThen(value -> System.out.println("[New And Then] : " + value) );
+
+        Consumer<Integer> message2 = sendMessage.andThen(value -> System.out.println("[New And Then] : " + value) );
+        ts.subscribe(message2);
 
         ts.onChange(31);
     }
@@ -149,7 +153,7 @@ public class ObserverByConsumer {
     void Test_andThen4() {
         TemperatureSensor ts = new TemperatureSensor("사무실 온도계");
         NotificationSlack notiSlack = new NotificationSlack("사무실 온도 채널");
-//        ts.subscribe(notiSlack::notify.andThen(System.out::println));
+        // ts.subscribe(notiSlack::notify.andThen(System.out::println));
         ts.onChange(26);
         ts.onChange(26);
     }
@@ -159,12 +163,23 @@ public class ObserverByConsumer {
         TemperatureSensor ts = new TemperatureSensor("사무실 온도계");
         NotificationSlack notiSlack = new NotificationSlack("사무실 온도 채널");
         ts.subscribe(
-                ((Consumer<Integer>)value -> System.out.println("Display:" + value)).andThen(
-                        value -> System.out.println("AndThen:" + value)
-                )
-        );
+                ((Consumer<Integer>)value -> System.out.println("Display:" + value)).andThen(value -> System.out.println())
+                );
+
         ts.onChange(26);
         ts.onChange(26);
     }
 
+    @Test
+    void Test_andThen6() {
+        TemperatureSensor ts = new TemperatureSensor("사무실 온도계");
+        NotificationSlack notiSlack = new NotificationSlack("사무실 온도 채널");
+        ts.subscribe(
+                ((Consumer<Integer>)value -> notiSlack.notify(value)).andThen(value -> System.out.println())
+        );
+
+        ts.onChange(26);
+        ts.onChange(26);
+    }
 }
+

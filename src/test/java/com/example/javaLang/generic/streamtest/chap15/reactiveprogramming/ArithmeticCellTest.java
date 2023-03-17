@@ -3,6 +3,10 @@ package com.example.javaLang.generic.streamtest.chap15.reactiveprogramming;
 import org.junit.jupiter.api.Test;
 
 public class ArithmeticCellTest {
+
+    private Subscriber<Integer> displayPannel = (value) -> System.out.println("==Display Pannel == : " + value);
+    private Subscriber<Integer> sendMessage = (value) -> System.out.println("==Send Message == : " + value);
+
     @Test
     void test() {
         SimpleCell voltageSensor1 = new SimpleCell("Voltage Sensor1");
@@ -25,7 +29,6 @@ public class ArithmeticCellTest {
         voltageSensor2.onChange(20);
         voltageSensor1.onChange(15);
     }
-
-    private Subscriber<Integer> displayPannel = (value) -> System.out.println("==Display Pannel == : " + value);
-    private Subscriber<Integer> sendMessage = (value) -> System.out.println("==Send Message == : " + value);
 }
+
+
