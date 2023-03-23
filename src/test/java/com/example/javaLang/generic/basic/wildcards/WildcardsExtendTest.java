@@ -1,6 +1,6 @@
-package com.example.javaLang.generic.wildcards;
+package com.example.javaLang.generic.basic.wildcards;
 
-import com.example.javaLang.generic.common.StreamTestGenerator;
+import com.example.javaLang.generic.teststreamprovider.StreamTestGenerator;
 import org.junit.jupiter.api.Test;
 
 import java.util.Comparator;

@@ -1,7 +1,7 @@
 package com.example.javaLang.generic.streamtest.chap05;
 
-import com.example.javaLang.generic.common.StreamTestGenerator;
-import com.example.javaLang.generic.wildcards.Student;
+import com.example.javaLang.generic.teststreamprovider.StreamTestGenerator;
+import com.example.javaLang.generic.basic.wildcards.Student;
 import org.junit.jupiter.api.Test;
 
 import java.util.stream.Stream;

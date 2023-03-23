@@ -1,4 +1,4 @@
-package com.example.javaLang.generic.streamtest.chap15;
+package com.example.javaLang.generic.streamtest.chap15unsync;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;

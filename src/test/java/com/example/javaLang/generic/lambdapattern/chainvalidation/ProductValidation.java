@@ -16,6 +16,7 @@ public enum ProductValidation {
         this.validators = validators;
     }
 
+    // 선언된 검증 항목에 대해 모두 테스트
     public boolean validate(Product product) {
         return Arrays.stream(validators).allMatch(p -> p.test(product));
     }

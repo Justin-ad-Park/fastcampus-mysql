@@ -1,4 +1,4 @@
-package com.example.javaLang.generic.streamtest.chap15.reactiveprogramming;
+package com.example.javaLang.generic.streamtest.chap15unsync.reactiveprogramming;
 
 public class ArithmeticCell extends SimpleCell {
     private int left;

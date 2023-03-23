@@ -1,4 +1,4 @@
-package com.example.javaLang.generic.wildcards;
+package com.example.javaLang.generic.basic.wildcards;
 
 public class HighStudent extends Student {
     public HighStudent(String name) {

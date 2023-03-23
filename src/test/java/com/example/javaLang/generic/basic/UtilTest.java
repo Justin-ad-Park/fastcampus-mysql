@@ -6,6 +6,8 @@ import com.example.javaLang.generic.Util;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -99,5 +101,33 @@ public class UtilTest {
         // 제네릭 타입에서 String 으로 선언되어 컴파일 에러가 발생함
         //list.add(3L);
         //Long value = list.get(1);
+    }
+
+    @Test
+    void helloStringEncode() throws UnsupportedEncodingException {
+        String helloString = "안녕하세요. ㄱㄴㄷㄹㅁㅂㅆㅢ 놟쐛씗쀍";
+        System.out.println("Source : " + helloString);
+
+        // String 을 euc-kr 로 인코딩.
+        byte[] euckrStringBuffer = helloString.getBytes(Charset.forName("euc-kr"));
+        String decodedFromEucKr = new String(euckrStringBuffer, "euc-kr");
+
+        System.out.println();
+        System.out.println("euc-kr - length : " + euckrStringBuffer.length);
+        System.out.println("String from euc-kr : " + decodedFromEucKr);
+
+        // String 을 utf-8 로 인코딩.
+        byte[] utf8StringBuffer = decodedFromEucKr.getBytes("utf-8");
+
+        String decodedFromUtf8 = new String(utf8StringBuffer, "utf-8");
+        System.out.println();
+        System.out.println("utf-8 - length : " + utf8StringBuffer.length);
+        System.out.println("String from utf-8 : " + decodedFromUtf8);
+
+        /*
+        인코딩에 성공해도 깨지는 글자가 발생할 수 있다.
+        이유는 완성형인 euc-kr 이 '놟쐛씗쀍' 과 같은 문자를 지원하지 못하기 때문에 문자열
+        '안녕하세요. ㄱㄴㄷㄹㅁㅂㅆㅢ 놟쐛씗쀍' 를 인코딩 할 경우 지원하지 못 하는 문자에 대한 손실이 일어나게 되는 것이다.
+        */
     }
 }

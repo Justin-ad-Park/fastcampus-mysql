@@ -1,6 +1,6 @@
-package com.example.javaLang.generic.common;
+package com.example.javaLang.generic.teststreamprovider;
 
-import com.example.javaLang.generic.wildcards.Student;
+import com.example.javaLang.generic.basic.wildcards.Student;
 
 import java.util.function.Supplier;
 import java.util.stream.Stream;

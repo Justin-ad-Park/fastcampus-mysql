@@ -1,4 +1,4 @@
-package com.example.javaLang.generic.wildcards;
+package com.example.javaLang.generic.basic.wildcards;
 
 import org.junit.jupiter.api.Test;
 
