@@ -8,7 +8,6 @@ public class Discount {
 
         private final int discountRate;
 
-
         Code(final int discountRate) {
             this.discountRate = discountRate;
         }
