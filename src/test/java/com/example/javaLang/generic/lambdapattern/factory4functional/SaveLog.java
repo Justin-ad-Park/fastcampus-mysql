@@ -1,4 +1,4 @@
-package com.example.javaLang.generic.lambdapattern.patternpractice;
+package com.example.javaLang.generic.lambdapattern.factory4functional;
 
 import java.util.function.Function;
 

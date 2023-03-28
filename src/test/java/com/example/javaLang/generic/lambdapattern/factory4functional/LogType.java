@@ -1,9 +1,9 @@
-package com.example.javaLang.generic.lambdapattern.patternpractice;
+package com.example.javaLang.generic.lambdapattern.factory4functional;
 
 import java.util.function.Function;
 
-import static com.example.javaLang.generic.lambdapattern.patternpractice.SaveLog.insertLogToDB;
-import static com.example.javaLang.generic.lambdapattern.patternpractice.SaveLog.writeLogToFile;
+import static com.example.javaLang.generic.lambdapattern.factory4functional.SaveLog.insertLogToDB;
+import static com.example.javaLang.generic.lambdapattern.factory4functional.SaveLog.writeLogToFile;
 
 
 public enum LogType {
