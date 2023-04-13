@@ -10,7 +10,9 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UtilTest {
 
@@ -129,5 +131,19 @@ public class UtilTest {
         이유는 완성형인 euc-kr 이 '놟쐛씗쀍' 과 같은 문자를 지원하지 못하기 때문에 문자열
         '안녕하세요. ㄱㄴㄷㄹㅁㅂㅆㅢ 놟쐛씗쀍' 를 인코딩 할 경우 지원하지 못 하는 문자에 대한 손실이 일어나게 되는 것이다.
         */
+    }
+
+    @Test
+    void mapTest() {
+        Map<String, String> map = new HashMap<>();
+
+        mapper(map);
+
+        System.out.println(map);
+    }
+
+    private void mapper(Map<String, String> map) {
+        map.put("A", "ABC");
+        map.put("A", "XYZ");
     }
 }
