@@ -2,9 +2,11 @@ package com.example.javaLang.generic.streamtest.chap17reactiveapplication.a_temp
 
 
 import java.util.concurrent.Flow;
+import java.util.concurrent.Flow.Subscriber;
+import java.util.concurrent.Flow.Subscription;
 
-public class TemperatureSubscriber implements Flow.Subscriber<TemperatureInfo> {
-    private Flow.Subscription subscription;
+public class TemperatureSubscriber implements Subscriber<TemperatureInfo> {
+    private Subscription subscription;
 
     @Override
     public void onSubscribe(Flow.Subscription subscription) {
