@@ -14,15 +14,15 @@ public class L10_FlatMapSample_Origin {
 
         Flowable<String> flowable = Flowable.just("A", "B", "C", "D", "E")
                 .flatMap(data -> {
-                    long randomL = JSUtils.getRandom(1000L);
-                    data = data + ": " + randomL;
+                    long randomL = 500L + JSUtils.getRandom(500L);
+                    String value = data + ": " + randomL;
 
-                    return Flowable.just(data).delay(JSUtils.getRandom(randomL), TimeUnit.MILLISECONDS);
+                    return Flowable.just(value).delay(JSUtils.getRandom(randomL), TimeUnit.MILLISECONDS);
                 });
 
         flowable.subscribe(data -> {
             System.out.println(JSUtils.getThreadName() + ": " + data);
-            JSUtils.stopWatchGetTime(sw);
+            JSUtils.printCurrentStopWatch(sw);
         });
 
         JSUtils.sleepNoEx(5000L);
@@ -34,17 +34,38 @@ public class L10_FlatMapSample_Origin {
 
         Flowable<String> flowable = Flowable.just("A", "B", "C", "D", "E")
                 .concatMap(data -> {
-                    long randomL = JSUtils.getRandom(1000L);
-                    data = data + ": " + randomL;
+                    long randomL = 500L + JSUtils.getRandom(500L);
+                    String value = data + ": " + randomL;
 
-                    return Flowable.just(data).delay(JSUtils.getRandom(randomL), TimeUnit.MILLISECONDS);
+                    return Flowable.just(value).delay(JSUtils.getRandom(randomL), TimeUnit.MILLISECONDS);
                 });
 
         flowable.subscribe(data -> {
             System.out.println(JSUtils.getThreadName() + ": " + data);
-            JSUtils.stopWatchGetTime(sw);
+            JSUtils.printCurrentStopWatch(sw);
         });
 
         JSUtils.sleepNoEx(5000L);
     }
+
+    @Test
+    void ConcatMapEagerTest() {
+        StopWatch sw = JSUtils.startStopWatch();
+
+        Flowable<String> flowable = Flowable.just("A", "B", "C", "D", "E")
+                .concatMapEager(data -> {
+                    long randomL = 500L + JSUtils.getRandom(500L);
+                    String value = data + ": " + randomL;
+
+                    return Flowable.just(value).delay(JSUtils.getRandom(randomL), TimeUnit.MILLISECONDS);
+                });
+
+        flowable.subscribe(data -> {
+            System.out.println(JSUtils.getThreadName() + ": " + data);
+            JSUtils.printCurrentStopWatch(sw);
+        });
+
+        JSUtils.sleepNoEx(5000L);
+    }
+
 }

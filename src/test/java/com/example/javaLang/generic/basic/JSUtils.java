@@ -10,6 +10,8 @@ import java.util.function.Supplier;
 import static java.lang.Thread.sleep;
 
 public class JSUtils {
+    private static StopWatch sw;
+
     public static void sleepNoEx(long millis) {
         try {
             sleep(millis);
@@ -20,11 +22,12 @@ public class JSUtils {
 
     public static StopWatch startStopWatch() {
         StopWatch stopWatch = StopWatch.createStarted();
+        sw = stopWatch;
 
         return stopWatch;
     }
 
-    public static void stopWatchGetTime(StopWatch stopWatch) {
+    public static void printCurrentStopWatch(StopWatch stopWatch) {
         System.out.println("Elapsed time : " + stopWatch.getTime(TimeUnit.MILLISECONDS) + " ms");
     }
 
