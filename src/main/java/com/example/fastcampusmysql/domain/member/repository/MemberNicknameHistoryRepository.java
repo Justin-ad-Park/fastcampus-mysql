@@ -1,7 +1,6 @@
 package com.example.fastcampusmysql.domain.member.repository;
 
 import com.example.fastcampusmysql.domain.member.entity.MemberNicknameHistory;
-import com.example.fastcampusmysql.domain.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -29,7 +28,7 @@ public class MemberNicknameHistoryRepository {
         rowMapper = (ResultSet resultSet, int rowNum) -> MemberNicknameHistory
                 .builder()
                 .id(resultSet.getLong("Id"))
-                .memberId(resultSet.getLong(PostRepository.MEMBER_ID))
+                .memberId(resultSet.getLong(MemberRepository.MEMBER_ID))
                 .nickname(resultSet.getString("nickname"))
                 .createdAt(resultSet.getObject("createdAt", LocalDateTime.class))
                 .build();
@@ -37,7 +36,7 @@ public class MemberNicknameHistoryRepository {
 
     public List<MemberNicknameHistory> findAllByMemberId(final Long memberId) {
         final var sql = String.format("SELECT * FROM %s WHERE memberId = :memberId", MemberNicknameHistoryRepository.TABLE);
-        final var params = new MapSqlParameterSource().addValue(PostRepository.MEMBER_ID, memberId);
+        final var params = new MapSqlParameterSource().addValue(MemberRepository.MEMBER_ID, memberId);
         return this.namedParameterJdbcTemplate.query(sql, params, MemberNicknameHistoryRepository.rowMapper);
     }
 

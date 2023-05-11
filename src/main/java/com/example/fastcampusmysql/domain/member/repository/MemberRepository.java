@@ -23,6 +23,7 @@ public class MemberRepository {
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     private static final String TABLE = "SNS_MEMBER";
+    public static final String MEMBER_ID = "memberId";
 
     static final RowMapper<Member> rowMapper = (ResultSet resultSet, int rowNum) -> Member
                 .builder()
