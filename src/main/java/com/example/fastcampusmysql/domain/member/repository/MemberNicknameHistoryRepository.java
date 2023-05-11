@@ -52,7 +52,7 @@ public class MemberNicknameHistoryRepository {
 
     private MemberNicknameHistory insert(final MemberNicknameHistory memberNicknameHistory) {
         final SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(this.namedParameterJdbcTemplate.getJdbcTemplate())
-                .withTableName("MemberNicknameHistory")
+                .withTableName(TABLE)
                 .usingGeneratedKeyColumns("id");
 
         final SqlParameterSource params = new BeanPropertySqlParameterSource(memberNicknameHistory);
