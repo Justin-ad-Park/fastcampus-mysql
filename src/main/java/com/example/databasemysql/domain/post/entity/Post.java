@@ -13,15 +13,17 @@ public class Post {
     private final Long memberId;
     private final String contents;
     private final LocalDate createdDate;
+    private final Long likeCount;
     private final LocalDateTime createdAt;
 
 
     @Builder
-    public Post(Long id, Long memberId, String contents, LocalDate createdDate, LocalDateTime createdAt) {
+    public Post(Long id, Long memberId, String contents, LocalDate createdDate, final Long likeCount, LocalDateTime createdAt) {
         this.id = id;
         this.memberId = Objects.requireNonNull(memberId);
         this.contents = Objects.requireNonNull(contents);
         this.createdDate = Objects.requireNonNullElseGet(createdDate, LocalDate::now);
+        this.likeCount = Objects.requireNonNullElse(likeCount, 0L);
         this.createdAt = Objects.requireNonNullElseGet(createdAt, LocalDateTime::now);
     }
 

@@ -8,7 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
+
+import static com.example.databasemysql.domain.post.entity.PostSort.ID_DESC;
 
 @SpringBootTest(classes = FastcampusMysqlApplicationTests.class)
 @ComponentScan(
@@ -23,6 +27,17 @@ class PostRepositoryTest {
 
     @Test
     void findAllByMemberId() {
+        PageRequest pageRequest =  PageRequest.of(1, 5, ID_DESC.getSort());
+        Page<Post> posts = postRepository.findAllByMemberId(4L, pageRequest);
+
+        posts.stream().forEach(
+                p -> System.out.println(
+                        String.format("PostId: %1$d, LikeCount:%2$d", p.getId(), p.getLikeCount())
+                )
+        );
+
+        var post = posts.stream().findAny();
+        Assertions.assertNotNull( post.get().getLikeCount());
     }
 
     /**
@@ -49,5 +64,6 @@ class PostRepositoryTest {
         Assertions.assertNotNull(savedPost.getId());
         Assertions.assertEquals(post.getMemberId(), savedPost.getMemberId());
     }
+
 
 }

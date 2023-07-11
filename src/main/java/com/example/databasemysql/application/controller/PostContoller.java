@@ -57,8 +57,8 @@ public class PostContoller {
             @PathVariable Long memberId,
             @Parameter(description = "페이징", example = """
                     {
-                      "page": 0,
                       "size": 10,
+                      "page": 0,
                       "sort": [
                         "createdDate,DESC"
                       ]

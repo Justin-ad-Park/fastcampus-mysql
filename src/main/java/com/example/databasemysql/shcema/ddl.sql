@@ -73,3 +73,7 @@ create table SNS_TIMELINE
 create index Timeline__index_member_id
     on SNS_TIMELINE (memberId);
 
+alter table SNS_POST
+add column
+(likeCount int);
+

@@ -59,6 +59,12 @@ public class L11_NormalCounterSample {
 
     }
 
+    /**
+     * 아래와 같이 VolatileCounter로 처리해도 read, update 간에 스레드 중첩 처리로 인해
+     * 카운트가 정확하게 되지 않는다.
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     @Test
     void VolatileCounterTest() throws ExecutionException, InterruptedException {
         StopWatch stopWatch = JSUtils.startStopWatch();

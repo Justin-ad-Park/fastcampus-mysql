@@ -8,7 +8,7 @@ import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * 1~20,000을 카운트하는 로직을 스레드 2개로 나눠서 처리한다.
+ * 1~20,000을 카운트하는 로직을 스레드 4개로 나눠서 처리한다.
  */
 public class L12_AtomicCounterSample {
     @Test

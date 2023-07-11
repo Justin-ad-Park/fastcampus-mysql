@@ -42,6 +42,7 @@ public class PostRepository {
                 .memberId(rs.getLong(MEMBER_ID))
                 .contents(rs.getString("contents"))
                 .createdDate(rs.getObject("createdDate", LocalDate.class))
+                .likeCount(rs.getLong("likeCount"))
                 .createdAt(rs.getObject("createdAt", LocalDateTime.class))
                 .build();
 
