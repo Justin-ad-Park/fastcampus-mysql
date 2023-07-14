@@ -25,7 +25,7 @@ public class L07_MethodChainSample {
                 .filter(l -> l % 2 == 0)
                 .map(l -> l * 100);
 
-        flowable.subscribe(println());
+        flowable.subscribe(println);
     }
 
     @Test
@@ -35,14 +35,12 @@ public class L07_MethodChainSample {
                         .filter(l -> l % 2 == 0)
                         .map(l -> l * 100);
 
-        flowable.subscribe(println());
+        flowable.subscribe(println);
 
         Thread.sleep(10000L);
     }
 
     @NotNull
-    private Consumer<Long> println() {
-        return System.out::println;
-    }
+    private Consumer<Long> println = data -> System.out.println(data);
 
 }

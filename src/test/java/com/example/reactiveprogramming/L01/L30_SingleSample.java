@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public class L30_SingleSample {
 
     @Test
-    void SimgleSampleTest() {
+    void SingleSampleTest() {
         Single<DayOfWeek> single = Single.create(getDayOfWeekSingleOnSubscribe);
 
         single.subscribe(new SingleObserver<DayOfWeek>() {

@@ -14,8 +14,14 @@ public class HelloWorldSample {
         //데이터 통지하는 생산자
         Flowable<String> flowable = Flowable.just("Hello", "World");
 
+        String threadName = Thread.currentThread().getName();
+
         //통지에 구독자를 등록한다.
-        flowable.subscribe(System.out::println);
+        flowable.subscribe(data -> {
+            System.out.println(Thread.currentThread().getName() + " : " + data);
+        });
+
+        System.out.println(threadName + ": End of Code!");
     }
 
     @Test
@@ -27,11 +33,12 @@ public class HelloWorldSample {
 
         //통지에 구독자를 등록한다.
         flowable.subscribe( data -> {
-            System.out.println("Subscribe : " + data);
+            System.out.println(Thread.currentThread().getName() + " : " + data);
+
             JSUtils.printCurrentStopWatch(sw);
         });
 
-        System.out.println("End of the code");
+        System.out.println(Thread.currentThread().getName() + ": End of the code");
         JSUtils.printCurrentStopWatch(sw);
 
         Thread.sleep(10000L);

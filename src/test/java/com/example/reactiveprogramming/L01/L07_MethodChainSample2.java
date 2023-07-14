@@ -24,16 +24,20 @@ public class L07_MethodChainSample2 {
 
     @Test
     void MethodChaining3() throws InterruptedException {
+        //1. Flowable을 만든다.
         Flowable<Long> flowable =
                 Flowable.intervalRange(1, 7, 3, 1, TimeUnit.SECONDS)
                         .filter(l -> l % 2 == 0)
                         .map(l -> l * 100);
 
-        flowable.subscribe(println());
+        //1-1. Flowable의 통지를 처리할 subscriber를 등록한다.
+        flowable.subscribe(println);
 
+        // 2. 메인스레드와 분리된 독립 스레드를 만들어 비동기로 실행한다.
         CompletableFuture.runAsync(      //내부의 호출을 비동기로 처리한다.
                 countOtherThread, executor);
 
+        // 메인 스레드의 실행을 표시한다.
         System.out.println("Before main thread sleep");
         Thread.sleep(13000L);
         System.out.println("After main thread sleep");
@@ -51,8 +55,6 @@ public class L07_MethodChainSample2 {
         };
 
     @NotNull
-    private Consumer<Long> println() {
-        return i -> System.out.println("Subscribed Data = " + i);
-    }
+    private Consumer<Long> println = value -> System.out.println("Subscribed Data = " + value);
 
 }

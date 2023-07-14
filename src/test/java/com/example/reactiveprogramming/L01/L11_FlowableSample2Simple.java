@@ -14,7 +14,11 @@ public class L11_FlowableSample2Simple {
 
     @Test
     void flowableTest() throws InterruptedException {
-        Flowable<String> flowable = Flowable.create(new StringFlowable(), BackpressureStrategy.BUFFER);
+        // 1. 람다 메소드 방식 */
+        Flowable<String> flowable = Flowable.create(stringFlowable, BackpressureStrategy.BUFFER);
+
+        // 2. 인스턴스 생성 방식 */
+        // Flowable<String> flowable = Flowable.create(new StringFlowable(), BackpressureStrategy.BUFFER);
 
         flowable
             .observeOn(Schedulers.computation())
@@ -25,8 +29,21 @@ public class L11_FlowableSample2Simple {
 
     }
 
-    class StringFlowable implements FlowableOnSubscribe<String> {
+    /* 1. 람다 메소드 정의 */
+    FlowableOnSubscribe<String> stringFlowable = (emitter) -> {
+        String[] datas = {"Hello, world!", "Hi, RxJava!"};
 
+        for (String data:datas) {
+            if(emitter.isCancelled()) return;
+
+            emitter.onNext(data);
+        }
+
+        emitter.onComplete();
+    };
+
+    /* 2. 클래스 정의 */
+    class StringFlowable implements FlowableOnSubscribe<String> {
         @Override
         public void subscribe(@NonNull FlowableEmitter<String> emitter) throws Throwable {
             String[] datas = {"Hello, world!", "Hi, RxJava!"};
