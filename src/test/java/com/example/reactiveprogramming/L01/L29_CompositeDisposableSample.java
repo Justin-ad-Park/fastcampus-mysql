@@ -19,7 +19,7 @@ public class L29_CompositeDisposableSample {
                 })
         );
 
-        compositeDisposable.add(Flowable.range(5, 9)
+        compositeDisposable.add(Flowable.range(5, 5)
                 .doOnCancel(() -> System.out.println("No.2 canceled"))
                 .observeOn(Schedulers.computation())
                 .subscribe(data -> {
@@ -29,7 +29,7 @@ public class L29_CompositeDisposableSample {
         );
 
         try {
-            Thread.sleep(150L);
+            Thread.sleep(400L);
         } catch (Exception e) {
             e.printStackTrace();
         }

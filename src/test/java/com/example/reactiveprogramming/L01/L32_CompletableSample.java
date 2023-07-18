@@ -9,6 +9,9 @@ import io.reactivex.rxjava3.disposables.Disposable;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 
+/**
+ * 데이터를 통지 하지 않고, 완료나 에러를 통지한다.
+ */
 public class L32_CompletableSample {
 
     @Test

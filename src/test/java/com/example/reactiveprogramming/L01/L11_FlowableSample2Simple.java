@@ -15,18 +15,15 @@ public class L11_FlowableSample2Simple {
     @Test
     void flowableTest() throws InterruptedException {
         // 1. 람다 메소드 방식 */
-        Flowable<String> flowable = Flowable.create(stringFlowable, BackpressureStrategy.BUFFER);
+        Flowable<String> flowable = Flowable.create(
+                stringFlowable, BackpressureStrategy.BUFFER);
 
         // 2. 인스턴스 생성 방식 */
         // Flowable<String> flowable = Flowable.create(new StringFlowable(), BackpressureStrategy.BUFFER);
-
-        flowable
-            .observeOn(Schedulers.computation())
-            .subscribe(new StringSubscriber());
+        flowable.observeOn(Schedulers.computation())
+                .subscribe(new StringSubscriber());
 
         Thread.sleep(1000L);
-
-
     }
 
     /* 1. 람다 메소드 정의 */

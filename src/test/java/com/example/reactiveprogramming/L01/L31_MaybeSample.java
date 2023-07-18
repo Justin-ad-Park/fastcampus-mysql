@@ -11,6 +11,10 @@ import org.junit.jupiter.api.Test;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 
+/**
+ * 1건만 통지하거나, 1건도 통지하지 않고 완료를 통지하거나, 에러를 통지
+ * 데이터 통지가 되면 완료 통지는 하지 않음
+ */
 public class L31_MaybeSample {
 
     @Test

@@ -57,6 +57,9 @@ public class L18_ObservableSample {
                     }
                 });
 
+        String threadName = Thread.currentThread().getName();
+        System.out.println(threadName + " : 메인 코드 끝");
+
         JSUtils.sleepNoEx(500L);
     }
 }
