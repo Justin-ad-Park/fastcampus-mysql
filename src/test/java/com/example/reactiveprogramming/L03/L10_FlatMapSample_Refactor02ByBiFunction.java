@@ -15,17 +15,17 @@ public class L10_FlatMapSample_Refactor02ByBiFunction {
 
     @Test
     void FlatMapTest() throws Throwable {
-        mapTest(flowableByFlatMap);
+        mapTest(flowableByFlatMap());
     }
 
     @Test
     void ConcatMapTest() throws Throwable {
-        mapTest(flowableByconcatMap);
+        mapTest(flowableByconcatMap());
     }
 
     @Test
     void ConcatMapEagerTest() throws Throwable {
-        mapTest(flowableByconcatMapEager);
+        mapTest(flowableByconcatMapEager());
     }
 
 
@@ -45,9 +45,15 @@ public class L10_FlatMapSample_Refactor02ByBiFunction {
         JSUtils.sleepNoEx(5000L);
     }
 
-    private BiFunction <Flowable<String>, Function<String, Publisher<? extends String>>, Flowable<String>> flowableByFlatMap = (fw, f) -> fw.flatMap(f);
-    private BiFunction <Flowable<String>, Function<String, Publisher<? extends String>>, Flowable<String>> flowableByconcatMap = (fw, f) -> fw.concatMap(f);
-    private BiFunction <Flowable<String>, Function<String, Publisher<? extends String>>, Flowable<String>> flowableByconcatMapEager = (fw, f) -> fw.concatMapEager(f);
+    private BiFunction <Flowable<String>, Function<String, Publisher<? extends String>>, Flowable<String>> flowableByFlatMap() {
+        return (fw, f) -> fw.flatMap(f);
+    }
+    private BiFunction <Flowable<String>, Function<String, Publisher<? extends String>>, Flowable<String>> flowableByconcatMap() {
+        return (fw, f) -> fw.concatMap(f);
+    }
+    private BiFunction <Flowable<String>, Function<String, Publisher<? extends String>>, Flowable<String>> flowableByconcatMapEager() {
+        return (fw, f) -> fw.concatMapEager(f);
+    }
 
     @NotNull
     private Function<String, Publisher<? extends String>> getFlowableDelayByF() {
