@@ -36,10 +36,11 @@ public class L13_Counter02_MergeSample {
                 .observeOn(Schedulers.computation());
 
 
+        // merge는 다른 스레드에 있는 여러 개의 Flowable/Observable이라 해도 순차적으로 처리한다.
         Flowable.merge(source1, source2)
                 .subscribe(data -> counter.increment(),
                         error -> error.printStackTrace(),
-                        () -> System.out.println("Counter : " + counter.get())
+                        () -> System.out.println(JSUtils.getThreadName() + " Counter : " + counter.get())
                 );
 
         JSUtils.sleepNoEx(1000L);

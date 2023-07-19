@@ -33,7 +33,7 @@ public class L13_Counter01_Sample {
                 .observeOn(Schedulers.computation())
                 .subscribe( data -> counter.increment(),
                         error -> error.printStackTrace(),
-                        () -> System.out.println("Counter : " + counter.get())
+                        () -> System.out.println(JSUtils.getThreadName() + " Counter : " + counter.get())
                 );
 
         Flowable.range(1, 10_000)
@@ -59,7 +59,7 @@ public class L13_Counter01_Sample {
 
                     @Override
                     public void onComplete() {
-                        System.out.println("Counter : " + counter.get());
+                        System.out.println(JSUtils.getThreadName() + " Counter : " + counter.get());
                     }
                 });
 
