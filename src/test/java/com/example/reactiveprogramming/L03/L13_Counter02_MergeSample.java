@@ -3,6 +3,7 @@ package com.example.reactiveprogramming.L03;
 import com.example.javaLang.generic.basic.JSUtils;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import org.apache.commons.lang3.time.StopWatch;
 import org.junit.jupiter.api.Test;
 import org.reactivestreams.Subscription;
 
@@ -36,11 +37,19 @@ public class L13_Counter02_MergeSample {
                 .observeOn(Schedulers.computation());
 
 
-        // merge는 다른 스레드에 있는 여러 개의 Flowable/Observable이라 해도 순차적으로 처리한다.
+        /**
+         *  merge는 다른 스레드에 있는 여러 개의 Flowable/Observable이라 해도 순차적으로 처리한다.
+         *  즉, 다중 스레드를 이용해도 순차 처리로 인해 side effect 발생 안함
+          */
+        StopWatch sw = JSUtils.startStopWatch();
+
         Flowable.merge(source1, source2)
                 .subscribe(data -> counter.increment(),
                         error -> error.printStackTrace(),
-                        () -> System.out.println(JSUtils.getThreadName() + " Counter : " + counter.get())
+                        () -> {
+                            System.out.println(JSUtils.getThreadName() + " Counter : " + counter.get());
+                            JSUtils.stopWatchWithMills(sw);
+                        }
                 );
 
         JSUtils.sleepNoEx(1000L);

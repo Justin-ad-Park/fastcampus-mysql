@@ -20,32 +20,51 @@ public class L22_MissingBackpressureFlowableSample {
      * 기본 버퍼는 128건 이기 때문에 약 3초 후에 128건을 초과한 데이터가 쌓여 역압이 발생한다.
      */
     @Test
-    void MainTest() {
-        Flowable<Long> flowable = Flowable.interval(20L, TimeUnit.MILLISECONDS)
-                .doOnNext(value -> System.out.println("emit: " + value));
+    void withOutDelay() {
+        Flowable<Long> flowable = getLongFlowable();
 
-        observeOn(flowable, Long.MAX_VALUE);
+        observeOn(flowable, Long.MAX_VALUE, 8, false);
 
         JSUtils.sleepNoEx(5_000L);
     }
 
     @Test
-    void MainTest2() {
-        Flowable<Long> flowable = Flowable.interval(10L, TimeUnit.MILLISECONDS)
-                .doOnNext(value -> System.out.println("emit: " + value));
+    void withDelay() {
+        Flowable<Long> flowable = getLongFlowable();
 
-        flowable = flowable.onBackpressureDrop();
-
-        observeOn(flowable, 2L);
+        observeOn(flowable, Long.MAX_VALUE, 8, true);
 
         JSUtils.sleepNoEx(5_000L);
     }
 
-    private void observeOn(Flowable<Long> flowable, Long capacity) {
+
+    @Test
+    void backpressureDrop() {
+        Flowable<Long> flowable = getLongFlowable().onBackpressureDrop();
+
+        observeOn(flowable, 64L, 4, false);
+
+        JSUtils.sleepNoEx(5_000L);
+    }
+
+
+    @NotNull
+    private Flowable<Long> getLongFlowable() {
+        Flowable<Long> flowable = Flowable.interval(10L, TimeUnit.MILLISECONDS)
+                .doOnNext(value -> System.out.println("emit: " + value));
+        return flowable;
+    }
+
+
+    private void observeOn(Flowable<Long> flowable, Long capacity, int bufferSize, boolean delayError) {
 
         Subscriber<Long> subscriber = getSubscriber(capacity);
 
-        flowable.observeOn(Schedulers.computation())
+        /**
+         * delayError : 통지 완료 후 에러 처리
+         * bufferSize가 flowable의 버퍼 사이즈
+         */
+        flowable.observeOn(Schedulers.computation(), delayError, bufferSize)
                 .subscribe(subscriber);
     }
 
@@ -66,11 +85,10 @@ public class L22_MissingBackpressureFlowableSample {
 
             @Override
             public void onNext(Long value) {
-                //1000ms 지연 후 처리한다.
-                System.out.println("Waiting...");
-                JSUtils.sleepNoEx(500L);
+                System.out.println(JSUtils.getThreadName() + " received: " + value);
 
-                System.out.println("received: " + value);
+                //1000ms 지연 후 처리한다.
+                JSUtils.sleepNoEx(500L);
 
                 subscription.request(capacity);
 
