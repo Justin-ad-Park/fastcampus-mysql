@@ -8,7 +8,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
-public class MapSample {
+public class P197_MapSample {
 
     @Test
     void MapSampleTest() {

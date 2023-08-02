@@ -8,8 +8,11 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
-public class TimerSample {
+public class L08_TimerSample {
 
+    /**
+     * 지정된 시간 경과 후 0을 통지
+     */
     @Test
     void timerSampleTest() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("mm:ss.SSS");

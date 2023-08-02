@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class BufferSample {
+public class P215_BufferSample {
     @Test
     void BufferSampleTest() {
         Flowable<List<Long>> flowable =

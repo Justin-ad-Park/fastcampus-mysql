@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.TimeUnit;
 
-public class IsEmptySample {
+public class P192_IsEmptySample {
     @Test
     void emptyTest() {
         Flowable<Long> flowable = Flowable.interval(500L, TimeUnit.MILLISECONDS)

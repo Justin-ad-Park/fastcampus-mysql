@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 import org.reactivestreams.Publisher;
 
-public class FlatMapSample {
+public class P199_FlatMapSample {
 
     @Test
     void FlatMapSampleTest() {
@@ -47,9 +47,9 @@ public class FlatMapSample {
                 .map(data -> 10/data);
 
         Flowable<Integer> flowable = original.flatMap(
-                onNextMapper(),
-                onErrorMapper(),
-                onCompleteSupplier()
+                data -> Flowable.just(data),
+                error -> Flowable.just(-1),
+                () -> Flowable.just(100)
         );
 
         flowable.subscribe(data -> System.out.println(data));
@@ -79,8 +79,8 @@ public class FlatMapSample {
 
     @Test
     void FlatMapSample4_ExtFunctionToLambda() {
-        Flowable<Integer> original = Flowable.just(1,2,3,4,5)
-                .map(data -> 20/data);
+        Flowable<Integer> original = Flowable.just(1,2,0,4,5)
+                .map(data -> 10/data);
 
         Flowable<Integer> flowable = original.flatMap(
                 onNextMapper1,

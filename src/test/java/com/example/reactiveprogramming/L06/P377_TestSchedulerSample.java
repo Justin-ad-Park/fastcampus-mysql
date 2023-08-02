@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.TimeUnit;
 
-public class TestSchedulerSample {
+public class P377_TestSchedulerSample {
     @Test
     void testSchedulerTest() {
         StopWatch st = JSUtils.startStopWatch();

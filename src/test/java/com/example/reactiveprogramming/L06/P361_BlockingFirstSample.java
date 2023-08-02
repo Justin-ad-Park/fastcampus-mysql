@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.TimeUnit;
 
-public class BlockingFirstSample {
+public class P361_BlockingFirstSample {
     @Test
     void blockingFirstTest() {
         Flowable<Long> flowable = Flowable.interval(300L, TimeUnit.MILLISECONDS)
