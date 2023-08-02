@@ -10,12 +10,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-public class ThreadPerSecondWithGradefullyShutdown {
+public class ThreadPerSecondWithGracefullyShutdown {
     private static final int MAX_API_CALLS_PER_SECOND = 5;
     private static final int ONE_SECOND_UNIT_MS = 1000;
 
     @Test
-    void test() throws InterruptedException {
+    void test() {
 
         /** Given
          * Create a list of 1000 integers
@@ -33,6 +33,7 @@ public class ThreadPerSecondWithGradefullyShutdown {
 
         while(dataIterator.hasNext()) {
             int value = dataIterator.next();
+
             // Start the scheduled task
             executor.submit(() -> {
                     System.out.println("Thread call :" + value);
