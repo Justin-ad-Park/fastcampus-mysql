@@ -1,5 +1,7 @@
 package com.example.reactiveprogramming.bestpractice;
 
+import org.apache.commons.lang3.time.StopWatch;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ public class ThreadPerSecondWithGracefullyShutdown {
 
     @Test
     void test() {
+        StopWatch sw = StopWatch.createStarted();
 
         /** Given
          * Create a list of 1000 integers
@@ -35,10 +38,7 @@ public class ThreadPerSecondWithGracefullyShutdown {
             int value = dataIterator.next();
 
             // Start the scheduled task
-            executor.submit(() -> {
-                    System.out.println("Thread call :" + value);
-                    call(value);
-            });
+            executor.submit(getRunnable(value));
         }
 
         System.out.println("Executor.shutdown()");
@@ -59,21 +59,40 @@ public class ThreadPerSecondWithGracefullyShutdown {
             Thread.currentThread().interrupt();
         }
 
-        System.out.println("All tasks completed");
+        sw.stop();
+        System.out.println("All tasks completed, elapsed time : " + sw.getTime(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @NotNull
+    private Runnable getRunnable(int value) {
+        return () -> {
+            StopWatch sw = StopWatch.createStarted();
+
+            call(value);
+
+            sw.stop();
+            long waitingMS = ONE_SECOND_UNIT_MS - sw.getTime(TimeUnit.MILLISECONDS);
+
+            if(waitingMS > 0) {
+                try {
+                    Thread.sleep(waitingMS);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        };
     }
 
 
     // Assuming the external API accepts an integer and returns a string
     public void call(int input) {
         try {
-            Thread.sleep(ONE_SECOND_UNIT_MS);  //초당 API Call 횟수 초과를 방지하기 위해 1초 대기
-
             // API Call 호출 응답 시간 강제 생성.
-            Long rnd = 100 + getRandom(1000L);
+            Long rnd = 100 + getRandom(1500L);
             Thread.sleep(rnd);
+            System.out.println(Thread.currentThread().getName()+ " Response for " + input );
 
-
-            System.out.println(Thread.currentThread().getName()+ " Response for " + input + " wait : " + rnd + "ms" );
         } catch (InterruptedException e) {
             System.out.println("Failed to get a response for " + input);
         }
