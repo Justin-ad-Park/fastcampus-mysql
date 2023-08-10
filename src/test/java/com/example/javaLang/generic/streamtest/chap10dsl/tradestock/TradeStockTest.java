@@ -1,5 +1,6 @@
 package com.example.javaLang.generic.streamtest.chap10dsl.tradestock;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class TradeStockTest {
@@ -7,7 +8,6 @@ public class TradeStockTest {
     void 도메인객체를이용한주식거래() {
         Order order = new Order();
         order.setCustomer("BigBank");
-
 
         Stock stock1 = new Stock();
         stock1.setSymbol("IBM");
@@ -33,5 +33,7 @@ public class TradeStockTest {
         trade2.setQuantity(50);
 
         order.addTrade(trade2);
+
+        Assertions.assertEquals(28750.0, order.getValue());
     }
 }

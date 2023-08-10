@@ -23,7 +23,7 @@ import com.example.javaLang.generic.streamtest.chap10dsl.tradestock.Trade;
 public class MethodChainingOrderBuilder {
     public final Order order = new Order();
 
-    private MethodChainingOrderBuilder(String customer) {
+    public MethodChainingOrderBuilder(String customer) {
         order.setCustomer(customer);
     }
 
