@@ -21,36 +21,19 @@ public class Eng2KorConverter {
     static String[] fin = { "r", "R", "rt", "s", "sw", "sg", "e", "f", "fr", "fa", "fq", "ft", "fx", "fv", "fg", "a", "q", "qt", "t", "T", "d", "w", "c", "z", "x", "v", "g" };
 
 
-    /**
-     * 알파벳 3자 이상이 연속 입력된 경우에만 영어로 인정
-     * @param eng
-     * @return
-     */
-    private static Eng2KorResultType valudateMessage(String eng) {
-        if(eng.length() > MAX_LENGTH)
-            return Eng2KorResultType.TOO_LONG;  //변환 성능을 위해 너무 긴 검색 키워드는 변환을 하지 않는다.
-
-        Pattern p = Pattern.compile("[a-zA-Z]{3,}");    //영어가 3글자 이상 있는 경우에만 처리
-        if(p.matcher(eng).find() == false) return Eng2KorResultType.NOT_ENOUGH_ENGLISH;
-
-        return Eng2KorResultType.SUCCESS;
-    }
-
     public static Eng2KorResult engToKor(String eng) {
         /** 키워드 사전 검사를 통해 변환 가능한 키워드만 변환을 시도한다. */
-        Eng2KorResultType validateResult = valudateMessage(eng);
+        Eng2KorResultType validateResult = validateMessage(eng);
 
         if(validateResult != Eng2KorResultType.SUCCESS) {
             return new Eng2KorResult(validateResult, eng);
         }
-
 
         StringBuffer resultStringBuffer = new StringBuffer();
 
         CharacterMatchingResult initialCharacter;
         CharacterMatchingResult medialCharacter;
         CharacterMatchingResult finalCharacter;
-
 
         for (int i = 0; i < eng.length();) {
 
@@ -60,40 +43,59 @@ public class Eng2KorConverter {
                 continue;
             }
 
-            
-            /** 초성코드 추출 */
-            initialCharacter = getInitialConsonant(i, eng);
+            try {
+                /** 초성코드 추출 */
+                initialCharacter = getInitialConsonant(i, eng);
+                i = i + initialCharacter.getCharacterLength();    //초성에 해당하는 문자 길이만큼 건너뜀(초성은 무조건 1문자)
 
-            if(initialCharacter.getCharacterCode() == NOT_EXISTS_CHARACTER_CODE) {
+                /** 중성코드 추출 */
+                medialCharacter = getMedial(i, eng);
+                i = i + medialCharacter.getCharacterLength();    //중성에 해당하는 문자 길이 만큼 건너뜀(ㅞ,ㅙ 등 2문자, ㅏㅣㅗㅜ 등 1문자)
+
+                /** 종성코드 추출 */
+                finalCharacter = getFinalConsonant(i, eng);
+                i = i + finalCharacter.getCharacterLength();
+
+                // 추출한 초성 문자 코드,
+                //중성 문자 코드, 종성 문자 코드를 합한 후 변환하여 스트링버퍼에 넘김
+                resultStringBuffer.append((char) (BASE_CODE_KOREAN
+                        + initialCharacter.getCharacterCode()
+                        + medialCharacter.getCharacterCode()
+                        + finalCharacter.getCharacterCode()));
+
+            } catch (ConversionException ex) {
+                return new Eng2KorResult(Eng2KorResultType.FAIL_CONVERT, eng);
+            } catch (Exception ex) {
                 return new Eng2KorResult(Eng2KorResultType.FAIL_CONVERT, eng);
             }
-
-            i = i + initialCharacter.getCharacterLength();    //초성에 해당하는 문자 길이만큼 건너뜀(초성은 무조건 1문자)
-
-
-            /** 중성코드 추출 */
-            medialCharacter = getMedial(i, eng);
-
-            if(medialCharacter.getCharacterCode() == NOT_EXISTS_CHARACTER_CODE) {
-                return new Eng2KorResult(Eng2KorResultType.FAIL_CONVERT, eng);
-            }
-
-            i = i + medialCharacter.getCharacterLength();    //중성에 해당하는 문자 길이 만큼 건너뜀(ㅞ,ㅙ 등 2문자, ㅏㅣㅗㅜ 등 1문자)
-
-
-            /** 종성코드 추출 */
-            finalCharacter = getFinalConsonant(i,eng);
-
-            i = i + finalCharacter.getCharacterLength();
-
-            // 추출한 초성 문자 코드,
-            //중성 문자 코드, 종성 문자 코드를 합한 후 변환하여 스트링버퍼에 넘김
-            resultStringBuffer.append((char) (BASE_CODE_KOREAN + initialCharacter.getCharacterCode() + medialCharacter.getCharacterCode() + finalCharacter.getCharacterCode()));
         }
 
         return new Eng2KorResult(Eng2KorResultType.SUCCESS, resultStringBuffer.toString());
     }
 
+    /**
+     * 길이가 너무 길 경우 변환하지 않음
+     * 알파벳 3자 이상이 연속 입력된 경우에만 영어로 인정
+     * @param eng
+     * @return
+     */
+    private static Eng2KorResultType validateMessage(String eng) {
+        if(eng.length() > MAX_LENGTH)
+            return Eng2KorResultType.TOO_LONG;  //변환 성능을 위해 너무 긴 검색 키워드는 변환을 하지 않는다.
+
+        Pattern p = Pattern.compile("[a-zA-Z]{3,}");    //영어가 3글자 이상 있는 경우에만 처리
+        if(p.matcher(eng).find() == false) return Eng2KorResultType.NOT_ENOUGH_ENGLISH;
+
+        return Eng2KorResultType.SUCCESS;
+    }
+
+    /**
+     * 숫자 특수문자 변환 무시
+     * @param eng
+     * @param sb
+     * @param i
+     * @return
+     */
     private static boolean addIgnoreChars(String eng, StringBuffer sb, int i) {
         if(ignoreChars.indexOf(eng.substring(i, i + CHARACTER_SINGLE)) > NOT_EXISTS_CHARACTER_CODE){
             sb.append(eng.substring(i, i + CHARACTER_SINGLE));
@@ -104,19 +106,18 @@ public class Eng2KorConverter {
 
 
     /** 초성 추출  */
-    static private CharacterMatchingResult getInitialConsonant(int i, String eng) {
+    static private CharacterMatchingResult getInitialConsonant(int i, String eng) throws ConversionException {
         String c = eng.substring(i, i + CHARACTER_SINGLE);
         int index = init.indexOf(c);
 
-        if (index != NOT_EXISTS_CHARACTER_CODE) {
+        if (index != NOT_EXISTS_CHARACTER_CODE)
             return new CharacterMatchingResult(index * 21 * 28, CHARACTER_SINGLE);
-        }
 
-        return new CharacterMatchingResult(NOT_EXISTS_CHARACTER_CODE, CHARACTER_SINGLE);
+        throw new ConversionException("초성 변환 실패 - 초성이 존재하지 않습니다.");
     }
 
     /** 중성코드 추출 */
-    static private CharacterMatchingResult getMedial(int i, String eng) {
+    static private CharacterMatchingResult getMedial(int i, String eng) throws ConversionException {
         int index = getDoubleMedial(i, eng);
 
         // 복합 중성코드 추출 (ㅞ, ㅙ, ㅝ, ㅘ 등)
@@ -130,7 +131,7 @@ public class Eng2KorConverter {
         if(index != NOT_EXISTS_CHARACTER_CODE)
             return new CharacterMatchingResult(index, CHARACTER_SINGLE);
 
-        return new CharacterMatchingResult(NOT_EXISTS_CHARACTER_CODE, CHARACTER_SINGLE);
+        throw new ConversionException("중성 변환 실패 - 중성이 존재하지 않습니다.");
     }
 
     // 두 자로 된 중성을 체크하고, 값을 리턴한다.
@@ -175,8 +176,8 @@ public class Eng2KorConverter {
 
     /** 종성 추출  */
     static private CharacterMatchingResult getFinalConsonant(int i, String eng) {
-        int finalCode = 0;
-        int nextMedialCode, tempFinalCode;
+        int finalCode = 0;  //종성(받침) 코드
+        int nextMedialCode; //중성(모음) 코드
 
         /** 복합 종성 코드 추출(ㄱㅅ, ㄴㅁ, ㄹㄱ 등) */
         finalCode = getDoubleFinal(i, eng);
@@ -224,10 +225,10 @@ public class Eng2KorConverter {
     }
     // 두 자로된 종성을 체크하고, 있다면 값을 리턴한다.
     static private int getDoubleFinal(int i, String eng) {
-        if ((i + CHARACTER_DOUBLE) > eng.length()) {
-            return NOT_EXISTS_CHARACTER_CODE;
-        } else {
+        if ((i + CHARACTER_DOUBLE) <= eng.length()) {
             return getFinalCode(eng.substring(i, i + CHARACTER_DOUBLE));
+        } else {
+            return NOT_EXISTS_CHARACTER_CODE;
         }
     }
 
