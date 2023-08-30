@@ -10,8 +10,9 @@ public class LambdaTest {
     @Test
     void 중첩함수_람다이용_명확화() {
         Order order = order("myCustomer",
-                buy(quantity(100), stock("IBM", "NYSE"), price(125.00)),
-                sell(quantity(50), stock("GOOGLE", "NASDAQ"), price(375.00))
+                buy(quantity(100), stock("IBM", "NYSE"), price(125.00))
+                , sell(quantity(50), stock("GOOGLE", "NASDAQ"), price(375.00))
+                , buy(quantity(100), stock("APPLE", "NYSE"), price(10.99))
         );
 
         System.out.println(order.getValue());
