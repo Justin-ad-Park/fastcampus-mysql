@@ -5,14 +5,13 @@ import java.util.regex.Pattern;
 public class Eng2KorConverter {
     public static final int BASE_CODE_KOREAN = 0xAC00;
     public static final int NOT_EXISTS_CHARACTER_CODE = -1;
-    public static final int CHARACTER_LENGTH_MINUS = -1;
-    public static final int CHARACTER_LENGTH_0 = 0;
-    public static final int CHARACTER_LENGTH_1 = 1;
-    public static final int CHARACTER_LENGTH_2 = 2;
-
+    public static final int CHARACTER_NOT_EXISTS = 0;
+    public static final int CHARACTER_SINGLE = 1;
+    public static final int CHARACTER_DOUBLE = 2;
     public static final int CHARACTER_CODE_EMPTY = 0;
+    public static final int MAX_LENGTH = 30;
 
-    enum CodeType { chosung, jungsung, jongsung }
+
     static String ignoreChars = "`1234567890-=[]\\;',./~!@#$%^&*()_+{}|:\"<>? ";
     // 초성
     static String init = "rRseEfaqQtTdwWczxvg";
@@ -28,7 +27,7 @@ public class Eng2KorConverter {
      * @return
      */
     private static Eng2KorResultType valudateMessage(String eng) {
-        if(eng.length() > 30)
+        if(eng.length() > MAX_LENGTH)
             return Eng2KorResultType.TOO_LONG;  //변환 성능을 위해 너무 긴 검색 키워드는 변환을 하지 않는다.
 
         Pattern p = Pattern.compile("[a-zA-Z]{3,}");    //영어가 3글자 이상 있는 경우에만 처리
@@ -96,8 +95,8 @@ public class Eng2KorConverter {
     }
 
     private static boolean addIgnoreChars(String eng, StringBuffer sb, int i) {
-        if(ignoreChars.indexOf(eng.substring(i, i + 1)) > -1){
-            sb.append(eng.substring(i, i + 1));
+        if(ignoreChars.indexOf(eng.substring(i, i + CHARACTER_SINGLE)) > NOT_EXISTS_CHARACTER_CODE){
+            sb.append(eng.substring(i, i + CHARACTER_SINGLE));
             return true;
         }
         return false;
@@ -106,14 +105,14 @@ public class Eng2KorConverter {
 
     /** 초성 추출  */
     static private CharacterMatchingResult getInitialConsonant(int i, String eng) {
-        String c = eng.substring(i, i + 1);
+        String c = eng.substring(i, i + CHARACTER_SINGLE);
         int index = init.indexOf(c);
 
         if (index != NOT_EXISTS_CHARACTER_CODE) {
-            return new CharacterMatchingResult(index * 21 * 28, CHARACTER_LENGTH_1);
+            return new CharacterMatchingResult(index * 21 * 28, CHARACTER_SINGLE);
         }
 
-        return new CharacterMatchingResult(NOT_EXISTS_CHARACTER_CODE, CHARACTER_LENGTH_1);
+        return new CharacterMatchingResult(NOT_EXISTS_CHARACTER_CODE, CHARACTER_SINGLE);
     }
 
     /** 중성코드 추출 */
@@ -122,27 +121,27 @@ public class Eng2KorConverter {
 
         // 복합 중성코드 추출 (ㅞ, ㅙ, ㅝ, ㅘ 등)
         if (index != NOT_EXISTS_CHARACTER_CODE) {
-            return new CharacterMatchingResult(index, CHARACTER_LENGTH_2);
+            return new CharacterMatchingResult(index, CHARACTER_DOUBLE);
         }
 
         //복합 중성 코드가 없으면 단일 중성 코드 추출
         index = getSingleMedial(i, eng);
 
         if(index != NOT_EXISTS_CHARACTER_CODE)
-            return new CharacterMatchingResult(index, CHARACTER_LENGTH_1);
+            return new CharacterMatchingResult(index, CHARACTER_SINGLE);
 
-        return new CharacterMatchingResult(NOT_EXISTS_CHARACTER_CODE, CHARACTER_LENGTH_1);
+        return new CharacterMatchingResult(NOT_EXISTS_CHARACTER_CODE, CHARACTER_SINGLE);
     }
 
     // 두 자로 된 중성을 체크하고, 값을 리턴한다.
     static private int getDoubleMedial(int i, String eng) {
         int result;
 
-        if ((i + 2) > eng.length()) {
+        if ((i + CHARACTER_DOUBLE) > eng.length()) {
             return NOT_EXISTS_CHARACTER_CODE;
         }
 
-        result = getMedialCode(eng.substring(i, i + 2));
+        result = getMedialCode(eng.substring(i, i + CHARACTER_DOUBLE));
 
         if (result != NOT_EXISTS_CHARACTER_CODE) {
             return result;
@@ -154,8 +153,8 @@ public class Eng2KorConverter {
     // 한 자로 된 중성값을 리턴한다
     // 인덱스를 벗어낫다면 -1을 리턴
     static private int getSingleMedial(int i, String eng) {
-        if ((i + 1) <= eng.length()) {
-            return getMedialCode(eng.substring(i, i + 1));
+        if ((i + CHARACTER_SINGLE) <= eng.length()) {
+            return getMedialCode(eng.substring(i, i + CHARACTER_SINGLE));
         }
 
         return NOT_EXISTS_CHARACTER_CODE;
@@ -185,51 +184,50 @@ public class Eng2KorConverter {
         // 두 자로 이루어진 종성코드 추출
         if (finalCode != NOT_EXISTS_CHARACTER_CODE) {
             // 복합 종성 코드 다음에 중성 코드가 있으면, 복합 종성 코드가 아닌 단일 종성 코드로 처리해야 한다.
-            nextMedialCode = getSingleMedial(i + 2, eng);
+            nextMedialCode = getSingleMedial(i + CHARACTER_DOUBLE, eng);    // + CHARACTER_DOUBLE : 복합 종성 다음 케릭터를 판단하기 위함
 
             //복합 종성 이후에 중성 코드가 따라오는 경우 복합 종성이 아닌 단일 종성, 이후에 초성+중성으로 구성된 것
             if (nextMedialCode == NOT_EXISTS_CHARACTER_CODE) {  //중성 코드가 없으면 복합 종성
-                return new CharacterMatchingResult(finalCode, CHARACTER_LENGTH_2);
+                return new CharacterMatchingResult(finalCode, CHARACTER_DOUBLE);
             }
 
             finalCode = getSingleFinal(i, eng);
-            return new CharacterMatchingResult(finalCode, CHARACTER_LENGTH_1);
+            return new CharacterMatchingResult(finalCode, CHARACTER_SINGLE);
         }
 
         /** 복합 종성이 아닌 경우 추가 로직 처리 */
 
         //복합 종성이 아닌 경우 다음 문자가 중성이면 현재 문자는 종성이 아닌 초성으로 종성 없음 처리
-        nextMedialCode = getSingleMedial(i + 1, eng);
+        nextMedialCode = getSingleMedial(i + CHARACTER_SINGLE, eng);
 
         if (nextMedialCode != NOT_EXISTS_CHARACTER_CODE) {  //다음 문자가 중성 문자기 때문에 종성 없음으로 처리
-            return new CharacterMatchingResult(CHARACTER_CODE_EMPTY, CHARACTER_LENGTH_0);   //종성이 아닌 경우 현재 문자를 초성부터 다시 처리하도록 index 증가 안함
+            return new CharacterMatchingResult(CHARACTER_CODE_EMPTY, CHARACTER_NOT_EXISTS);   //종성이 아닌 경우 현재 문자를 초성부터 다시 처리하도록 index 증가 안함
         }
 
         finalCode = getSingleFinal(i, eng);
 
         // 종성 문자 추출
         if (finalCode != NOT_EXISTS_CHARACTER_CODE)
-            return new CharacterMatchingResult(finalCode, CHARACTER_LENGTH_1);
+            return new CharacterMatchingResult(finalCode, CHARACTER_SINGLE);
 
-        return new CharacterMatchingResult(CHARACTER_CODE_EMPTY, CHARACTER_LENGTH_0);   //종성이 아닌 경우 현재 문자를 초성부터 다시 처리하도록 index 증가 안함
+        return new CharacterMatchingResult(CHARACTER_CODE_EMPTY, CHARACTER_NOT_EXISTS);   //종성이 아닌 경우 현재 문자를 초성부터 다시 처리하도록 index 증가 안함
     }
 
     // 한 자로된 종성값을 리턴한다
     // 인덱스를 벗어낫다면 -1을 리턴
     static private int getSingleFinal(int i, String eng) {
-        if ((i + 1) <= eng.length()) {
-            return getFinalCode(eng.substring(i, i + 1));
+        if ((i + CHARACTER_SINGLE) <= eng.length()) {
+            return getFinalCode(eng.substring(i, i + CHARACTER_SINGLE));
         } else {
-            return -1;
+            return NOT_EXISTS_CHARACTER_CODE;
         }
     }
     // 두 자로된 종성을 체크하고, 있다면 값을 리턴한다.
-    // 없으면 리턴값은 -1
     static private int getDoubleFinal(int i, String eng) {
-        if ((i + 2) > eng.length()) {
-            return -1;
+        if ((i + CHARACTER_DOUBLE) > eng.length()) {
+            return NOT_EXISTS_CHARACTER_CODE;
         } else {
-            return getFinalCode(eng.substring(i, i + 2));
+            return getFinalCode(eng.substring(i, i + CHARACTER_DOUBLE));
         }
     }
 
