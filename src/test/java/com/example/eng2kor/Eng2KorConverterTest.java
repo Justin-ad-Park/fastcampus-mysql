@@ -21,6 +21,25 @@ class Eng2KorConverterTest {
         Assertions.assertEquals(true, convert.getResultType().isSuccess());
     }
 
+    @Test
+    void test2() {
+        String keyword = "dho qnpfr";
+
+        Eng2KorResult convert = Eng2KorConverter.engToKor(keyword);
+        Assertions.assertEquals("왜 뷁", convert.getResult());
+        Assertions.assertEquals(true, convert.getResultType().isSuccess());
+    }
+
+
+    @Test
+    void test3() {
+        String keyword = "Rkcl RkrRkrRkR";
+
+        Eng2KorResult convert = Eng2KorConverter.engToKor(keyword);
+        Assertions.assertEquals("까치 깍깍깎", convert.getResult());
+        Assertions.assertEquals(true, convert.getResultType().isSuccess());
+    }
+
 
     @Test
     void test4() {

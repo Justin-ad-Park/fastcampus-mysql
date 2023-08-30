@@ -5,9 +5,12 @@ import java.util.regex.Pattern;
 public class Eng2KorConverter {
     public static final int BASE_CODE_KOREAN = 0xAC00;
     public static final int NOT_EXISTS_CHARACTER_CODE = -1;
+    public static final int CHARACTER_LENGTH_MINUS = -1;
+    public static final int CHARACTER_LENGTH_0 = 0;
     public static final int CHARACTER_LENGTH_1 = 1;
-    public static final int CHARACTER_LENGTH = 1;
     public static final int CHARACTER_LENGTH_2 = 2;
+
+    public static final int CHARACTER_CODE_EMPTY = 0;
 
     enum CodeType { chosung, jungsung, jongsung }
     static String ignoreChars = "`1234567890-=[]\\;',./~!@#$%^&*()_+{}|:\"<>? ";
@@ -47,15 +50,16 @@ public class Eng2KorConverter {
 
         CharacterMatchingResult initialCharacter;
         CharacterMatchingResult medialCharacter;
-
-        int medialCode = 0, finalCode = 0; //중성, 종성 위치
-        int tempMedialCode, tempFinalCode;
+        CharacterMatchingResult finalCharacter;
 
 
-        for (int i = 0; i < eng.length(); i++) {
+        for (int i = 0; i < eng.length();) {
 
             // 숫자특수문자 처리 : 숫자나 특수문자는 한글 변환없이 결과 값에 추가
-            if (addIgnoreChars(eng, resultStringBuffer, i)) continue;
+            if (addIgnoreChars(eng, resultStringBuffer, i)) {
+                i++;
+                continue;
+            }
 
             
             /** 초성코드 추출 */
@@ -65,7 +69,7 @@ public class Eng2KorConverter {
                 return new Eng2KorResult(Eng2KorResultType.FAIL_CONVERT, eng);
             }
 
-            i = i + initialCharacter.getCharacterLength();    //초성에 해당하는 영어1문자 건너뜀
+            i = i + initialCharacter.getCharacterLength();    //초성에 해당하는 문자 길이만큼 건너뜀(초성은 무조건 1문자)
 
 
             /** 중성코드 추출 */
@@ -75,46 +79,17 @@ public class Eng2KorConverter {
                 return new Eng2KorResult(Eng2KorResultType.FAIL_CONVERT, eng);
             }
 
-            i = i + medialCharacter.getCharacterLength();    //초성에 해당하는 영어1문자 건너뜀
+            i = i + medialCharacter.getCharacterLength();    //중성에 해당하는 문자 길이 만큼 건너뜀(ㅞ,ㅙ 등 2문자, ㅏㅣㅗㅜ 등 1문자)
 
 
             /** 종성코드 추출 */
-            tempFinalCode = getDoubleFinal(i, eng);
-            // 두 자로 이루어진 종성코드 추출
-            if (tempFinalCode != -1) {
-                finalCode = tempFinalCode;
-                // 그 다음의 중성 문자에 대한 코드를 추출한다.
-                tempMedialCode = getSingleMedial(i + 2, eng);
-                if (tempMedialCode != -1) {
-                    // 코드 값이 있을 경우
-                    finalCode = getSingleFinal(i, eng);
-                    // 종성 코드 값을 저장한다.
-                } else {
-                    i++;
-                }
-            } else {
-                // 코드 값이 없을 경우 ,
-                tempMedialCode = getSingleMedial(i + 1, eng);
-                // 그 다음의 중성 문자에 대한 코드 추출.
-                if (tempMedialCode != -1) {
-                    // 그 다음에 중성 문자가 존재할 경우,
-                    finalCode = 0; // 종성 문자는 없음.
-                    i--;
-                }
-                else {
-                    finalCode = getSingleFinal(i, eng);
-                    // 종성 문자 추출
-                    if (finalCode == -1){
-                        finalCode = 0; i--;
-                        // 초성,중성 + 숫자,특수문자,
-                        //기호가 나오는 경우 index를 줄임.
-                    }
-                }
-            }
+            finalCharacter = getFinalConsonant(i,eng);
+
+            i = i + finalCharacter.getCharacterLength();
 
             // 추출한 초성 문자 코드,
             //중성 문자 코드, 종성 문자 코드를 합한 후 변환하여 스트링버퍼에 넘김
-            resultStringBuffer.append((char) (BASE_CODE_KOREAN + initialCharacter.getCharacterCode() + medialCharacter.getCharacterCode() + finalCode));
+            resultStringBuffer.append((char) (BASE_CODE_KOREAN + initialCharacter.getCharacterCode() + medialCharacter.getCharacterCode() + finalCharacter.getCharacterCode()));
         }
 
         return new Eng2KorResult(Eng2KorResultType.SUCCESS, resultStringBuffer.toString());
@@ -128,40 +103,33 @@ public class Eng2KorConverter {
         return false;
     }
 
-    // 초성 추출
-    static private int getInitialCode(String c) {
-        int index = init.indexOf(c);
-        if (index != -1) { return index * 21 * 28; }
 
-        return -1;
-    }
-
-    // 초성 추출
+    /** 초성 추출  */
     static private CharacterMatchingResult getInitialConsonant(int i, String eng) {
         String c = eng.substring(i, i + 1);
         int index = init.indexOf(c);
 
         if (index != NOT_EXISTS_CHARACTER_CODE) {
-            return new CharacterMatchingResult(index * 21 * 28, CHARACTER_LENGTH);
+            return new CharacterMatchingResult(index * 21 * 28, CHARACTER_LENGTH_1);
         }
 
         return new CharacterMatchingResult(NOT_EXISTS_CHARACTER_CODE, CHARACTER_LENGTH_1);
     }
 
+    /** 중성코드 추출 */
     static private CharacterMatchingResult getMedial(int i, String eng) {
-        /** 중성코드 추출 */
         int index = getDoubleMedial(i, eng);
 
-        // 두 자로 이루어진 중성코드 추출
+        // 복합 중성코드 추출 (ㅞ, ㅙ, ㅝ, ㅘ 등)
         if (index != NOT_EXISTS_CHARACTER_CODE) {
             return new CharacterMatchingResult(index, CHARACTER_LENGTH_2);
-        } else {
-            // 없다면,
-            index = getSingleMedial(i, eng);
-
-            if(index != NOT_EXISTS_CHARACTER_CODE)
-                return new CharacterMatchingResult(index, CHARACTER_LENGTH_1);
         }
+
+        //복합 중성 코드가 없으면 단일 중성 코드 추출
+        index = getSingleMedial(i, eng);
+
+        if(index != NOT_EXISTS_CHARACTER_CODE)
+            return new CharacterMatchingResult(index, CHARACTER_LENGTH_1);
 
         return new CharacterMatchingResult(NOT_EXISTS_CHARACTER_CODE, CHARACTER_LENGTH_1);
     }
@@ -194,7 +162,7 @@ public class Eng2KorConverter {
     }
 
 
-    /** * 중성 코드 변환 */
+    // 중성 코드 변환
     static private int getMedialCode(String c) {
         for (int i = 0; i < mid.length; i++) {
             if (mid[i].equals(c)) {
@@ -206,15 +174,44 @@ public class Eng2KorConverter {
     }
 
 
-    /** 종성 코드 변환 */
-    static private int getFinalCode(String c) {
-        for (int i = 0; i < fin.length; i++) {
-            if (fin[i].equals(c)) {
-                return i + 1;
+    /** 종성 추출  */
+    static private CharacterMatchingResult getFinalConsonant(int i, String eng) {
+        int finalCode = 0;
+        int nextMedialCode, tempFinalCode;
+
+        /** 복합 종성 코드 추출(ㄱㅅ, ㄴㅁ, ㄹㄱ 등) */
+        finalCode = getDoubleFinal(i, eng);
+
+        // 두 자로 이루어진 종성코드 추출
+        if (finalCode != NOT_EXISTS_CHARACTER_CODE) {
+            // 복합 종성 코드 다음에 중성 코드가 있으면, 복합 종성 코드가 아닌 단일 종성 코드로 처리해야 한다.
+            nextMedialCode = getSingleMedial(i + 2, eng);
+
+            //복합 종성 이후에 중성 코드가 따라오는 경우 복합 종성이 아닌 단일 종성, 이후에 초성+중성으로 구성된 것
+            if (nextMedialCode == NOT_EXISTS_CHARACTER_CODE) {  //중성 코드가 없으면 복합 종성
+                return new CharacterMatchingResult(finalCode, CHARACTER_LENGTH_2);
             }
+
+            finalCode = getSingleFinal(i, eng);
+            return new CharacterMatchingResult(finalCode, CHARACTER_LENGTH_1);
         }
 
-        return NOT_EXISTS_CHARACTER_CODE;
+        /** 복합 종성이 아닌 경우 추가 로직 처리 */
+
+        //복합 종성이 아닌 경우 다음 문자가 중성이면 현재 문자는 종성이 아닌 초성으로 종성 없음 처리
+        nextMedialCode = getSingleMedial(i + 1, eng);
+
+        if (nextMedialCode != NOT_EXISTS_CHARACTER_CODE) {  //다음 문자가 중성 문자기 때문에 종성 없음으로 처리
+            return new CharacterMatchingResult(CHARACTER_CODE_EMPTY, CHARACTER_LENGTH_0);   //종성이 아닌 경우 현재 문자를 초성부터 다시 처리하도록 index 증가 안함
+        }
+
+        finalCode = getSingleFinal(i, eng);
+
+        // 종성 문자 추출
+        if (finalCode != NOT_EXISTS_CHARACTER_CODE)
+            return new CharacterMatchingResult(finalCode, CHARACTER_LENGTH_1);
+
+        return new CharacterMatchingResult(CHARACTER_CODE_EMPTY, CHARACTER_LENGTH_0);   //종성이 아닌 경우 현재 문자를 초성부터 다시 처리하도록 index 증가 안함
     }
 
     // 한 자로된 종성값을 리턴한다
@@ -234,6 +231,17 @@ public class Eng2KorConverter {
         } else {
             return getFinalCode(eng.substring(i, i + 2));
         }
+    }
+
+    // 종성 코드 변환
+    static private int getFinalCode(String c) {
+        for (int i = 0; i < fin.length; i++) {
+            if (fin[i].equals(c)) {
+                return i + 1;
+            }
+        }
+
+        return NOT_EXISTS_CHARACTER_CODE;
     }
 
 }
