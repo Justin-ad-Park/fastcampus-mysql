@@ -3,13 +3,15 @@ package com.example.eng2kor;
 import java.util.regex.Pattern;
 
 public class Eng2KorConverter {
-    public static final int BASE_CODE_KOREAN = 0xAC00;
+    public static final int BASE_CODE_KOREAN = 0xAC00;  //0xAC00 = 가
     public static final int NOT_EXISTS_CHARACTER_CODE = -1;
-    public static final int CHARACTER_NOT_EXISTS = 0;
+    public static final int CHARACTER_NONE = 0; //종성이 없는 경우 index 증가를 하지 않기 위함
     public static final int CHARACTER_SINGLE = 1;
     public static final int CHARACTER_DOUBLE = 2;
     public static final int CHARACTER_CODE_EMPTY = 0;
     public static final int MAX_LENGTH = 30;
+    public static final int MEDIALS_COUNT = 21; //중성(모음) 갯수
+    public static final int FINAL_CONSONANTS_COUNT = 28;    //종성(받침) 갯수 : 받침 없음 포함 시 28개
 
 
     static String ignoreChars = "`1234567890-=[]\\;',./~!@#$%^&*()_+{}|:\"<>? ";
@@ -111,7 +113,7 @@ public class Eng2KorConverter {
         int index = init.indexOf(c);
 
         if (index != NOT_EXISTS_CHARACTER_CODE)
-            return new CharacterMatchingResult(index * 21 * 28, CHARACTER_SINGLE);
+            return new CharacterMatchingResult(index * MEDIALS_COUNT * FINAL_CONSONANTS_COUNT, CHARACTER_SINGLE);
 
         throw new ConversionException("초성 변환 실패 - 초성이 존재하지 않습니다.");
     }
@@ -166,7 +168,7 @@ public class Eng2KorConverter {
     static private int getMedialCode(String c) {
         for (int i = 0; i < mid.length; i++) {
             if (mid[i].equals(c)) {
-                return i * 28;
+                return i * FINAL_CONSONANTS_COUNT;
             }
         }
 
@@ -202,7 +204,7 @@ public class Eng2KorConverter {
         nextMedialCode = getSingleMedial(i + CHARACTER_SINGLE, eng);
 
         if (nextMedialCode != NOT_EXISTS_CHARACTER_CODE) {  //다음 문자가 중성 문자기 때문에 종성 없음으로 처리
-            return new CharacterMatchingResult(CHARACTER_CODE_EMPTY, CHARACTER_NOT_EXISTS);   //종성이 아닌 경우 현재 문자를 초성부터 다시 처리하도록 index 증가 안함
+            return new CharacterMatchingResult(CHARACTER_CODE_EMPTY, CHARACTER_NONE);   //종성이 아닌 경우 현재 문자를 초성부터 다시 처리하도록 index 증가 안함
         }
 
         finalCode = getSingleFinal(i, eng);
@@ -211,7 +213,7 @@ public class Eng2KorConverter {
         if (finalCode != NOT_EXISTS_CHARACTER_CODE)
             return new CharacterMatchingResult(finalCode, CHARACTER_SINGLE);
 
-        return new CharacterMatchingResult(CHARACTER_CODE_EMPTY, CHARACTER_NOT_EXISTS);   //종성이 아닌 경우 현재 문자를 초성부터 다시 처리하도록 index 증가 안함
+        return new CharacterMatchingResult(CHARACTER_CODE_EMPTY, CHARACTER_NONE);   //종성이 아닌 경우 현재 문자를 초성부터 다시 처리하도록 index 증가 안함
     }
 
     // 한 자로된 종성값을 리턴한다

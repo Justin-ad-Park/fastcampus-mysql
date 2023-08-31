@@ -206,5 +206,14 @@ public class Eng2KorConverter {
         }
     }
 
+    public static void main(String[] args) {
+
+        System.out.println(engToKor("vnfandjs zhdrnrtn"));
+
+
+
+
+    }
+
 }
 
