@@ -138,29 +138,23 @@ public class Eng2KorConverter {
 
     // 두 자로 된 중성을 체크하고, 값을 리턴한다.
     static private int getDoubleMedial(int i, String eng) {
-        int result;
-
         if ((i + CHARACTER_DOUBLE) > eng.length()) {
             return NOT_EXISTS_CHARACTER_CODE;
         }
 
-        result = getMedialCode(eng.substring(i, i + CHARACTER_DOUBLE));
+        return getMedialCode(eng.substring(i, i + CHARACTER_DOUBLE));
 
-        if (result != NOT_EXISTS_CHARACTER_CODE) {
-            return result;
-        }
-
-        return NOT_EXISTS_CHARACTER_CODE;
     }
 
     // 한 자로 된 중성값을 리턴한다
     // 인덱스를 벗어낫다면 -1을 리턴
     static private int getSingleMedial(int i, String eng) {
-        if ((i + CHARACTER_SINGLE) <= eng.length()) {
-            return getMedialCode(eng.substring(i, i + CHARACTER_SINGLE));
+        if ((i + CHARACTER_SINGLE) > eng.length()) {
+            return NOT_EXISTS_CHARACTER_CODE;
         }
 
-        return NOT_EXISTS_CHARACTER_CODE;
+        return getMedialCode(eng.substring(i, i + CHARACTER_SINGLE));
+
     }
 
 
@@ -168,7 +162,7 @@ public class Eng2KorConverter {
     static private int getMedialCode(String c) {
         for (int i = 0; i < mid.length; i++) {
             if (mid[i].equals(c)) {
-                return i * FINAL_CONSONANTS_COUNT;
+                return i * FINAL_CONSONANTS_COUNT;  //중성 index * 종성수(28)
             }
         }
 
