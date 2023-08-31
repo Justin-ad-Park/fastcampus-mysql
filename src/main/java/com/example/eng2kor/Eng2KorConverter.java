@@ -10,7 +10,7 @@ public class Eng2KorConverter {
     public static final int CHARACTER_DOUBLE = 2;
     public static final int CHARACTER_CODE_EMPTY = 0;
     public static final int MAX_LENGTH = 30;
-    public static final int MEDIALS_COUNT = 21; //중성(모음) 갯수
+    public static final int MEDIAL_CONSONANTS_COUNT = 21; //중성(모음) 갯수
     public static final int FINAL_CONSONANTS_COUNT = 28;    //종성(받침) 갯수 : 받침 없음 포함 시 28개
 
 
@@ -51,7 +51,7 @@ public class Eng2KorConverter {
                 i = i + initialCharacter.getCharacterLength();    //초성에 해당하는 문자 길이만큼 건너뜀(초성은 무조건 1문자)
 
                 /** 중성코드 추출 */
-                medialCharacter = getMedial(i, eng);
+                medialCharacter = getMedialConsonant(i, eng);
                 i = i + medialCharacter.getCharacterLength();    //중성에 해당하는 문자 길이 만큼 건너뜀(ㅞ,ㅙ 등 2문자, ㅏㅣㅗㅜ 등 1문자)
 
                 /** 종성코드 추출 */
@@ -113,13 +113,13 @@ public class Eng2KorConverter {
         int index = init.indexOf(c);
 
         if (index != NOT_EXISTS_CHARACTER_CODE)
-            return new CharacterMatchingResult(index * MEDIALS_COUNT * FINAL_CONSONANTS_COUNT, CHARACTER_SINGLE);
+            return new CharacterMatchingResult(index * MEDIAL_CONSONANTS_COUNT * FINAL_CONSONANTS_COUNT, CHARACTER_SINGLE);
 
         throw new ConversionException("초성 변환 실패 - 초성이 존재하지 않습니다.");
     }
 
     /** 중성코드 추출 */
-    static private CharacterMatchingResult getMedial(int i, String eng) throws ConversionException {
+    static private CharacterMatchingResult getMedialConsonant(int i, String eng) throws ConversionException {
         int index = getDoubleMedial(i, eng);
 
         // 복합 중성코드 추출 (ㅞ, ㅙ, ㅝ, ㅘ 등)
