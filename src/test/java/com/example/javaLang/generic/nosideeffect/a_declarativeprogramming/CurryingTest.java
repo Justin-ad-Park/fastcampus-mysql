@@ -26,6 +26,9 @@ public class CurryingTest {
 
         System.out.println("Km -> Mile 변환");
         System.out.println(convertKmtoMi.applyAsDouble(10));
+
+        System.out.println("USD -> GBP(영국파운드)");
+        System.out.println(convertUSDtoGBP.applyAsDouble(10));
     }
 
     @Test
