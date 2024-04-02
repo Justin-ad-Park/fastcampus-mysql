@@ -47,7 +47,6 @@ public class CDETest {
     @Test
     void 단순실행테스트() {
         methodName = "단순 반복 실행";
-        String logMessage;
 
         for(int i = 0; i < 1_000; i ++) {
             logOut(useLog, getMessage(methodName));
@@ -61,7 +60,6 @@ public class CDETest {
     @Test
     void 조건부연기실행() {    //conditional diferred execution
         methodName = "조건부 연기 실행";
-        String logMessage;
 
         for(int i = 0; i < 1_000; i ++) {
             logOut(useLog, () -> getMessage(methodName));
