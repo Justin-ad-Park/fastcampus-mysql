@@ -1,4 +1,4 @@
-package com.example.javaLang.generic.lambdapattern.removeduplicatestream;
+package com.example.javaLang.generic.lambdapattern._20removeduplicatestream;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;

@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.function.Function;
 
-public class CurriedFunctionTest {
+public class _4_CurriedFunctionTest {
 
     Function<String, Function<Integer, String>> repeatLetterCurriedFunction = letter ->
             repeatCount -> {

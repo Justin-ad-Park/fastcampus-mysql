@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
-public class DeclarativeTest {
+public class _2_DeclarativeTest {
 
     private record Transantion (int value) {};
 

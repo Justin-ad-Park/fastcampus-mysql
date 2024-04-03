@@ -1,4 +1,4 @@
-package com.example.javaLang.generic.lambdapattern.removeduplicatestream;
+package com.example.javaLang.generic.lambdapattern._20removeduplicatestream;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -47,9 +47,10 @@ public class BackpressureMode_RefactoringFinal {
 
     /**
      * <pre>
-     * 빌더 패턴 + 람다 함수를 활용한 전략 패턴
+     * Execute Around 패턴 + 빌더 패턴
      *  빌더 패턴 : 자기 자신을 리턴
-     *  전략 패턴 : 함수형 인터페이스를 통해 세부 로직을 사용자 측에서 정의할 수 있도록 함
+     *  Execute Around 패턴 : 공통 로직은 Execute Around 코드 내에서 처리를 해주고,
+     *  사용자는 함수형 인터페이스를 통해 세부 로직의 구현에만 신경을 씀
      *  </pre>
      * @param fluxModifier
      * @throws InterruptedException
