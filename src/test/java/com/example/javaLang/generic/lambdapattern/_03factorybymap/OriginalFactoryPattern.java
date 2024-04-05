@@ -1,4 +1,4 @@
-package com.example.javaLang.generic.lambdapattern._02factorybymap;
+package com.example.javaLang.generic.lambdapattern._03factorybymap;
 
 import org.junit.jupiter.api.Test;
 

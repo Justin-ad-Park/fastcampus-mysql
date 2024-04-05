@@ -1,4 +1,4 @@
-package com.example.javaLang.generic.lambdapattern._03factorybyenum;
+package com.example.javaLang.generic.lambdapattern._04factorybyenum;
 
 import org.junit.jupiter.api.Test;
 

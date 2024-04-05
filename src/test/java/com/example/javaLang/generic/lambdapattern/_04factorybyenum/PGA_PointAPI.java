@@ -1,4 +1,4 @@
-package com.example.javaLang.generic.lambdapattern._03factorybyenum;
+package com.example.javaLang.generic.lambdapattern._04factorybyenum;
 
 public class PGA_PointAPI implements PointAPI {
     @Override

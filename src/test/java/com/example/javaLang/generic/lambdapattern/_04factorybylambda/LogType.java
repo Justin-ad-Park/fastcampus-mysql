@@ -2,14 +2,10 @@ package com.example.javaLang.generic.lambdapattern._04factorybylambda;
 
 import java.util.function.Function;
 
-import static com.example.javaLang.generic.lambdapattern._04factorybylambda.SaveLog.insertLogToDB;
-import static com.example.javaLang.generic.lambdapattern._04factorybylambda.SaveLog.writeLogToFile;
-
-
 public enum LogType {
 
-    FileLog("File", writeLogToFile),
-    DbLog("DB", insertLogToDB);
+    FileLog("File", SaveLog.writeFile),
+    DbLog("DB", SaveLog.writeDB);
 
     private final String kind;
     private Function<LogType, String> saveMethod;
@@ -32,5 +28,10 @@ public enum LogType {
         return saveMethod;
     }
 
+    private class SaveLog {
+        public static Function<LogType, String> writeFile = (LogType pLog) -> pLog.getKind() + " write Log to File";
+
+        public static Function<LogType, String> writeDB = (LogType pLog) -> pLog.getKind() + " insert log to DB";
+    }
 }
 

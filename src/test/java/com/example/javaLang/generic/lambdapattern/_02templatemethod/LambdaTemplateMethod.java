@@ -1,4 +1,4 @@
-package com.example.javaLang.generic.lambdapattern._06templatemethod;
+package com.example.javaLang.generic.lambdapattern._02templatemethod;
 
 import org.junit.jupiter.api.Test;
 
