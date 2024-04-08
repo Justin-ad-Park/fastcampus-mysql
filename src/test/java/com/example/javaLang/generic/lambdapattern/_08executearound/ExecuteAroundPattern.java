@@ -26,10 +26,12 @@ public class ExecuteAroundPattern {
     // 패턴을 사용하지 않는 경우 아래와 예와 같이 BufferReader를 만드는 코드가 중복된다.
     @Test
     void ReadFileOneLineTest() throws IOException {
+        // 리더 생성
         BufferedReader br = new BufferedReader(
                 new FileReader("src/main/resources/data.txt")
         );
 
+        // 주요 로직
         String contents = br.readLine();
 
         System.out.println("한줄 : " + contents);
@@ -37,10 +39,12 @@ public class ExecuteAroundPattern {
 
     @Test
     void ReadFileTwoLinesTest() throws IOException {
+        // 리더 생성
         BufferedReader br = new BufferedReader(
                 new FileReader("src/main/resources/data.txt")
         );
 
+        //주요 로직
         String contents = br.readLine();
         contents += br.readLine();
 

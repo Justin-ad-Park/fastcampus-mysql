@@ -22,9 +22,7 @@ public enum ProductValidation {
     }
 
     // 상품명 존재 여부
-    private static Predicate<Product> validProductName() {
-        return p -> !p.productName().isEmpty();
-    }
+    private static Predicate<Product> validProductName() { return p -> !p.productName().isEmpty();}
 
     // 상품 판매 상태
     private static Predicate<Product> CompareStatus(ProductStatus productStatus) {

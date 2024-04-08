@@ -10,8 +10,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 @Slf4j
-public class BackpressureMode_RefactoringFinal {
-
+public class BackpressureMode_RefactoringFinal2 {
     /**
      * <pre>
      * 대부분의 람다 함수를 사용해서 메서드를 제공하는 방식은 전략 패턴(Strategy pattern)을 활용하는 것이다.
@@ -33,7 +32,6 @@ public class BackpressureMode_RefactoringFinal {
      * 이 차이로 인해 람다함수에서는 전략패턴을 활용하는 것이 훨씬 구현이 쉽다.
      * </pre>
      */
-
     /**
      * <pre>
      * Execute Around 패턴 + 빌더 패턴
@@ -46,9 +44,8 @@ public class BackpressureMode_RefactoringFinal {
      */
     private void subscribeWithBackpressure(Function<Flux<Long>, Flux<Long>> fluxModifier) throws InterruptedException {
 
-        Flux<Long> flux = Flux.interval(Duration.ofMillis(1L)); //flux 생성
-
-        fluxModifier.apply(flux)    //fluxModifier(Funciton<T,R>)의 파라미터로 주입
+        Flux.interval(Duration.ofMillis(1L))
+                .transform(fluxModifier)
                 .publishOn(Schedulers.parallel())
                 .subscribe(printInt, errorProcess);
 
@@ -76,6 +73,7 @@ public class BackpressureMode_RefactoringFinal {
         );
     }
 
+
     private static Consumer<Long> printInt = data -> {
         log.info("# onNext: {}", data);
 
@@ -87,4 +85,5 @@ public class BackpressureMode_RefactoringFinal {
     };
 
     private static Consumer<Throwable> errorProcess = error -> log.error("# onError");
+
 }

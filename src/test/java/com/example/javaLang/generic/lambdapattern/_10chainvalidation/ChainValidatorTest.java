@@ -29,6 +29,8 @@ public class ChainValidatorTest {
         Product product = new Product("사과", 1000, ProductStatus.SOLD_OUT, false);
         boolean resultValid = productValidator.valid(product, ProductValidation.DEFAULT_PRODUCT);
 
+        resultValid = productValidator.valid(product, ProductValidation.EXPENSIVE_PRODUCT);
+
         Assertions.assertFalse(resultValid);
     }
 

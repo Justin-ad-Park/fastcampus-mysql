@@ -37,6 +37,7 @@ public class BackpressureMode_Origin {
     void BackpressureTest_Drop() throws InterruptedException {
 
         Flux.interval(Duration.ofMillis(1L))
+                .doOnNext(d -> log.info("# DoOnNext: {}", d))
                 .onBackpressureDrop(d -> log.info("# dropped: {}", d))
                 .publishOn(Schedulers.parallel())
                 .subscribe(data -> {

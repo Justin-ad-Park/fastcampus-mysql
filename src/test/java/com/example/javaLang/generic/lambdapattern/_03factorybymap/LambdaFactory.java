@@ -10,10 +10,9 @@ import java.util.function.Supplier;
 public class LambdaFactory {
     final static Map<String, Supplier<Product>> map = new HashMap<>();
     static {
-        map.put("Car", Car::new);
+        map.put("Car", Car::getInstance);
         map.put("Boat", Boat::new);
     }
-
 
     @Test
     void 람다팩토리_테스트() {

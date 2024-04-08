@@ -14,7 +14,7 @@ public class LambdapatternTest {
     @Test
     void 메서드참조_Test() {
         var saveLog = LogType.FileLog.getSaveMethod();
-        var result = saveLog.apply(LogType.FileLog);
+        var result = saveLog.apply(LogType.DbLog);
 
         System.out.println(result);
     }

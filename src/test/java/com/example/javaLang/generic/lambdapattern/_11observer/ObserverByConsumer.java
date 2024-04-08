@@ -1,10 +1,12 @@
 package com.example.javaLang.generic.lambdapattern._11observer;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public class ObserverByConsumer {
 
@@ -17,9 +19,15 @@ public class ObserverByConsumer {
             this.sensorName = sensorName;
         }
 
+        //구독자 등록
+        public void subscribe(Consumer<? super Integer> subscriber) {
+            this.subscribers.add(subscriber);
+        }
+
+
         public void onChange(int newCelsius) {
             this.celsius = newCelsius;
-            System.out.println("--센서-->" + this.sensorName + " : " + this.celsius);
+            System.out.println("--[센서 온도 감지]-->" + this.sensorName + " : " + this.celsius);
 
             notificationSubscripbers();
         }
@@ -27,11 +35,6 @@ public class ObserverByConsumer {
         public void clearSubscribers() {
             System.out.println("--모든 구독 제거--");
             subscribers.clear();
-        }
-
-        //구독자 등록
-        public void subscribe(Consumer<? super Integer> subscriber) {
-            this.subscribers.add(subscriber);
         }
 
         public void notificationSubscripbers() {
@@ -132,23 +135,22 @@ public class ObserverByConsumer {
     }
 
     @Test
-    void Test_AndThen2() {
-        TemperatureSensor ts = new TemperatureSensor("사무실 온도계");
-        ts.subscribe(sendMessage);
-        sendMessage.andThen(value -> System.out.println("[New And Then] : " + value) );
-        ts.onChange(31);
-    }
-
-    @Test
     void Test_andThen3() {
         TemperatureSensor ts = new TemperatureSensor("사무실 온도계");
 
         // 함수형 인터페이스를 구현한 클래스 방식
         CelsiusDisplayPannel dispPannel = new CelsiusDisplayPannel();
-        ts.subscribe(dispPannel.andThen(System.out::println));
+
+        ts.subscribe(newConsumer2.andThen(newConsumer));
         ts.onChange(25);
         ts.onChange(26);
-        }
+    }
+
+    Consumer<Integer> newConsumer = (i) ->
+        System.out.println("[디스플레이패널]온도가 " + i + "로 변경이 되었습니다.");
+
+    Consumer<Integer> newConsumer2 = (i) ->
+        System.out.println("[나는]온도가 " + i + "로 변경이 되었습니다.");
 
     @Test
     void Test_andThen4() {
@@ -182,5 +184,31 @@ public class ObserverByConsumer {
         ts.onChange(26);
         ts.onChange(26);
     }
+
+
+    /**
+     * <pre>
+     * 함수형 인터페이스의 default 메서드 활용 예
+     * </pre>
+     */
+    @Test
+    void predicateTest() {
+        Assertions.assertTrue( isEven.and(canDivide3).test(12));
+
+        Assertions.assertFalse( isEven.and(canDivide3).and(over10).test(3));
+
+        Assertions.assertTrue( isEven.and(canDivide3).or(over10).test(14));
+
+        Assertions.assertFalse( isEven.or(over10).and(canDivide3).test(14));
+
+        int num = 10;
+
+    }
+
+    Predicate<Integer> isEven = (i) -> i % 2 == 0;
+
+    Predicate<Integer> over10 = (i) -> i >= 10;
+
+    Predicate<Integer> canDivide3 = (i) -> i % 3 == 0;
 }
 
