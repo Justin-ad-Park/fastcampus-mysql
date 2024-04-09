@@ -10,7 +10,7 @@ public class CursorRequestV2 {
     @Setter
     @Getter
     private Long key;
-    @Setter
+
     @Getter
     private final Long size;
     private Long prevKey = null;
