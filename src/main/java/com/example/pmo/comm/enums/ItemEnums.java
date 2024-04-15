@@ -23,9 +23,9 @@ public class ItemEnums {
 
         , SPEC_FIELD_02(
                 "SPEC_FIELD_02"
-                , "소비자상담 관련 전화번호"
-                , "{*소비자상담 관련 전화번호}"
-                , Arrays.asList("{*소비자상담 관련 전화번호}")
+                , "샘플 메시지"
+                , "{이름}님, 오늘은 {행사명}(이)가 있습니다."
+                , Arrays.asList("{이름}","{행사명}")
                 , false
         );
 

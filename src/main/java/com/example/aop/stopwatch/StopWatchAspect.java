@@ -23,7 +23,8 @@ public class StopWatchAspect {
             String className = fullClassName.substring(fullClassName.lastIndexOf('.') + 1);
 
             // methodName() 값을 사용하여 어노테이션에서 제공된 메소드 이름 로그 출력
-            System.out.println(String.format("\n=====[Running time] %s.%s - %d ms  =============\n\n"
+            System.out.println(String.format("\n=====[Running time %1$s] %2$s.%3$s - %4$d ms  =============\n\n"
+                    , stopWatchOn.watchName()
                     , className, joinPoint.getSignature().getName(),
                     stopWatch.getTotalTimeMillis())
             );

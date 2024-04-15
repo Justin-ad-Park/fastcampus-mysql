@@ -36,11 +36,13 @@ class ItemEnumsTest {
     @Test
     void 추가메세지_존재안하는케이스() {
         ItemEnums.SpecFieldCode specFieldCodeEnum = ItemEnums.SpecFieldCode.SPEC_FIELD_02;
-        String addtionalMessage = specFieldCodeEnum.getAdditionalMessage("");
+        List<String> params = Arrays.asList("홍길동","#풀무원 할인 행사");
 
+        String message = specFieldCodeEnum.getModifiedDetailMessage(params);
 
-        Assertions.assertEquals("", addtionalMessage);
+        System.out.println(message);
 
+        Assertions.assertEquals("홍길동님, 오늘은 #풀무원 할인 행사(이)가 있습니다.", message);
     }
 
 }
