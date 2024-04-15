@@ -19,18 +19,13 @@ public abstract class AlarmService {
         setParamsMapper();
 
         String modifiedMessage = this.messageTemplate();
-        String key;
-        GetAlarmParam<String> getAlarmParam;
-
 
         Iterator<Map.Entry<String, GetAlarmParam>> iterator = paramsMapper.entrySet().iterator();
 
         while (iterator.hasNext()) {
             Map.Entry<String, GetAlarmParam> entry = iterator.next();
-            key = entry.getKey();
-            getAlarmParam = entry.getValue();
 
-            modifiedMessage = modifiedMessage.replace(key, getAlarmParam.getValue());
+            modifiedMessage = modifiedMessage.replace(entry.getKey(), (String)entry.getValue().getValue());
         }
 
         return modifiedMessage;
