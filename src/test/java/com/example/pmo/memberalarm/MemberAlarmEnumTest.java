@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @Slf4j
-public class MemberAlarmEnumEnumTest {
+public class MemberAlarmEnumTest {
 
     @Test
      void 회원알림_enum테스트() {
