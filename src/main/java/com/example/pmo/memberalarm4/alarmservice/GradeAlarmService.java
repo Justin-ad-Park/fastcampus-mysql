@@ -4,8 +4,10 @@ import com.example.pmo.memberalarm4.domain.gradeservice.GradeDto;
 import com.example.pmo.memberalarm4.domain.gradeservice.GradeService;
 
 public class GradeAlarmService extends AlarmService {
-
-    private static final String alarmTemplate = "[등급변경]{회원명}님은 레벨{회원레벨}로 회원 등급이 변경되었습니다.";
+    private static final String alarmTemplate = """
+                {"UserNM": "{회원명}"},
+                {"UserLevel": "{회원레벨}"}
+            """;
 
     private GradeService gradeService;
     private GradeDto gradeDto;
@@ -15,7 +17,7 @@ public class GradeAlarmService extends AlarmService {
     }
 
     @Override
-    protected String messageTemplate() {
+    protected String templateParams() {
         return alarmTemplate;
     }
 
