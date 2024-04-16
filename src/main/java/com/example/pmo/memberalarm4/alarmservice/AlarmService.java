@@ -8,8 +8,8 @@ import java.util.Map;
 
 public abstract class AlarmService {
 
-    protected static final String COMP_ID = "{CompID}";
-    protected static final String COMP_VER = "{CompVer}";
+    private static final String COMP_ID = "{CompID}";
+    private static final String COMP_VER = "{CompVer}";
 
     private static final String TEMPLATE_HEADER = String.format("""
             {
@@ -27,21 +27,27 @@ public abstract class AlarmService {
 
     private MemberAlarmEnum4 memberAlarmEnum;
 
-    abstract protected String templateParams();
 
-    protected String getAlarmTemplate() {
-        return TEMPLATE_HEADER + templateParams() + TEMPLATE_FOOTER;
-    }
+    abstract protected String templateParams();
 
     abstract protected void setParamsMapper();
 
     // New method to be implemented by subclasses to load specific data
     abstract protected void loadData(Long id);
 
+
+    protected String getAlarmTemplate() {
+        return TEMPLATE_HEADER + templateParams() + TEMPLATE_FOOTER;
+    }
+
+    public void setEnum(MemberAlarmEnum4 memberAlarmEnum) {
+        this.memberAlarmEnum = memberAlarmEnum;
+    }
+
     /**
      * <pre>
      *     TODO 1. 알람 메시지 생성 로직으로 변경
-     *  <Font color=green>Note : 알람 메시지를 Frontend용 API에 리턴하기 좋은 JSON 포멧으로 저장하는 로직으로 변경한다.</Font>
+     *  <Font color="green">Note : 알람 메시지를 Frontend용 API에 리턴하기 좋은 JSON 포멧으로 저장하는 로직으로 변경한다.</Font>
      *  아래 코드는 샘플 설명을 위해 간단하게 문자열을 만들어서 리턴하도록 작성했지만,
      *  실제 사용에서는 각 ID값으로 필요한 데이터를 조회해서 Frontend 용도에 맞게
      *  JSON 데이터를 생성해 두는 방식을 염두하고 개발함
@@ -87,7 +93,4 @@ public abstract class AlarmService {
         return modifiedMessage;
     }
 
-    public void setEnum(MemberAlarmEnum4 memberAlarmEnum) {
-        this.memberAlarmEnum = memberAlarmEnum;
-    }
 }
