@@ -1,6 +1,7 @@
 package com.example.pmo.memberalarm4.domain.gradeservice;
 
-import com.example.pmo.memberalarm4.alarmservice.GetAlarmParam;
+
+import java.util.function.Supplier;
 
 public class GradeDto {
     private long userId;
@@ -15,7 +16,7 @@ public class GradeDto {
         this.userLevel = userLevel;
     }
 
-    public GetAlarmParam<String> getUserName = () -> userName;
+    public Supplier<String> getUserName = () -> userName;
 
-    public GetAlarmParam<String> getUserLevel = () -> String.valueOf(userLevel);
+    public Supplier<String> getUserLevel = () -> String.valueOf(userLevel);
 }

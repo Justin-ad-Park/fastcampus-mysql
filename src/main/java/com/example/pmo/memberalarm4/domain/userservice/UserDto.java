@@ -1,6 +1,6 @@
 package com.example.pmo.memberalarm4.domain.userservice;
 
-import com.example.pmo.memberalarm4.alarmservice.GetAlarmParam;
+import java.util.function.Supplier;
 
 public class UserDto {
     private long userId;
@@ -12,6 +12,6 @@ public class UserDto {
         this.userName = userName;
     }
 
-    public GetAlarmParam<String> getUserName = () -> userName;
+    public Supplier<String> getUserName = () -> userName;
 
 }

@@ -5,6 +5,7 @@ import com.example.pmo.memberalarm4.MemberAlarmEnum4;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.function.Supplier;
 
 public abstract class AlarmService {
 
@@ -23,7 +24,7 @@ public abstract class AlarmService {
             """;
 
 
-    protected HashMap<String, GetAlarmParam> paramsMapper = new HashMap<>();
+    protected HashMap<String, Supplier<String>> paramsMapper = new HashMap<>();
 
     private MemberAlarmEnum4 memberAlarmEnum;
 
@@ -82,12 +83,12 @@ public abstract class AlarmService {
         modifiedMessage = modifiedMessage.replace(COMP_VER, memberAlarmEnum.getCompVer());
 
         // dto 객체의 값으로 메시지(JSON)를 치환한다.
-        Iterator<Map.Entry<String, GetAlarmParam>> iterator = paramsMapper.entrySet().iterator();
+        Iterator<Map.Entry<String, Supplier<String>>> iterator = paramsMapper.entrySet().iterator();
 
         while (iterator.hasNext()) {
-            Map.Entry<String, GetAlarmParam> entry = iterator.next();
+            Map.Entry<String, Supplier<String>> entry = iterator.next();
 
-            modifiedMessage = modifiedMessage.replace(entry.getKey(), (String)entry.getValue().getValue());
+            modifiedMessage = modifiedMessage.replace(entry.getKey(), entry.getValue().get());
         }
 
         return modifiedMessage;
