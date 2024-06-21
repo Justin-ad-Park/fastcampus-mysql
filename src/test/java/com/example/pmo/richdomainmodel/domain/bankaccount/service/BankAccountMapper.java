@@ -1,10 +1,11 @@
-package com.example.pmo.richdomainmodel.domain.account;
+package com.example.pmo.richdomainmodel.domain.bankaccount.service;
 
+import com.example.pmo.richdomainmodel.domain.bankaccount.BankAccountBo;
 import java.math.BigDecimal;
 
-public class AccountMapper {
+public class BankAccountMapper {
 
-    public Account getAccount(long accountId) {
+    protected BankAccountBo getAccount(long accountId) {
         /**
          * select AccountId, balance
          * from Account
@@ -13,7 +14,8 @@ public class AccountMapper {
         return null;
     }
 
-    public BigDecimal getBalance(Long AccountId) {
+
+    protected BigDecimal getBalance(Long AccountId) {
         /**
          * select balance
          * from Account
@@ -23,7 +25,7 @@ public class AccountMapper {
         return BigDecimal.valueOf(0);
     }
 
-    public void updateBalance(Long AccountId, BigDecimal subtract) {
+    protected void updateBalance(Long AccountId, BigDecimal subtract) {
         // Account 테이블에 차감된 amout를 업데이트 한다.
         /**
          * update Account
