@@ -3,7 +3,9 @@ package com.example.lambdapattern._13decorator;
 import com.example.lambdapattern._13decorator.Extras.ExtraAddition;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.function.Supplier;
 
 public final class Coffee {
     private final Cup cup;
@@ -16,12 +18,26 @@ public final class Coffee {
 
     private List<ExtraAddition> extras = new ArrayList<>();
 
-    public void addExtraOrder(ExtraAddition extra) {
+    public Coffee addExtraOrder(ExtraAddition extra) {
         extras.add(extra);
+        return this;
     }
 
-    public void addExtraOrder(ExtraAddition ...extra) {
+    public Coffee addExtraOrder(ExtraAddition ...extra) {
         extras.addAll(List.of(extra));
+        return this;
+    }
+
+    public Coffee addExtraOrder(Supplier<ExtraAddition> extra) {
+        extras.add(extra.get());
+        return this;
+    }
+
+    public Coffee addExtraOrder(Supplier<ExtraAddition> ...extra) {
+        Arrays.stream(extra).forEach(
+                e -> this.extras.add(e.get())
+        );
+        return this;
     }
 
     public Cup cup() {

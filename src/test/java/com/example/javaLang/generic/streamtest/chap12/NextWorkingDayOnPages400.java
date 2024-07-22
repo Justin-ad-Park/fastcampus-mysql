@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
 import java.time.temporal.*;
 import java.util.Locale;
 import java.util.stream.Stream;
@@ -64,6 +65,22 @@ public class NextWorkingDayOnPages400 implements TemporalAdjuster {
         System.out.println(day3m1d.format(korDDFormatter));
 
 
+    }
+
+    @Test
+    void dayOfWeek() {
+        // 특정 날짜를 설정합니다.
+        LocalDate date = LocalDate.of(2024, 7, 11);
+
+        // Locale을 한국어로 설정하여 요일을 출력합니다.
+        Locale koreanLocale = new Locale("ko", "KR");
+
+        // 요일을 한글로 출력합니다.
+        String dayOfWeekInKorean = date.getDayOfWeek().getDisplayName(TextStyle.FULL, koreanLocale);
+
+        // 결과 출력
+        System.out.println("날짜: " + date);
+        System.out.println("요일: " + dayOfWeekInKorean);
     }
 
     private DateTimeFormatter korDFormatter = DateTimeFormatter.ofPattern("yyyy년 MMM d일(E)", Locale.KOREAN);

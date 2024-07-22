@@ -1,11 +1,10 @@
 package com.example.pmo.memberalarm.domain.userservice;
 
 import com.example.pmo.memberalarm.alarmservice.GetAlarmParam;
-import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 
-@Service
+//@Service
 public class UserService {
         private HashMap<Long, UserVo> userList = new HashMap<>();
 
