@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.function.Function;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -131,7 +132,7 @@ public class CollectTest {
                                 .stream()   /* 학생 이름, 평균 점수로 구성된 스트림 StudentName, AvgScore */
                                 .sorted(Map.Entry.<String, Double>comparingByValue().reversed())   //comparingByKey로 하면 이름순 정렬
                                 .collect(Collectors.toMap(
-                                        Map.Entry::getKey,  //스트림 요소에서 키를 추출하는 함수
+                                        Map.Entry::getKey ,  //스트림 요소에서 키를 추출하는 함수
                                         Map.Entry::getValue,    //스트림 요소에서 값을 추출하는 함수
                                         (e1, e2) -> e1,     // 키 충돌 시 두 개의 충돌 데이터로 결과 데이터 1개를 만듬
                                                             // 예) (e1, e2) -> e1로 하면 기존 데이터를 유지함. e1, e2를 조합해서 새로운 데이터 생성도 가능
@@ -204,19 +205,20 @@ public class CollectTest {
                                         .entrySet()
                                         .stream()
                                         .map(examEntry ->
-                                                new AbstractMap.SimpleEntry<>(
+                                                new SimpleEntry<>(
                                                         studentEntry.getKey() + " - " + examEntry.getKey(),
                                                         examEntry.getValue())))
                         .peek(System.out::println)
                         .toList()
                         ;
-
-        // scoreList2PeriodName.forEach(System.out::println);
-
+//
+//        // scoreList2PeriodName.forEach(System.out::println);
+//
         var scoreRanges = scoreList2PeriodName
                 .stream()
                 .collect(Collectors.groupingBy(
                         entry -> (int) (Math.floor(entry.getValue() / 10) * 10),
+                        // TreeMap::new,
                         Collectors.toList()
                 ));
 
@@ -230,12 +232,26 @@ public class CollectTest {
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,
                         entry -> entry.getValue().stream()
-                                .sorted(Comparator.comparing(AbstractMap.SimpleEntry::getValue))
+                                .sorted(Comparator.comparing((SimpleEntry<String, Double> e) -> e.getValue()).reversed())
+                                //.sorted((Comparator.comparing(SimpleEntry::getValue)))
                                 .collect(Collectors.toList())
                 ));
 
         System.out.println("\n[Result]");
         System.out.println(sortedResult);
+
+        var finalSortedResult = sortedResult.entrySet().stream()
+                .sorted(Map.Entry.comparingByKey())
+                //.sorted(Map.Entry.<Integer, List<SimpleEntry<String, Double>>>comparingByKey().reversed())
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (e1, e2) -> e1,
+                        LinkedHashMap::new
+                ));
+
+        System.out.println("\n[Final]");
+        System.out.println(finalSortedResult);
 
     }
 
@@ -254,7 +270,7 @@ public class CollectTest {
 
         System.out.println(studentAverages);
 
-        Map<Integer, List<AbstractMap.SimpleEntry<String, Double>>> scoreRanges =
+        Map<Integer, List<SimpleEntry<String, Double>>> scoreRanges =
                 studentAverages.entrySet()
                         .stream()
                         .flatMap(studentEntry ->
@@ -263,7 +279,7 @@ public class CollectTest {
                                         .entrySet()
                                         .stream()
                                         .map(examEntry ->
-                                                new AbstractMap.SimpleEntry<>(
+                                                new SimpleEntry<>(
                                                         studentEntry.getKey() + " - " + examEntry.getKey(),
                                                         examEntry.getValue())))
                         // .filter(e -> e.getValue() >= 80) //필터링이 필요한 경우
@@ -283,7 +299,7 @@ public class CollectTest {
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,
                         entry -> entry.getValue().stream()
-                                .sorted(Comparator.comparing(AbstractMap.SimpleEntry::getValue))
+                                .sorted(Comparator.comparing(SimpleEntry::getValue))
                                 .collect(Collectors.toList())
                 ));
 
@@ -323,32 +339,32 @@ public class CollectTest {
     }
 
     private static @NotNull Function<Map.Entry<String, Map<String, Double>>,
-            Stream<? extends AbstractMap.SimpleEntry<String, Double>>> flatToNameAvgScore() {
+            Stream<? extends SimpleEntry<String, Double>>> flatToNameAvgScore() {
         return studentEntry ->
                 studentEntry
                         .getValue()
                         .entrySet()
                         .stream()
                         .map(examEntry ->
-                                new AbstractMap.SimpleEntry<>(
+                                new SimpleEntry<>(
                                         studentEntry.getKey() + " - " + examEntry.getKey(),
                                         examEntry.getValue()));
     }
 
-    private static @NotNull Collector<AbstractMap.SimpleEntry<String, Double>
-            , ?, Map<Integer, List<AbstractMap.SimpleEntry<String, Double>>>> collectBy10point() {
+    private static @NotNull Collector<SimpleEntry<String, Double>
+            , ?, Map<Integer, List<SimpleEntry<String, Double>>>> collectBy10point() {
         return Collectors.groupingBy(
                 entry -> (int) (Math.floor(entry.getValue() / 10) * 10),
                 Collectors.toList()
         );
     }
 
-    private static @NotNull Collector<Map.Entry<Integer, List<AbstractMap.SimpleEntry<String, Double>>>,
-            ?, Map<Integer, List<AbstractMap.SimpleEntry<String, Double>>>> sortedByAvgscore() {
+    private static @NotNull Collector<Map.Entry<Integer, List<SimpleEntry<String, Double>>>,
+            ?, Map<Integer, List<SimpleEntry<String, Double>>>> sortedByAvgscore() {
         return Collectors.toMap(
                 Map.Entry::getKey,
                 entry -> entry.getValue().stream()
-                        .sorted(Comparator.comparing(AbstractMap.SimpleEntry::getValue))
+                        .sorted(Comparator.comparing(SimpleEntry::getValue))
                         .collect(Collectors.toList())
         );
     }

@@ -27,7 +27,7 @@ public class FileStreamTest {
         // matcher를 이용한 파일 스트림 생성
         try (var stream = Files.find(path, Integer.MAX_VALUE, longTimeNoAccessMatcher(noAccessTime))) {
             stream
-                    //.filter(getFilter())      // 추가적인 필터가 필요한 경우
+                    .filter(getFilter())      // 추가적인 필터가 필요한 경우
                     .limit(2)           // 과도한 처리를 제한하기 위한 수량 한정
                     .peek(System.out::println)  // 대상 파일 로그 출력
                     .forEach(FileStreamTest::deleteFile);
@@ -39,6 +39,9 @@ public class FileStreamTest {
 
     /**
      * try-with-resource 블록을 사용해 자원 반환을 보장
+     *
+     * Stream<T> 타입은 BaseStream을 통해 java.io.AutoCloseable을 구현한다.
+     *
      *
      * Files.find
      * >> (선언부)
