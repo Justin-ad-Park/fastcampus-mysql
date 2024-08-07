@@ -32,7 +32,7 @@ public class TryCatchTest {
     @Test
     void testPrintStackTrace() {
         Path path1 = Path.of("src/main/resources/data.txt");
-        Path path2 = Paths.get("src/main/resources/dataError.txt");
+        Path path2 = Path.of("src/main/resources/dataError.txt");
         Path path3 = Path.of("src/main/resources/data1.txt");
 
         Stream.of(path1, path2, path3)
@@ -49,12 +49,16 @@ public class TryCatchTest {
 
     @Test
     void testThrow() {
-        throwMethod();
+        try {
+            throwMethod();
+        } catch (RuntimeException e) {
+            System.out.println("예외 발생: " + e.getMessage());
+        }
     }
 
-    private static void throwMethod() {
+    private static void throwMethod()   {
         Path path1 = Path.of("src/main/resources/data.txt");
-        Path path2 = Paths.get("src/main/resources/dataError.txt");
+        Path path2 = Path.of("src/main/resources/dataError.txt");
         Path path3 = Path.of("src/main/resources/data1.txt");
 
         Stream.of(path1, path2, path3)
@@ -91,6 +95,7 @@ public class TryCatchTest {
                 .filter(Objects::nonNull)
                 .forEach(System.out::println);
     }
+
 
     @Test
     void testExtractMethod() {
