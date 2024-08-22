@@ -9,7 +9,7 @@ public class ClassResult <E extends Throwable>{
     private final E throwable;
     private final boolean isSuccess;
 
-    private ClassResult(String value, E throwable, boolean isSuccess) {
+    public ClassResult(String value, E throwable, boolean isSuccess) {
         this.value = value;
         this.throwable = throwable;
         this.isSuccess = isSuccess;

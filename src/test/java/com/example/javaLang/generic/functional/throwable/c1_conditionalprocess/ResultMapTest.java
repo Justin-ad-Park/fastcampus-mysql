@@ -57,9 +57,9 @@ public class ResultMapTest {
         Stream.of(path1, path2, path3)
                 .map(this::safeReadString)
                 .map(r ->
-                        r.mapSuccessFailure(
-                                String::toUpperCase,    //성공 mapper -> 대문자로 변경
-                                e -> "IO Error: " + e.getMessage()  //실패 mapper -> 에러 메시지 출력
+                        r.map(
+                                String::toUpperCase,
+                                e -> "IO Error: " + e.getMessage()
                         )
                 )//success, failure 동시에 처리
                 .forEach(System.out::println);
@@ -75,7 +75,7 @@ public class ResultMapTest {
 
         Stream.of(path1, path2, path3)
                 .map(this::safeReadString)
-                .map(successFailureMapper)   // 성공과 실패를 각각 처리해서 결과를 리턴하는
+                .map(successNfailure)//success, failure 동시에 처리
                 .forEach(System.out::println);
 
     }
@@ -85,9 +85,9 @@ public class ResultMapTest {
     Function<IOException, String> failureMapper =
             e -> "IO Error: " + e.getMessage();
 
-    Function<Result<String, IOException>, String> successFailureMapper =
+    Function<Result<String, IOException>, String> successNfailure =
         r ->
-                r.mapSuccessFailure(
+                r.map(
                         successMapper,
                         failureMapper
                 );
