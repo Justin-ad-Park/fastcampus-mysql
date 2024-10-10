@@ -24,15 +24,6 @@ import java.util.stream.Stream;
  */
 public class FileIOv2Test {
 
-    // 제네릭 메서드로 변환
-    private <R> R safeReadString(Path path, ResultFactory<R> factory) {
-        try {
-            return factory.success(Files.readString(path));
-        } catch (IOException e) {
-            return factory.failure(e);
-        }
-    }
-
     @Test
     void test() {
         Path path1 = Path.of("src/main/resources/data.txt");
@@ -53,6 +44,14 @@ public class FileIOv2Test {
         testResult(path1, path2, path3, ClassResult::success, ClassResult::failure);
     }
 
+    // 제네릭 메서드로 변환
+    private <R> R safeReadString(Path path, ResultFactory<R> factory) {
+        try {
+            return factory.success(Files.readString(path));
+        } catch (IOException e) {
+            return factory.failure(e);
+        }
+    }
 
     private <R> void testResult(Path path1, Path path2, Path path3,
                                 ResultSuccessFactory<R> successFactory,
@@ -99,11 +98,13 @@ public class FileIOv2Test {
     }
 
     // 성공 팩토리 인터페이스
+    @FunctionalInterface
     private interface ResultSuccessFactory<R> {
         R create(String value);
     }
 
     // 실패 팩토리 인터페이스
+    @FunctionalInterface
     private interface ResultFailureFactory<R> {
         R create(IOException e);
     }
