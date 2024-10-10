@@ -16,18 +16,19 @@ public class OmEmplDiscTranDataGeneratorV2 {
     //private static final String url = "jdbc:mysql://localhost:3306/fast_sns?rewriteBatchedStatements=true&profileSQL=true&logger=Slf4JLogger&maxQuerySizeToLog=999&characterEncoding=UTF-8&serverTimezone=Asia/Seoul"; // 데이터베이스 URL
 
     /* 데이터베이스 연결 정보 설정(로그 미기록 - 빠른 데이터 생성용) */
-    public static final String url = "jdbc:mysql://localhost:3306/fast_sns?characterEncoding=UTF-8&serverTimezone=Asia/Seoul"; // 데이터베이스 URL
-    private static final String user = "root"; // 데이터베이스 사용자 이름
-    private static final String password = ""; // 데이터베이스 비밀번호
+    //public static final String url = "jdbc:mysql://localhost:3306/fast_sns?characterEncoding=UTF-8&serverTimezone=Asia/Seoul"; // 데이터베이스 URL
+    public static final String url = "jdbc:mysql://db-665ft-kr.vpc-pub-cdb.ntruss.com:3306/toy_project"; // 데이터베이스 URL
+    private static final String user = "toy_dbuser"; // 데이터베이스 사용자 이름
+    private static final String password = "project##77"; // 데이터베이스 비밀번호
 
 
     //-- 데이터 생성 조건 셋팅 영역 --------------------------------------
     // 1. OM_EMPL_DISC_TRAN 테이블에 대량의 레코드를 생성하기 위한 조건--------
     // OM_ORDER_ID 시작 번호 : 기존 데이터가 있을 경우 이어서 생성하기 위해, 기존 주문번호 +1 이상의 값을 설정
-    private static final long startOrderId = 141;
+    private static final long startOrderId = 1;
 
     // 생성할 트랜잭션 수
-    private static final long recordCount = 10;
+    private static final long recordCount = 10000;
 
     // OM_ORDER_DT 생성 범위 설정
     private static final LocalDateTime startDate = LocalDateTime.of(2024, 1, 1, 0, 0, 0);
@@ -106,7 +107,7 @@ public class OmEmplDiscTranDataGeneratorV2 {
                 generateOrderData(conn, tranId, Timestamp.valueOf(randomOrderDate));
 
                 // 배치 사이즈가 1000일 때 한 번에 실행
-                if ((i + 1) % 1000 == 0) {
+                if ((i + 1) % 100 == 0) {
                     pstmt.executeBatch();
                     conn.commit();
                     System.out.println((i + 1) + "개의 레코드가 삽입되었습니다.");
