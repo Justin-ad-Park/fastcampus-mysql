@@ -4,7 +4,7 @@ import com.example.javaLang.generic.streamtest.chap10dsl.tradestock.Order;
 
 import java.util.function.DoubleUnaryOperator;
 
-public class TaxCaculatorWithLambda {
+public class TaxCalculatorWithLambda {
     //기본 세금계산 함수는 원래 금액을 그대로 리턴한다.
     // 즉, 세금을 계산하지 않는다.
     public DoubleUnaryOperator taxFunction = d -> {
@@ -12,7 +12,7 @@ public class TaxCaculatorWithLambda {
         return d;
     };
 
-    public TaxCaculatorWithLambda with(DoubleUnaryOperator f) {
+    public TaxCalculatorWithLambda with(DoubleUnaryOperator f) {
         taxFunction = taxFunction.andThen(f);
         return this;
     }

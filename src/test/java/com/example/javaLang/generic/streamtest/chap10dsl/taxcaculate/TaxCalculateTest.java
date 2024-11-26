@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 
 import static com.example.javaLang.generic.streamtest.chap10dsl.tradestock.lambdamixedbuilder.MixedBuilder.*;
 
-public class TaxCaculateTest {
+public class TaxCalculateTest {
     private final Order order;
 
-    public TaxCaculateTest() {
+    public TaxCalculateTest() {
         order = forCustomer("BigBank",
                 buy(t -> t.quantity(80)
                         .stock("IBM")
@@ -37,7 +37,7 @@ public class TaxCaculateTest {
 
     @Test
     void TaxCaculatorTest() {
-        double value = new TaxCaculator().withTaxGeneral().withTaxSurcharge()
+        double value = new TaxCalculator().withTaxGeneral().withTaxSurcharge()
                 .calculate(order);
 
         printBill(value);
@@ -45,14 +45,14 @@ public class TaxCaculateTest {
 
     @Test
     void TaxCaculatorWithLambdaTest() {
-        double value = new TaxCaculatorWithLambda()
+        double value = new TaxCalculatorWithLambda()
                 .calculate(order);
         printBill(value);
     }
 
     @Test
     void TaxCaculatorWithLambdaTest2() {
-        double value = new TaxCaculatorWithLambda()
+        double value = new TaxCalculatorWithLambda()
                 .with(Tax::regional)
                 .with(Tax::surcharge)
                 .calculate(order);

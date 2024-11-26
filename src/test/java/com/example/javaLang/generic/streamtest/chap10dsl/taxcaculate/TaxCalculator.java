@@ -2,22 +2,22 @@ package com.example.javaLang.generic.streamtest.chap10dsl.taxcaculate;
 
 import com.example.javaLang.generic.streamtest.chap10dsl.tradestock.Order;
 
-public class TaxCaculator {
+public class TaxCalculator {
     private boolean useRegional;
     private boolean useGeneral;
     private boolean useSurcharge;
 
-    public TaxCaculator withTaxRegional() {
+    public TaxCalculator withTaxRegional() {
         useRegional = true;
         return this;
     }
 
-    public TaxCaculator withTaxGeneral() {
+    public TaxCalculator withTaxGeneral() {
         useGeneral = true;
         return this;
     }
 
-    public TaxCaculator withTaxSurcharge() {
+    public TaxCalculator withTaxSurcharge() {
         useSurcharge = true;
         return this;
     }
