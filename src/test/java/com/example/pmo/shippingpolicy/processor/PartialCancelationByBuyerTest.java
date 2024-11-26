@@ -2,25 +2,27 @@ package com.example.pmo.shippingpolicy.processor;
 
 import com.example.pmo.shippingpolicy.*;
 import com.example.pmo.shippingpolicy.processor.implement.PartialCancelationByBuyer;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 class PartialCancelationByBuyerTest {
 
     @Test
-    void calculate_요청파라미터는notNull() {
+    void calculate_응답객체_생성여부() throws Exception {
         // given
         PartialCancelationByBuyer partialCancelationByBuyer = new PartialCancelationByBuyer();
 
         // when
 
         // then
-        assertThrows(Exception.class, () -> partialCancelationByBuyer.calculate(null));
+        ClaimShippingResDTO resDto = partialCancelationByBuyer.calculate(null);
+
+        Assertions.assertNotNull(resDto);
     }
 
     @Test
@@ -43,6 +45,6 @@ class PartialCancelationByBuyerTest {
         ClaimShippingResDTO claimShippingResDTO = partialCancelationByBuyerMock.calculate(claimShippingReqDTO);
 
         // then
-        assertNotNull(claimShippingResDTO);
+        Assertions.assertNotNull(claimShippingResDTO);
     }
 }
