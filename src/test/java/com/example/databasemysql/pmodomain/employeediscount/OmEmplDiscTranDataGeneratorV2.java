@@ -16,9 +16,10 @@ public class OmEmplDiscTranDataGeneratorV2 {
     //private static final String url = "jdbc:mysql://localhost:3306/fast_sns?rewriteBatchedStatements=true&profileSQL=true&logger=Slf4JLogger&maxQuerySizeToLog=999&characterEncoding=UTF-8&serverTimezone=Asia/Seoul"; // 데이터베이스 URL
 
     /* 데이터베이스 연결 정보 설정(로그 미기록 - 빠른 데이터 생성용) */
-    public static final String url = "jdbc:mysql://localhost:3306/fast_sns?characterEncoding=UTF-8&serverTimezone=Asia/Seoul"; // 데이터베이스 URL
-    private static final String user = "root"; // 데이터베이스 사용자 이름
-    private static final String password = ""; // 데이터베이스 비밀번호
+    //public static final String url = "jdbc:mysql://localhost:3306/fast_sns?characterEncoding=UTF-8&serverTimezone=Asia/Seoul"; // 데이터베이스 URL
+    public static final String url = "jdbc:mysql://db-665ft-kr.vpc-pub-cdb.ntruss.com:3306/toy_project"; // 데이터베이스 URL
+    private static final String user = "toy_dbuser"; // 데이터베이스 사용자 이름
+    private static final String password = "project##77"; // 데이터베이스 비밀번호
 
 
     //-- 데이터 생성 조건 셋팅 영역 --------------------------------------
