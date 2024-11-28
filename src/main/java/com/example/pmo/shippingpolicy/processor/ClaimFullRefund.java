@@ -1,8 +1,7 @@
-package com.example.pmo.shippingpolicy.processor.implement;
+package com.example.pmo.shippingpolicy.processor;
 
-import com.example.pmo.shippingpolicy.processor.ClaimShippingReqDTO;
-import com.example.pmo.shippingpolicy.processor.ClaimShippingResDTO;
-import com.example.pmo.shippingpolicy.processor.ClaimShippingProcessor;
+import com.example.pmo.shippingpolicy.ClaimShippingReqDTO;
+import com.example.pmo.shippingpolicy.ClaimShippingResDTO;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -12,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
  *  - 전체취소(구매자)
  *  - 전체반품(판매자)
  */
-public class ClaimFullRefund implements ClaimShippingProcessor {
+class ClaimFullRefund implements ClaimShippingProcessor {
 
     @Override
     public ClaimShippingResDTO calculate(@NotNull ClaimShippingReqDTO claimShippingReqDTO) throws Exception {

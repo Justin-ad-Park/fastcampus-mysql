@@ -1,7 +1,5 @@
-package com.example.pmo.shippingpolicy.processor;
+package com.example.pmo.shippingpolicy;
 
-import com.example.pmo.shippingpolicy.ClaimResponsibility;
-import com.example.pmo.shippingpolicy.ClaimType;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 

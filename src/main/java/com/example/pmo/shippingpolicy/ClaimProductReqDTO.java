@@ -1,4 +1,4 @@
-package com.example.pmo.shippingpolicy.processor;
+package com.example.pmo.shippingpolicy;
 
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;

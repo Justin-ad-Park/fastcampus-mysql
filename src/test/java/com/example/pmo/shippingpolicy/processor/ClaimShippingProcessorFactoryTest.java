@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
+@Deprecated
 class ClaimShippingProcessorFactoryTest {
 
     @Test

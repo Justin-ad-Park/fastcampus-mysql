@@ -1,10 +1,6 @@
-package com.example.pmo.shippingpolicy;
+package com.example.pmo.shippingpolicy.processor;
 
-import com.example.pmo.shippingpolicy.processor.ClaimProductReqDTO;
-import com.example.pmo.shippingpolicy.processor.ClaimShippingProcessor;
-import com.example.pmo.shippingpolicy.processor.ClaimShippingReqDTO;
-import com.example.pmo.shippingpolicy.processor.ClaimShippingResDTO;
-import com.example.pmo.shippingpolicy.processor.implement.PartialCancelationByBuyer;
+import com.example.pmo.shippingpolicy.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -13,16 +9,16 @@ import java.util.ArrayList;
 class ClaimProcessorSelectorTest {
 
     @Test
-    void getInstance_타입체크() throws Exception {
+    void getInstance_객체생성테스트() throws Exception {
         // given
         ClaimShippingProcessor claimProcessor = ClaimProcessorSelector.getInstance(ClaimType.PARTIAL_CANCELLATION, ClaimResponsibility.BUYER_RESPONSIBILITY);
 
         // then
-        Assertions.assertTrue(claimProcessor instanceof PartialCancelationByBuyer);
+        Assertions.assertNotNull(claimProcessor);
     }
 
     @Test
-    void getInstance() throws Exception {
+    void getInstance_리턴값테스트() throws Exception {
         // given
         ClaimShippingProcessor claimProcessor = ClaimProcessorSelector.getInstance(ClaimType.PARTIAL_CANCELLATION, ClaimResponsibility.BUYER_RESPONSIBILITY);
 

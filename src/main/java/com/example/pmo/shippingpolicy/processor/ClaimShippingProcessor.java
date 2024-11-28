@@ -1,5 +1,8 @@
 package com.example.pmo.shippingpolicy.processor;
 
+import com.example.pmo.shippingpolicy.ClaimShippingReqDTO;
+import com.example.pmo.shippingpolicy.ClaimShippingResDTO;
+
 public interface ClaimShippingProcessor {
 
         /**
