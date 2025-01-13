@@ -103,6 +103,13 @@ public class GameV2 extends JPanel implements KeyListener {
     }
 
     private void update() {
+        handleInputs();
+
+        updateMaps();
+
+    }
+
+    private void handleInputs() {
         while (!inputs.isEmpty()) {
             Input input = inputs.remove(0);
             keyPressCount++;
@@ -116,7 +123,9 @@ public class GameV2 extends JPanel implements KeyListener {
             repaint();
             checkSuccess();
         }
+    }
 
+    private void updateMaps() {
         for (int y = map.length - 2; y >= 0; y--) {
             for (int x = 0; x < map[y].length; x++) {
                 if ((map[y][x] == Tile.STONE || map[y][x] == Tile.FALLING_STONE) && map[y + 1][x] == Tile.AIR) {
@@ -132,7 +141,6 @@ public class GameV2 extends JPanel implements KeyListener {
                 }
             }
         }
-
     }
 
 
