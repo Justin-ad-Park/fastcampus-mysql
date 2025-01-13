@@ -7,7 +7,7 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameUpgrade extends JPanel implements KeyListener {
+public class GameV2 extends JPanel implements KeyListener {
 
     private static final int TILE_SIZE = 30;
     private static final int FPS = 30;
@@ -35,7 +35,7 @@ public class GameUpgrade extends JPanel implements KeyListener {
     private List<Input> inputs = new ArrayList<>();
     private int keyPressCount = 0;
 
-    public GameUpgrade() {
+    public GameV2() {
         setPreferredSize(new Dimension(map[0].length * TILE_SIZE, map.length * TILE_SIZE));
         setFocusable(true);
         addKeyListener(this);
@@ -93,10 +93,8 @@ public class GameUpgrade extends JPanel implements KeyListener {
     }
 
     private void checkSuccess() {
-        int y = map.length - 2;
         int x = map[0].length - 2;
-
-        System.out.println(x + " : " + y);
+        int y = map.length - 2;
 
         if (map[y][x] == Tile.BOX ) {
             JOptionPane.showMessageDialog(this, "Success! Key presses: " + keyPressCount);
@@ -155,16 +153,18 @@ public class GameUpgrade extends JPanel implements KeyListener {
                     g.setColor(new Color(255, 204, 0));
                 } else if (map[y][x] == Tile.KEY2 || map[y][x] == Tile.LOCK2) {
                     g.setColor(new Color(0, 204, 255));
+                } else if (map[y][x] == Tile.AIR) {
+                    g.setColor(Color.WHITE);
+                } else if (map[y][x] == Tile.PLAYER) {
+                    g.setColor(Color.RED);
                 }
 
-                if (map[y][x] != Tile.AIR && map[y][x] != Tile.PLAYER) {
-                    g.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
-                }
+                g.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
             }
         }
 
-        g.setColor(Color.RED);
-        g.fillRect(playerX * TILE_SIZE, playerY * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+        //g.setColor(Color.RED);
+        //g.fillRect(playerX * TILE_SIZE, playerY * TILE_SIZE, TILE_SIZE, TILE_SIZE);
     }
 
     @Override
@@ -186,8 +186,8 @@ public class GameUpgrade extends JPanel implements KeyListener {
     }
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Game");
-        GameUpgrade game = new GameUpgrade();
+        JFrame frame = new JFrame("GameV2");
+        GameV2 game = new GameV2();
         frame.add(game);
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
