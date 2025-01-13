@@ -135,6 +135,7 @@ public class GameV2 extends JPanel implements KeyListener {
 
     }
 
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
