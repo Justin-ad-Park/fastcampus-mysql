@@ -1,7 +1,6 @@
 package com.example.pmo.shippingpolicy.processor;
 
 import com.example.pmo.shippingpolicy.*;
-import com.example.pmo.shippingpolicy.processor.impl.PartialCancelationByBuyer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

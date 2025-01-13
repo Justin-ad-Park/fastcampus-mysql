@@ -6,6 +6,7 @@ import com.example.pmo.shippingpolicy.ClaimType;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 public enum ClaimProcessorSelector {
@@ -77,18 +78,18 @@ public enum ClaimProcessorSelector {
             this.claimResponsibility = claimResponsibility;
         }
 
-//        @Override
-//        public boolean equals(Object o) {
-//            if (this == o) return true;
-//            if (o == null || getClass() != o.getClass()) return false;
-//            Key key = (Key) o;
-//            return claimType == key.claimType && claimResponsibility == key.claimResponsibility;
-//        }
-//
-//        @Override
-//        public int hashCode() {
-//            return Objects.hash(claimType, claimResponsibility);
-//        }
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Key key = (Key) o;
+            return claimType == key.claimType && claimResponsibility == key.claimResponsibility;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(claimType, claimResponsibility);
+        }
     }
 
 }

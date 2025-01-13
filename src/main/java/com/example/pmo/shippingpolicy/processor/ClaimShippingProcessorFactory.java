@@ -2,9 +2,6 @@ package com.example.pmo.shippingpolicy.processor;
 
 import com.example.pmo.shippingpolicy.ClaimResponsibility;
 import com.example.pmo.shippingpolicy.ClaimType;
-import com.example.pmo.shippingpolicy.processor.impl.ClaimFullRefund;
-import com.example.pmo.shippingpolicy.processor.impl.PartialCancelationByBuyer;
-import com.example.pmo.shippingpolicy.processor.impl.PartialClaimBySeller;
 
 /**
  * 배송비 처리기 팩토리
