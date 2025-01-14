@@ -1,5 +1,7 @@
 package com.example.filvelines;
 
+import com.example.filvelines.input.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -17,7 +19,7 @@ public class GameV2 extends JPanel implements KeyListener {
         AIR, FLUX, UNBREAKABLE, PLAYER, STONE, FALLING_STONE, BOX, FALLING_BOX, KEY1, LOCK1, KEY2, LOCK2
     }
 
-    private enum Input {
+    private enum RawInput {
         UP, DOWN, LEFT, RIGHT
     }
 
@@ -32,7 +34,7 @@ public class GameV2 extends JPanel implements KeyListener {
             {Tile.UNBREAKABLE, Tile.UNBREAKABLE, Tile.UNBREAKABLE, Tile.UNBREAKABLE, Tile.UNBREAKABLE, Tile.UNBREAKABLE, Tile.UNBREAKABLE, Tile.UNBREAKABLE},
     };
 
-    private List<Input> inputs = new ArrayList<>();
+    private List<Input2> inputs = new ArrayList<>();
     private int keyPressCount = 0;
 
     public GameV2() {
@@ -111,7 +113,7 @@ public class GameV2 extends JPanel implements KeyListener {
 
     private void handleInputs() {
         while (!inputs.isEmpty()) {
-            Input input = inputs.remove(0);
+            Input2 input = inputs.remove(0);
 
             countKeyPress();
             handleInput(input);
@@ -124,14 +126,14 @@ public class GameV2 extends JPanel implements KeyListener {
         keyPressCount++;
     }
 
-    private void handleInput(Input input) {
-        if (input == Input.LEFT)
+    private void handleInput(Input2 input) {
+        if (input.isLeft())
             moveHorizontal(-1);
-        else if (input == Input.RIGHT)
+        else if (input.isRight())
             moveHorizontal(1);
-        else if (input == Input.UP)
+        else if (input.isUp())
             moveVertical(-1);
-        else if (input == Input.DOWN)
+        else if (input.isDown())
             moveVertical(1);
     }
 
@@ -201,10 +203,10 @@ public class GameV2 extends JPanel implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
-            case KeyEvent.VK_LEFT, KeyEvent.VK_A -> inputs.add(Input.LEFT);
-            case KeyEvent.VK_UP, KeyEvent.VK_W -> inputs.add(Input.UP);
-            case KeyEvent.VK_RIGHT, KeyEvent.VK_D -> inputs.add(Input.RIGHT);
-            case KeyEvent.VK_DOWN, KeyEvent.VK_S -> inputs.add(Input.DOWN);
+            case KeyEvent.VK_LEFT, KeyEvent.VK_A -> inputs.add(new Left());
+            case KeyEvent.VK_UP, KeyEvent.VK_W -> inputs.add(new Up());
+            case KeyEvent.VK_RIGHT, KeyEvent.VK_D -> inputs.add(new Right());
+            case KeyEvent.VK_DOWN, KeyEvent.VK_S -> inputs.add(new Down());
         }
     }
 
