@@ -125,12 +125,14 @@ public class GameV2 extends JPanel implements KeyListener {
     }
 
     private void handleInput(Input input) {
-        switch (input) {
-            case LEFT -> moveHorizontal(-1);
-            case RIGHT -> moveHorizontal(1);
-            case UP -> moveVertical(-1);
-            case DOWN -> moveVertical(1);
-        }
+        if (input == Input.LEFT)
+            moveHorizontal(-1);
+        else if (input == Input.RIGHT)
+            moveHorizontal(1);
+        else if (input == Input.UP)
+            moveVertical(-1);
+        else if (input == Input.DOWN)
+            moveVertical(1);
     }
 
     private void updateMaps() {
