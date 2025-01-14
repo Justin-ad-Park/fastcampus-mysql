@@ -148,6 +148,7 @@ public class GameV2 extends JPanel implements KeyListener {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+        //Draw Map
         for (int y = 0; y < map.length; y++) {
             for (int x = 0; x < map[y].length; x++) {
                 if (map[y][x] == Tile.FLUX) {
@@ -162,18 +163,17 @@ public class GameV2 extends JPanel implements KeyListener {
                     g.setColor(new Color(255, 204, 0));
                 } else if (map[y][x] == Tile.KEY2 || map[y][x] == Tile.LOCK2) {
                     g.setColor(new Color(0, 204, 255));
-                } else if (map[y][x] == Tile.AIR) {
-                    g.setColor(Color.WHITE);
-                } else if (map[y][x] == Tile.PLAYER) {
-                    g.setColor(Color.RED);
+                } else {
+                    continue;
                 }
 
                 g.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
             }
         }
 
-        //g.setColor(Color.RED);
-        //g.fillRect(playerX * TILE_SIZE, playerY * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+        //Daw Player
+        g.setColor(Color.RED);
+        g.fillRect(playerX * TILE_SIZE, playerY * TILE_SIZE, TILE_SIZE, TILE_SIZE);
     }
 
     @Override
