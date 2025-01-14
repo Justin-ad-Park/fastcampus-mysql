@@ -1,5 +1,7 @@
 package com.example.filvelines;
 
+import com.example.filvelines.input.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -17,7 +19,7 @@ public class GameV2 extends JPanel implements KeyListener {
         AIR, FLUX, UNBREAKABLE, PLAYER, STONE, FALLING_STONE, BOX, FALLING_BOX, KEY1, LOCK1, KEY2, LOCK2
     }
 
-    private enum Input {
+    private enum RawInput {
         UP, DOWN, LEFT, RIGHT
     }
 
@@ -125,13 +127,13 @@ public class GameV2 extends JPanel implements KeyListener {
     }
 
     private void handleInput(Input input) {
-        if (input == Input.LEFT)
+        if (input.isLeft())
             moveHorizontal(-1);
-        else if (input == Input.RIGHT)
+        else if (input.isRight())
             moveHorizontal(1);
-        else if (input == Input.UP)
+        else if (input.isUp())
             moveVertical(-1);
-        else if (input == Input.DOWN)
+        else if (input.isDown())
             moveVertical(1);
     }
 
@@ -201,10 +203,10 @@ public class GameV2 extends JPanel implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
-            case KeyEvent.VK_LEFT, KeyEvent.VK_A -> inputs.add(Input.LEFT);
-            case KeyEvent.VK_UP, KeyEvent.VK_W -> inputs.add(Input.UP);
-            case KeyEvent.VK_RIGHT, KeyEvent.VK_D -> inputs.add(Input.RIGHT);
-            case KeyEvent.VK_DOWN, KeyEvent.VK_S -> inputs.add(Input.DOWN);
+            case KeyEvent.VK_LEFT, KeyEvent.VK_A -> inputs.add(new Left());
+            case KeyEvent.VK_UP, KeyEvent.VK_W -> inputs.add(new Up());
+            case KeyEvent.VK_RIGHT, KeyEvent.VK_D -> inputs.add(new Right());
+            case KeyEvent.VK_DOWN, KeyEvent.VK_S -> inputs.add(new Down());
         }
     }
 
