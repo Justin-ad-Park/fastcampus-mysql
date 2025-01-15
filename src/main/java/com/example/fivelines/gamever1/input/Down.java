@@ -1,8 +1,8 @@
-package com.example.fivelines.input;
+package com.example.fivelines.gamever1.input;
 
-public class Right implements Input {
+public class Down implements Input {
     @Override
-    public boolean isRight() { return true; }
+    public boolean isRight() { return false; }
 
     @Override
     public boolean isLeft() {
@@ -16,7 +16,6 @@ public class Right implements Input {
 
     @Override
     public boolean isDown() {
-        return false;
+        return true;
     }
-
 }
