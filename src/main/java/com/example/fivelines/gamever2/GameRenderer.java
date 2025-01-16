@@ -4,7 +4,7 @@ package com.example.fivelines.gamever2;
 import javax.swing.*;
 import java.awt.*;
 
-public class GameRenderer extends JPanel {
+public class GameRenderer extends JPanel implements GameStatusObserver<Integer> {
     private static final int TILE_SIZE = 30;
     private final GameLogic gameLogic;
 
@@ -49,4 +49,11 @@ public class GameRenderer extends JPanel {
         int playerY = gameLogic.getPlayerY();
         g.fillRect(playerX * TILE_SIZE, playerY * TILE_SIZE, TILE_SIZE, TILE_SIZE);
     }
+
+    @Override
+    public  void gameSuccess(Integer score) {
+        JOptionPane.showMessageDialog(this, "Game Success! Score: " + score);
+        System.exit(0);
+    }
+
 }

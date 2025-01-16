@@ -1,14 +1,20 @@
 package com.example.fivelines.gamever2;
 
-public class GameLogic {
+import java.util.ArrayList;
+import java.util.List;
+
+public class GameLogic implements  PlayerControl, GameStatusSubject<Integer> {
     private Tile[][] map;
     private int playerX;
     private int playerY;
+    private KeyPressCounter keyPressCounter;
+    private final List<GameStatusObserver<Integer>> gameStatusObservers = new ArrayList<>();
 
-    public GameLogic(Tile[][] initialMap, int startX, int startY) {
+    public GameLogic(Tile[][] initialMap, int startX, int startY, KeyPressCounter keyPressCounter) {
         this.map = initialMap;
         this.playerX = startX;
         this.playerY = startY;
+        this.keyPressCounter = keyPressCounter;
     }
 
     public void updateFallingObjects() {
@@ -24,6 +30,15 @@ public class GameLogic {
                 }
             }
         }
+    }
+
+    @Override
+    public void movePlayer(int x, int y) {
+        move(playerX  + x, playerY + y, x, y);
+
+        keyPressCounter.countKeyPress();
+
+        checkSuccess();
     }
 
     public void move(int targetX, int targetY, int dx, int dy) {
@@ -87,4 +102,26 @@ public class GameLogic {
     public int getPlayerY() {
         return playerY;
     }
+
+
+    public void checkSuccess() {
+        //가장 우측 하단에 BOX(상자)를 옮기면 성공
+        int x = map[0].length - 2;
+        int y = map.length - 2;
+
+        if (map[y][x] == Tile.BOX ) {
+            notifyObservers(keyPressCounter.getKeyPressCount());
+        }
+    }
+
+    @Override
+    public void registerObserver(GameStatusObserver<Integer> o) {
+        gameStatusObservers.add(o);
+    }
+
+    @Override
+    public void notifyObservers(Integer score) {
+        gameStatusObservers.forEach(o -> o.gameSuccess(score));
+    }
+
 }

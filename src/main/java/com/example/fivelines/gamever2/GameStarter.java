@@ -1,6 +1,7 @@
 package com.example.fivelines.gamever2;
 
 import com.example.fivelines.gamever2.input.*;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
@@ -19,28 +20,50 @@ public class GameStarter {
                 {Tile.UNBREAKABLE, Tile.UNBREAKABLE, Tile.UNBREAKABLE, Tile.UNBREAKABLE, Tile.UNBREAKABLE, Tile.UNBREAKABLE, Tile.UNBREAKABLE, Tile.UNBREAKABLE}
         };
 
-        GameLogic gameLogic = new GameLogic(initialMap, 1, 1);
+        KeyPressCounter keyPressCounter = new KeyPressCounter();
+
+        GameLogic gameLogic = new GameLogic(initialMap, 1, 1, keyPressCounter);
         GameRenderer gameRenderer = new GameRenderer(gameLogic);
 
-        Map<Integer, InputAction> keyMappings = new HashMap<>();
-        keyMappings.put(KeyEvent.VK_UP, new Up());
-        keyMappings.put(KeyEvent.VK_DOWN, new Down());
-        keyMappings.put(KeyEvent.VK_LEFT, new Left());
-        keyMappings.put(KeyEvent.VK_RIGHT, new Right());
+        //게임 성공 상태를 처리하기 위해 옵저버 패턴을 이용
+        gameLogic.registerObserver(gameRenderer);
 
+        JFrame frame = initFrame(gameRenderer);
+
+        initKeyListener(gameLogic, frame);
+
+        Timer timer = new Timer(1000 / 30, e -> {
+            gameLogic.updateFallingObjects();
+            gameRenderer.repaint();
+        });
+        timer.start();
+    }
+
+    private static @NotNull JFrame initFrame(GameRenderer gameRenderer) {
         JFrame frame = new JFrame("Game");
         frame.add(gameRenderer);
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
+        return frame;
+    }
 
-        frame.addKeyListener(new KeyListener() {
+    private static void initKeyListener(GameLogic gameLogic, JFrame frame) {
+
+        Map<Integer, InputAction> keyMappings = initKeyMappings();
+
+        frame.addKeyListener(createKeyListener(gameLogic, keyMappings));
+    }
+
+    private static @NotNull KeyListener createKeyListener(GameLogic gameLogic, Map<Integer, InputAction> keyMappings) {
+        return new KeyListener() {
+
+            NoneAction noneAction = new NoneAction();
+
             @Override
             public void keyPressed(KeyEvent e) {
-                InputAction action = keyMappings.get(e.getKeyCode());
-                if (action != null) {
-                    action.execute(gameLogic);
-                }
+                InputAction action = keyMappings.getOrDefault(e.getKeyCode(), noneAction);
+                action.execute(gameLogic);
             }
 
             @Override
@@ -50,12 +73,17 @@ public class GameStarter {
             @Override
             public void keyTyped(KeyEvent e) {
             }
-        });
-
-        Timer timer = new Timer(1000 / 30, e -> {
-            gameLogic.updateFallingObjects();
-            gameRenderer.repaint();
-        });
-        timer.start();
+        };
     }
+
+    private static @NotNull Map<Integer, InputAction> initKeyMappings() {
+        Map<Integer, InputAction> keyMappings = new HashMap<>();
+        keyMappings.put(KeyEvent.VK_UP, new Up());
+        keyMappings.put(KeyEvent.VK_DOWN, new Down());
+        keyMappings.put(KeyEvent.VK_LEFT, new Left());
+        keyMappings.put(KeyEvent.VK_RIGHT, new Right());
+        return keyMappings;
+    }
+
+
 }
