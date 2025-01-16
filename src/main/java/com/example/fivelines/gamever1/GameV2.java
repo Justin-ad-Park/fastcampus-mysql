@@ -1,7 +1,6 @@
 package com.example.fivelines.gamever1;
 
 import com.example.fivelines.gamever1.input.*;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
