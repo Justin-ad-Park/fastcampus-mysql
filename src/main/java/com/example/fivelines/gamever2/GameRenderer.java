@@ -22,33 +22,15 @@ public class GameRenderer extends JPanel implements GameStatusObserver<Integer> 
                 drawTile(g, map[y][x], x, y);
             }
         }
-
-        drawPlayer(g);
     }
 
     private void drawTile(Graphics g, Tile tile, int x, int y) {
-        switch (tile) {
-            case FLUX -> g.setColor(new Color(204, 255, 204));
-            case UNBREAKABLE -> g.setColor(new Color(153, 153, 153));
-            case STONE, FALLING_STONE -> g.setColor(new Color(0, 0, 204));
-            case BOX, FALLING_BOX -> g.setColor(new Color(139, 69, 19));
-            case KEY1, LOCK1 -> g.setColor(new Color(255, 204, 0));
-            case KEY2, LOCK2 -> g.setColor(new Color(0, 204, 255));
-            case AIR -> g.setColor(Color.WHITE);
-            default -> g.setColor(Color.BLACK);
-        }
+        g.setColor(tile.getColor());
 
-        if (tile != Tile.AIR && tile != Tile.PLAYER) {
-            g.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
-        }
+        g.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+
     }
 
-    private void drawPlayer(Graphics g) {
-        g.setColor(Color.RED);
-        int playerX = gameLogic.getPlayerX();
-        int playerY = gameLogic.getPlayerY();
-        g.fillRect(playerX * TILE_SIZE, playerY * TILE_SIZE, TILE_SIZE, TILE_SIZE);
-    }
 
     @Override
     public  void gameSuccess(Integer score) {

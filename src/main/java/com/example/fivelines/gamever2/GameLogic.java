@@ -43,23 +43,23 @@ public class GameLogic implements  PlayerControl, GameStatusSubject<Integer> {
 
     public void move(int targetX, int targetY, int dx, int dy) {
         if (isWalkable(targetY, targetX)) {
-            moveToTile(targetX, targetY);
+            movePlayerToTile(targetX, targetY);
         } else if ((map[targetY][targetX] == Tile.BOX || map[targetY][targetX] == Tile.STONE) &&
                 isWalkable(targetY + dy, targetX + dx)) {
             moveBox(targetX, targetY, dx, dy);
         } else if (map[targetY][targetX] == Tile.KEY1) {
             removeLocks(Tile.LOCK1);
-            moveToTile(targetX, targetY);
+            movePlayerToTile(targetX, targetY);
         } else if (map[targetY][targetX] == Tile.KEY2) {
             removeLocks(Tile.LOCK2);
-            moveToTile(targetX, targetY);
+            movePlayerToTile(targetX, targetY);
         }
     }
 
     private void moveBox(int boxX, int boxY, int dx, int dy) {
         map[boxY + dy][boxX + dx] = map[boxY][boxX];
         map[boxY][boxX] = Tile.AIR;
-        moveToTile(boxX, boxY);
+        movePlayerToTile(boxX, boxY);
     }
 
     private void removeLocks(Tile lockType) {
@@ -76,7 +76,7 @@ public class GameLogic implements  PlayerControl, GameStatusSubject<Integer> {
         return map[y][x] == Tile.AIR || map[y][x] == Tile.FLUX;
     }
 
-    public void moveToTile(int x, int y) {
+    private void movePlayerToTile(int x, int y) {
         map[playerY][playerX] = Tile.AIR;
         map[y][x] = Tile.PLAYER;
         playerX = x;
