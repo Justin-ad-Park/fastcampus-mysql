@@ -20,32 +20,29 @@ public class GameLogic implements  PlayerControl, GameStatusSubject<Integer> {
     public void updateFallingObjects() {
         for (int y = map.length - 2; y >= 0; y--) {
             for (int x = 0; x < map[y].length; x++) {
-                if ((map[y][x] == Tile.STONE || map[y][x] == Tile.FALLING_STONE || map[y][x] == Tile.BOX || map[y][x] == Tile.FALLING_BOX) && map[y + 1][x] == Tile.AIR) {
-                    map[y + 1][x] = (map[y][x] == Tile.BOX) ? Tile.FALLING_BOX : Tile.FALLING_STONE;
-                    map[y][x] = Tile.AIR;
-                } else if (map[y][x] == Tile.FALLING_STONE) {
-                    map[y][x] = Tile.STONE;
-                } else if (map[y][x] == Tile.FALLING_BOX) {
-                    map[y][x] = Tile.BOX;
-                }
+                map[y][x].handleFalling(this, x, y);
             }
         }
     }
 
     @Override
     public void movePlayer(int x, int y) {
-        move(playerX  + x, playerY + y, x, y);
+        move(x, y);
 
         keyPressCounter.countKeyPress();
 
         checkSuccess();
     }
 
-    public void move(int targetX, int targetY, int dx, int dy) {
-        if (isWalkable(targetY, targetX)) {
+    public void move(int dx, int dy) {
+        int targetX = playerX + dx;
+        int targetY = playerY + dy;
+
+
+        if (map[targetY][targetX].isWalkable()) {
             movePlayerToTile(targetX, targetY);
         } else if ((map[targetY][targetX] == Tile.BOX || map[targetY][targetX] == Tile.STONE) &&
-                isWalkable(targetY + dy, targetX + dx)) {
+                map[targetY + dy][targetX + dx].isWalkable() ) {
             moveBox(targetX, targetY, dx, dy);
         } else if (map[targetY][targetX] == Tile.KEY1) {
             removeLocks(Tile.LOCK1);
@@ -72,10 +69,6 @@ public class GameLogic implements  PlayerControl, GameStatusSubject<Integer> {
         }
     }
 
-    private boolean isWalkable(int y, int x) {
-        return map[y][x] == Tile.AIR || map[y][x] == Tile.FLUX;
-    }
-
     private void movePlayerToTile(int x, int y) {
         map[playerY][playerX] = Tile.AIR;
         map[y][x] = Tile.PLAYER;
@@ -94,15 +87,6 @@ public class GameLogic implements  PlayerControl, GameStatusSubject<Integer> {
     public Tile[][] getMap() {
         return map;
     }
-
-    public int getPlayerX() {
-        return playerX;
-    }
-
-    public int getPlayerY() {
-        return playerY;
-    }
-
 
     public void checkSuccess() {
         //가장 우측 하단에 BOX(상자)를 옮기면 성공
