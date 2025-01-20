@@ -1,11 +1,11 @@
 package com.example.fivelines.gamever3.tile;
 
-import com.example.fivelines.gamever3.Tile;
+import com.example.fivelines.gamever3.tile.implement.*;
 
 public class TileCreator {
-    public static TileV3 createTile(Tile tile, int x, int y) {
+    public static Tile createTile(TileType tileType, int x, int y) {
 
-        switch (tile) {
+        switch (tileType) {
             case FLUX:
                 return new Flux(x, y);
             case UNBREAKER:

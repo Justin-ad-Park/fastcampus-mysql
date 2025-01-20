@@ -1,6 +1,8 @@
 package com.example.fivelines.gamever3;
 
+import com.example.fivelines.gamever3.gamelogic.GameMainBoardV3;
 import com.example.fivelines.gamever3.input.*;
+import com.example.fivelines.gamever3.tile.TileType;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -11,13 +13,13 @@ import java.util.Map;
 
 public class GameStarter {
     public static void main(String[] args) {
-        Tile[][] initialMap = {
-                {Tile.UNBREAKER, Tile.UNBREAKER, Tile.UNBREAKER, Tile.UNBREAKER, Tile.UNBREAKER, Tile.UNBREAKER, Tile.UNBREAKER, Tile.UNBREAKER},
-                {Tile.UNBREAKER, Tile.PLAYER, Tile.AIR, Tile.FLUX, Tile.FLUX, Tile.UNBREAKER, Tile.AIR, Tile.UNBREAKER},
-                {Tile.UNBREAKER, Tile.STONE, Tile.UNBREAKER, Tile.BOX, Tile.FLUX, Tile.UNBREAKER, Tile.AIR, Tile.UNBREAKER},
-                {Tile.UNBREAKER, Tile.KEY1, Tile.STONE, Tile.FLUX, Tile.FLUX, Tile.UNBREAKER, Tile.AIR, Tile.UNBREAKER},
-                {Tile.UNBREAKER, Tile.STONE, Tile.FLUX, Tile.FLUX, Tile.FLUX, Tile.LOCK1, Tile.AIR, Tile.UNBREAKER},
-                {Tile.UNBREAKER, Tile.UNBREAKER, Tile.UNBREAKER, Tile.UNBREAKER, Tile.UNBREAKER, Tile.UNBREAKER, Tile.UNBREAKER, Tile.UNBREAKER}
+        TileType[][] initialMap = {
+                {TileType.UNBREAKER, TileType.UNBREAKER, TileType.UNBREAKER, TileType.UNBREAKER, TileType.UNBREAKER, TileType.UNBREAKER, TileType.UNBREAKER, TileType.UNBREAKER},
+                {TileType.UNBREAKER, TileType.PLAYER, TileType.AIR, TileType.FLUX, TileType.FLUX, TileType.UNBREAKER, TileType.AIR, TileType.UNBREAKER},
+                {TileType.UNBREAKER, TileType.STONE, TileType.UNBREAKER, TileType.BOX, TileType.FLUX, TileType.UNBREAKER, TileType.AIR, TileType.UNBREAKER},
+                {TileType.UNBREAKER, TileType.KEY1, TileType.STONE, TileType.FLUX, TileType.FLUX, TileType.UNBREAKER, TileType.AIR, TileType.UNBREAKER},
+                {TileType.UNBREAKER, TileType.STONE, TileType.FLUX, TileType.FLUX, TileType.FLUX, TileType.LOCK1, TileType.AIR, TileType.UNBREAKER},
+                {TileType.UNBREAKER, TileType.UNBREAKER, TileType.UNBREAKER, TileType.UNBREAKER, TileType.UNBREAKER, TileType.UNBREAKER, TileType.UNBREAKER, TileType.UNBREAKER}
         };
 
         KeyPressCounter keyPressCounter = new KeyPressCounter();

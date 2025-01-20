@@ -1,6 +1,6 @@
 package com.example.fivelines.gamever3.input;
 
-import com.example.fivelines.gamever3.PlayerControl;
+import com.example.fivelines.gamever3.gamelogic.PlayerControl;
 
 public class Left implements InputAction {
     @Override
