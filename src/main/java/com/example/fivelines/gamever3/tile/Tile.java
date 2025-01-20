@@ -1,11 +1,10 @@
 package com.example.fivelines.gamever3.tile;
 
-import com.example.fivelines.gamever3.Tile;
-import com.example.fivelines.gamever3.TileControl;
+import com.example.fivelines.gamever3.gamelogic.TileControl;
 
 import java.awt.*;
 
-public interface TileV3 {
+public interface Tile {
     Color getColor();
 
     boolean isFallable();
@@ -14,7 +13,7 @@ public interface TileV3 {
 
     int getY();
 
-    Tile getTile();
+    TileType getTile();
 
     void handleFalling(TileControl gameMainBoard);
 

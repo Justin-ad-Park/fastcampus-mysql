@@ -2,7 +2,9 @@ package com.example.fivelines.gamever3;
 
 // GameRenderer.java
 
-import com.example.fivelines.gamever3.tile.TileV3;
+import com.example.fivelines.gamever3.gamelogic.GameMainBoardV3;
+import com.example.fivelines.gamever3.observer.GameStatusObserver;
+import com.example.fivelines.gamever3.tile.Tile;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +22,7 @@ public class GameRenderer extends JPanel implements GameStatusObserver<Integer> 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        TileV3[][] map = gameMainBoard.getMap();
+        Tile[][] map = gameMainBoard.getMap();
 
         //전체 타일을 그린다.
         Arrays.stream(map).flatMap(Arrays::stream)
@@ -28,7 +30,7 @@ public class GameRenderer extends JPanel implements GameStatusObserver<Integer> 
 
     }
 
-    private void drawTile(Graphics g, TileV3 tile) {
+    private void drawTile(Graphics g, Tile tile) {
         g.setColor(tile.getColor());
         g.fillRect(tile.getX() * TILE_SIZE, tile.getY() * TILE_SIZE, TILE_SIZE, TILE_SIZE);
 

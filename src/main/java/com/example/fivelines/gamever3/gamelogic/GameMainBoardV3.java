@@ -1,21 +1,25 @@
-package com.example.fivelines.gamever3;
+package com.example.fivelines.gamever3.gamelogic;
 
-import com.example.fivelines.gamever3.tile.Box;
-import com.example.fivelines.gamever3.tile.Player;
+import com.example.fivelines.gamever3.KeyPressCounter;
+import com.example.fivelines.gamever3.tile.TileType;
+import com.example.fivelines.gamever3.observer.GameStatusObserver;
+import com.example.fivelines.gamever3.observer.GameStatusSubject;
+import com.example.fivelines.gamever3.tile.implement.Box;
+import com.example.fivelines.gamever3.tile.implement.Player;
 import com.example.fivelines.gamever3.tile.TileCreator;
-import com.example.fivelines.gamever3.tile.TileV3;
+import com.example.fivelines.gamever3.tile.Tile;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class GameMainBoardV3 implements PlayerControl, TileControl, GameStatusSubject<Integer> {
-    private TileV3[][] map;
+    private Tile[][] map;
     private Player player;
     private KeyPressCounter keyPressCounter;
     private final List<GameStatusObserver<Integer>> gameStatusObservers = new ArrayList<>();
 
-    public GameMainBoardV3(Tile[][] initMap, int startX, int startY, KeyPressCounter keyPressCounter) {
+    public GameMainBoardV3(TileType[][] initMap, int startX, int startY, KeyPressCounter keyPressCounter) {
         this.initMap(initMap);
 
         this.player = (Player)map[startX][startY];
@@ -23,11 +27,11 @@ public class GameMainBoardV3 implements PlayerControl, TileControl, GameStatusSu
     }
 
     //initMap 메소드는 Enum인 Tile[][]을 받아서 TileV3[][]로 변환하는 메소드입니다.
-    private void initMap(Tile[][] maps) {
+    private void initMap(TileType[][] maps) {
         int height = maps.length;
         int width = maps[0].length;
 
-        map = new TileV3[height][width];
+        map = new Tile[height][width];
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -53,21 +57,21 @@ public class GameMainBoardV3 implements PlayerControl, TileControl, GameStatusSu
     }
 
     @Override
-    public TileV3[][] getTiles() {
+    public Tile[][] getTiles() {
         return map;
     }
 
     @Override
-    public TileV3 getTile(int x, int y) {
+    public Tile getTile(int x, int y) {
         return map[y][x];
     }
 
     @Override
-    public void setTile(TileV3 tile) {
+    public void setTile(Tile tile) {
         map[tile.getY()][tile.getX()] = tile;
     }
 
-    public TileV3[][] getMap() {
+    public Tile[][] getMap() {
         return map;
     }
 

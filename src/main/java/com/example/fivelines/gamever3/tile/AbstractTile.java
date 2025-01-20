@@ -1,24 +1,24 @@
 package com.example.fivelines.gamever3.tile;
 
-import com.example.fivelines.gamever3.Tile;
-import com.example.fivelines.gamever3.TileControl;
+import com.example.fivelines.gamever3.gamelogic.TileControl;
+import com.example.fivelines.gamever3.tile.implement.Air;
 
 import java.awt.*;
 import java.util.Arrays;
 
-public class AbstractTileV3 implements TileV3 {
+public class AbstractTile implements Tile {
     private final Color color;
     private final boolean isFallable;
     private int x;
     private int y;
-    private Tile tile;
+    private TileType tileType;
 
-    public AbstractTileV3(Color color, boolean isFallable, int x, int y, Tile tile) {
+    public AbstractTile(Color color, boolean isFallable, int x, int y, TileType tileType) {
         this.color = color;
         this.isFallable = isFallable;
         this.x = x;
         this.y = y;
-        this.tile = tile;
+        this.tileType = tileType;
     }
 
     public void setXY(int x, int y) {
@@ -27,8 +27,8 @@ public class AbstractTileV3 implements TileV3 {
     }
 
     @Override
-    public Tile getTile() {
-        return tile;
+    public TileType getTile() {
+        return tileType;
     }
 
     @Override
@@ -71,12 +71,12 @@ public class AbstractTileV3 implements TileV3 {
          * 아래 타일이 Air 타일인 경우 아래 타일과 위치를 변경해서 떨어지는 효과를 준다.
           */
         if (gameMainBoardV3.getTile(x, y + 1) instanceof Air) {
-            AbstractTileV3 air = (AbstractTileV3) gameMainBoardV3.getTile(x, y + 1);
+            AbstractTile air = (AbstractTile) gameMainBoardV3.getTile(x, y + 1);
             switchTile(gameMainBoardV3, this, air);
         }
     }
 
-    private static void switchTile(TileControl gameMainBoardV3, AbstractTileV3 tileA, AbstractTileV3 tileB) {
+    private static void switchTile(TileControl gameMainBoardV3, AbstractTile tileA, AbstractTile tileB) {
         int x = tileA.getX();
         int y = tileA.getY();
 
@@ -92,7 +92,7 @@ public class AbstractTileV3 implements TileV3 {
         int newX = getX() + dx;
         int newY = getY() + dy;
 
-        TileV3 tile = gameMainBoard.getTile(newX, newY);
+        Tile tile = gameMainBoard.getTile(newX, newY);
 
         /**
          * 이동하려는 위치(newX, newY)의 타일에 doAction 이벤트를 전달한다.
@@ -113,7 +113,7 @@ public class AbstractTileV3 implements TileV3 {
         return false;
     }
 
-    protected boolean removeKeyAndLock(TileControl gameMainBoard, Tile tileType) {
+    protected boolean removeKeyAndLock(TileControl gameMainBoard, TileType tileType) {
         //연결된 Lock1 타일을 Air 타일로 바꾼다.
         Arrays.stream(gameMainBoard.getTiles()).flatMap(Arrays::stream).forEach(tile -> {
             if (tile.getTile() == tileType) {
