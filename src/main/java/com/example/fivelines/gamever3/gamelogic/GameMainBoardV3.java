@@ -6,7 +6,7 @@ import com.example.fivelines.gamever3.observer.GameStatusObserver;
 import com.example.fivelines.gamever3.observer.GameStatusSubject;
 import com.example.fivelines.gamever3.tile.implement.Box;
 import com.example.fivelines.gamever3.tile.implement.Player;
-import com.example.fivelines.gamever3.tile.TileCreator;
+import com.example.fivelines.gamever3.tile.factory.TileCreator;
 import com.example.fivelines.gamever3.tile.Tile;
 
 import java.util.ArrayList;
