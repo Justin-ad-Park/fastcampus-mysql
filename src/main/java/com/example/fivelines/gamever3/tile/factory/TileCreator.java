@@ -1,5 +1,7 @@
-package com.example.fivelines.gamever3.tile;
+package com.example.fivelines.gamever3.tile.factory;
 
+import com.example.fivelines.gamever3.tile.Tile;
+import com.example.fivelines.gamever3.tile.TileType;
 import com.example.fivelines.gamever3.tile.implement.*;
 
 public class TileCreator {

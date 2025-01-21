@@ -13,6 +13,6 @@ public class Key2 extends AbstractTile {
 
     @Override
     public boolean doAction(TileControl gameMainBoard, int dx, int dy) {
-        return removeKeyAndLock(gameMainBoard, TileType.LOCK1);
+        return removeKeyAndLock(gameMainBoard, TileType.LOCK2);
     }
 }

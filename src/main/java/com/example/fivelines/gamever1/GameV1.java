@@ -8,7 +8,7 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameV2 extends JPanel implements KeyListener {
+public class GameV1 extends JPanel implements KeyListener {
 
     private static final int TILE_SIZE = 30;
     private static final int FPS = 30;
@@ -36,7 +36,7 @@ public class GameV2 extends JPanel implements KeyListener {
     private List<Input> inputs = new ArrayList<>();
     private int keyPressCount = 0;
 
-    public GameV2() {
+    public GameV1() {
         setPreferredSize(new Dimension(map[0].length * TILE_SIZE, map.length * TILE_SIZE));
         setFocusable(true);
         addKeyListener(this);
@@ -220,7 +220,7 @@ public class GameV2 extends JPanel implements KeyListener {
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("GameV2");
-        GameV2 game = new GameV2();
+        GameV1 game = new GameV1();
         frame.add(game);
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

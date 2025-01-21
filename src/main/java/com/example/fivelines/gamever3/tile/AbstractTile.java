@@ -21,6 +21,7 @@ public class AbstractTile implements Tile {
         this.tileType = tileType;
     }
 
+    @Override
     public void setXY(int x, int y) {
         this.x = x;
         this.y = y;
@@ -65,18 +66,19 @@ public class AbstractTile implements Tile {
         if(!isFallable()) return;
 
         int x = getX();
-        int y = getY();
+        int belowY = getY() + 1;
+
+        Tile belowTile = gameMainBoardV3.getTile(x, belowY);
 
         /**
          * 아래 타일이 Air 타일인 경우 아래 타일과 위치를 변경해서 떨어지는 효과를 준다.
           */
-        if (gameMainBoardV3.getTile(x, y + 1) instanceof Air) {
-            AbstractTile air = (AbstractTile) gameMainBoardV3.getTile(x, y + 1);
-            switchTile(gameMainBoardV3, this, air);
+        if (belowTile instanceof Air) {
+            swapTile(gameMainBoardV3, this, belowTile);
         }
     }
 
-    private static void switchTile(TileControl gameMainBoardV3, AbstractTile tileA, AbstractTile tileB) {
+    private static void swapTile(TileControl gameMainBoardV3, Tile tileA, Tile tileB) {
         int x = tileA.getX();
         int y = tileA.getY();
 
@@ -100,12 +102,9 @@ public class AbstractTile implements Tile {
          * doAction을 요청한 타일이 자신의 위치로 이동이 가능하면 true를 반환한다.
           */
         if (tile.doAction(gameMainBoard, dx, dy)) {
-            Air air = (Air) gameMainBoard.getTile(newX, newY);
-            air.setXY(getX(), getY());
-            gameMainBoard.setTile(air);
+            tile = gameMainBoard.getTile(newX, newY);   //doAction에 의해 대상 타일이 변경될 수 있어서 다시 객체를 받아야 함
 
-            this.setXY(newX, newY);
-            gameMainBoard.setTile(this);
+            swapTile(gameMainBoard, this, tile);
 
             return true;
         }

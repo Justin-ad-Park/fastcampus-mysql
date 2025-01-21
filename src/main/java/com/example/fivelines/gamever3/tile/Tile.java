@@ -18,4 +18,6 @@ public interface Tile {
     void handleFalling(TileControl gameMainBoard);
 
     boolean doAction(TileControl gameMainBoard, int dx, int dy);
+
+    void setXY(int x, int y);
 }
