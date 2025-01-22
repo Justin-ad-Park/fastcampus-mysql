@@ -1,4 +1,4 @@
-package com.example.fivelines.input;
+package com.example.fivelines.gamever1.input;
 
 public class Up implements Input {
     @Override
