@@ -1,0 +1,13 @@
+[
+  {
+    "groupA": [
+      {"name": "Alice", "age": 30},
+      {"name": "Bob", "age": 25}
+    ]
+  },
+  {
+    "groupB": [
+      {"name": "Charlie", "age": 28}
+    ]
+  }
+]
