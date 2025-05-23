@@ -47,7 +47,8 @@ public class JSUtils {
 
     public static long getRandom(long maxValue) {
         Random rnd = new Random();
-        return rnd.nextLong(maxValue);
+        rnd.setSeed(maxValue);
+        return rnd.nextLong();
     }
 
     public static Supplier<String> getNow = () -> LocalDateTime.now().toLocalTime().toString();

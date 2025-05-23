@@ -100,7 +100,8 @@ public class ThreadPerSecondWithGracefullyShutdown {
 
     public static long getRandom(long maxValue) {
         Random rnd = new Random();
-        return rnd.nextLong(maxValue);
+        rnd.setSeed(maxValue);
+        return rnd.nextLong();
     }
 
 }
